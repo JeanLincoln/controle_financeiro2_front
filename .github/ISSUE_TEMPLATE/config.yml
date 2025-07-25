@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+issue_templates:
+  - name: Nova Task
+    about: Criação de nova task.
+  - name: Bug Report
+    about: Reportar um bug no sistema.

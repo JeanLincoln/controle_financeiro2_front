@@ -1,0 +1,16 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          if [[ ! "${{ github.head_ref }}" =~ ^cf2-[0-9]+-[a-zA-Z0-9-]+$ ]]; then
+            echo "❌ O nome da branch deve seguir o padrão: cf2-numeroDaTarefa-nomeDaTarefa"
+            exit 1
+          fi
