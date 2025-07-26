@@ -9,16 +9,17 @@ import {
 } from "@/components/Form/Form.component";
 import { Input } from "@/components/Input/Input.component";
 import { useForm } from "react-hook-form";
-import { LoginFormSchema, type LoginFormSchemaType } from "./LoginForm.schema";
+import {
+  loginFormDefaultValues,
+  LoginFormSchema,
+  type LoginFormSchemaType
+} from "./LoginForm.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function LoginForm() {
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(LoginFormSchema),
-    defaultValues: {
-      email: "",
-      password: ""
-    }
+    defaultValues: loginFormDefaultValues
   });
 
   const onSubmit = ({ email, password }: LoginFormSchemaType) => {

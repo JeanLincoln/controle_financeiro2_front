@@ -1,10 +1,6 @@
-import { type PropsWithChildren } from /*, useEffect*/ "react";
+import { type PropsWithChildren } from "react";
 
-// import { useNavigate } from "react-router-dom";
-
-type ProtectedRouteProps = PropsWithChildren;
-
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: PropsWithChildren) {
   //   const user = useAuth();
   //   const navigate = useNavigate();
 
