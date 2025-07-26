@@ -1,8 +1,7 @@
-import js from "@eslint/js";
+import { default as eslint, default as js } from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import { defineConfig } from "eslint/config";
-import eslint from '@eslint/js';
 
 
 
@@ -21,9 +20,11 @@ export default defineConfig([
         {
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_"
+          caughtErrorsIgnorePattern: "^_",
+          ignoreRestSiblings: true
         }
-      ]
+      ],
+      "@typescript-eslint/no-unused-imports": "off"
     }
   }
 ]);
