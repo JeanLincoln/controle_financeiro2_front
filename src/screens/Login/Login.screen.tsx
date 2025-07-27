@@ -3,9 +3,11 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardContent
+  CardContent,
+  CardFooter
 } from "@/components/Card/Card";
 import { LoginForm } from "./components/LoginForm/LoginForm.component";
+import { Link } from "react-router";
 
 function Login() {
   return (
@@ -20,6 +22,14 @@ function Login() {
         <CardContent>
           <LoginForm />
         </CardContent>
+        <CardFooter>
+          <p className="text-sm text-muted-foreground">
+            Não tem uma conta?
+            <Link to="/auth/register" className="text-primary hover:underline">
+              Registre-se
+            </Link>
+          </p>
+        </CardFooter>
       </Card>
     </div>
   );

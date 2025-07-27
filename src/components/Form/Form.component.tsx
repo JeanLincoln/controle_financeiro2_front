@@ -85,20 +85,25 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function FormLabel({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+interface FormLabelProps
+  extends React.ComponentProps<typeof LabelPrimitive.Root> {
+  required?: boolean;
+}
+
+function FormLabel({ className, required = false, ...props }: FormLabelProps) {
   const { error, formItemId } = useFormField();
 
   return (
-    <Label
-      data-slot="form-label"
-      data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
-      htmlFor={formItemId}
-      {...props}
-    />
+    <div className="flex items-center gap-2 text-center">
+      <Label
+        data-slot="form-label"
+        data-error={!!error}
+        className={cn("data-[error=true]:text-destructive", className)}
+        htmlFor={formItemId}
+        {...props}
+      />
+      {required && <span className="text-red-500 text-xs">*</span>}
+    </div>
   );
 }
 
