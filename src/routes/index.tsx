@@ -5,6 +5,7 @@ import { DefaultLayout } from "@/components/Layouts/DefaultLayout/DefaultLayout.
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthLayout } from "@/components/Layouts/AuthLayout/AuthLayout.component";
 import { Login } from "@/screens/Login/Login.screen";
+import Register from "@/screens/Register/Register.screen";
 
 export const router = createBrowserRouter([
   {
@@ -14,23 +15,22 @@ export const router = createBrowserRouter([
         <DefaultLayout />
       </ProtectedRoute>
     ),
-    children: APP_ROUTES,
-    errorElement: <PageNotFound />
+    errorElement: <PageNotFound />,
+    children: APP_ROUTES
   },
   {
     path: "/auth",
     element: <AuthLayout />,
+    errorElement: <PageNotFound />,
     children: [
       {
         path: "/auth/login",
-        element: <Login />,
-        errorElement: <PageNotFound />
+        element: <Login />
+      },
+      {
+        path: "/auth/register",
+        element: <Register />
       }
-      // {
-      //   path: "/auth/reset-password",
-      //   element: <ResetPassword />,
-      //   errorElement: <PageNotFound />
-      // }
     ]
   }
 ]);

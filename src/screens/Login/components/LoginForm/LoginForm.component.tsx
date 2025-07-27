@@ -15,8 +15,11 @@ import {
   type LoginFormSchemaType
 } from "./LoginForm.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Mail, Lock, LogIn, Eye, EyeClosed } from "lucide-react";
+import { useState } from "react";
 
 export function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: loginFormDefaultValues
@@ -34,9 +37,16 @@ export function LoginForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>E-mail</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                E-mail
+              </FormLabel>
               <FormControl>
-                <Input placeholder="seuEmail@exemplo.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="seuEmail@exemplo.com"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,16 +56,39 @@ export function LoginForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Senha</FormLabel>
+            <FormItem className="relative">
+              <FormLabel className="flex items-center gap-2">
+                <Lock className="h-4 w-4" />
+                Senha
+              </FormLabel>
               <FormControl>
-                <Input placeholder="********" type="password" {...field} />
+                <Input
+                  placeholder="********"
+                  type={showPassword ? "text" : "password"}
+                  {...field}
+                />
               </FormControl>
+              {showPassword ? (
+                <Eye
+                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              ) : (
+                <EyeClosed
+                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1 hover:opacity-80 duration-300 ease-in"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" variant="outline">
+        <Button
+          type="submit"
+          variant="outline"
+          className="flex items-center gap-2"
+        >
+          <LogIn className="h-4 w-4" />
           Enviar
         </Button>
       </form>
