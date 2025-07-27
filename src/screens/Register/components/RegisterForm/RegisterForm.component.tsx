@@ -46,9 +46,6 @@ export function RegisterForm() {
     console.log({ firstName, lastName, email, password, birthDate });
   };
 
-  const birthDate = form.watch("birthDate");
-  console.log(birthDate);
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -62,7 +59,7 @@ export function RegisterForm() {
                 Primeiro Nome
               </FormLabel>
               <FormControl>
-                <Input type="firstName" placeholder="João Paulo" {...field} />
+                <Input type="text" placeholder="João Paulo" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,7 +75,7 @@ export function RegisterForm() {
                 Sobrenome
               </FormLabel>
               <FormControl>
-                <Input type="lastName" placeholder="Silva" {...field} />
+                <Input type="text" placeholder="Silva" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,32 +134,22 @@ export function RegisterForm() {
                   placeholder="********"
                   type={showPassword ? "text" : "password"}
                   {...field}
+                  icon={
+                    showPassword ? (
+                      <Eye onClick={() => setShowPassword(!showPassword)} />
+                    ) : (
+                      <EyeClosed
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    )
+                  }
                 />
               </FormControl>
-              {showPassword ? (
-                <Eye
-                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : (
-                <EyeClosed
-                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1 hover:opacity-80 duration-300 ease-in"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              )}
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex items-center justify-between">
-          <Button
-            type="submit"
-            variant="outline"
-            className="flex items-center gap-2"
-          >
-            <LogIn className="h-4 w-4" />
-            Enviar
-          </Button>
           <Button
             type="button"
             variant="outline"
@@ -171,6 +158,14 @@ export function RegisterForm() {
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar
+          </Button>
+          <Button
+            type="submit"
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            <LogIn className="h-4 w-4" />
+            Enviar
           </Button>
         </div>
       </form>

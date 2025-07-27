@@ -27,7 +27,7 @@ export function DateOfBirthPicker({
           id="date"
           className="w-full justify-between font-normal"
         >
-          {date ? date.toLocaleDateString() : "Select date"}
+          {date ? date.toLocaleDateString() : "Selecionar data"}
           <ChevronDownIcon />
         </Button>
       </PopoverTrigger>

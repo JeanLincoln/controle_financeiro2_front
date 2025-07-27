@@ -66,19 +66,17 @@ export function LoginForm() {
                   placeholder="********"
                   type={showPassword ? "text" : "password"}
                   {...field}
+                  icon={
+                    showPassword ? (
+                      <Eye onClick={() => setShowPassword(!showPassword)} />
+                    ) : (
+                      <EyeClosed
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    )
+                  }
                 />
               </FormControl>
-              {showPassword ? (
-                <Eye
-                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : (
-                <EyeClosed
-                  className="absolute right-3 top-1/2 z-10 bg-card cursor-pointer rounded-full p-1 hover:opacity-80 duration-300 ease-in"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              )}
               <FormMessage />
             </FormItem>
           )}
