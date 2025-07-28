@@ -2,19 +2,14 @@ import { createBrowserRouter } from "react-router";
 import { APP_ROUTES } from "./routes";
 import PageNotFound from "@/screens/PageNotFound/PageNotFound.screen";
 import { DefaultLayout } from "@/components/Layouts/DefaultLayout/DefaultLayout.component";
-import ProtectedRoute from "./ProtectedRoute";
-import { AuthLayout } from "@/components/Layouts/AuthLayout/AuthLayout.component";
 import { Login } from "@/screens/Login/Login.screen";
 import Register from "@/screens/Register/Register.screen";
+import AuthLayout from "@/components/Layouts/AuthLayout/AuthLayout.component";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <DefaultLayout />
-      </ProtectedRoute>
-    ),
+    element: <DefaultLayout />,
     errorElement: <PageNotFound />,
     children: APP_ROUTES
   },
