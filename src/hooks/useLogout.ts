@@ -14,7 +14,8 @@ export const useLogout = () => {
     const [error] = await handleRequest(logoutReq().unwrap());
 
     if (error) {
-      toast.error("Failed to log out. Please try again.");
+      toast.error("Houve um erro ao fazer logout. Tente novamente.");
+      return;
     }
 
     dispatch(AuthActions.logout());

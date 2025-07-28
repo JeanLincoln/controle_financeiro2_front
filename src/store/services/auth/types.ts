@@ -5,6 +5,4 @@ export interface AuthSessionParams {
   password: string;
 }
 
-export interface AuthSessionResponse {
-  user: User;
-}
+export type AuthSessionResponse = User;

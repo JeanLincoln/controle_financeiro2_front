@@ -8,7 +8,7 @@ const reducer = combineReducers({
   [AuthService.reducerPath]: AuthService.reducer,
   [DashboardService.reducerPath]: DashboardService.reducer,
   // Slices
-  [AuthSlice.reducerPath]: AuthSlice.reducer
+  [AuthSlice.name]: AuthSlice.reducer
 });
 
 export { reducer };
