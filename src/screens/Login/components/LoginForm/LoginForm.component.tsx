@@ -17,16 +17,36 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Lock, LogIn, Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
+import { useLoginMutation } from "@/store/services/auth/auth.service";
+import { handleRequest } from "@/utils/handleRequest";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "@/store";
+import { AuthActions } from "@/store/slices/auth/auth.slice";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [login, { isLoading }] = useLoginMutation();
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: loginFormDefaultValues
   });
 
-  const onSubmit = ({ email, password }: LoginFormSchemaType) => {
-    console.log({ email, password });
+  const onSubmit = async ({ email, password }: LoginFormSchemaType) => {
+    const [error, response] = await handleRequest(
+      login({ email, password }).unwrap()
+    );
+
+    if (error) {
+      toast.error("Houve um erro ao fazer login. Verifique suas credenciais.");
+      return;
+    }
+
+    dispatch(AuthActions.login({ user: response }));
+    toast.success("Login realizado com sucesso!");
+    navigate("/");
   };
 
   return (
@@ -85,9 +105,10 @@ export function LoginForm() {
           type="submit"
           variant="outline"
           className="flex items-center gap-2"
+          disabled={isLoading}
         >
           <LogIn className="h-4 w-4" />
-          Enviar
+          {isLoading ? "Enviando..." : "Enviar"}
         </Button>
       </form>
     </Form>
