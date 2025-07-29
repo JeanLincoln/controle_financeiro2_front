@@ -75,23 +75,15 @@ export function LoadingSpinner({
     );
   }
 
-  // Default spinner
   return (
     <div className={cn("flex items-center justify-center", className)}>
       <div className={cn("relative", sizeClasses[size])}>
-        {/* Outer glow ring */}
         <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"></div>
-
-        {/* Main spinning ring */}
         <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary border-r-primary animate-spin"></div>
-
-        {/* Inner spinning ring (reverse direction) */}
         <div
           className="absolute inset-1 rounded-full border border-transparent border-b-primary/60 animate-spin"
           style={{ animationDirection: "reverse", animationDuration: "1.5s" }}
         ></div>
-
-        {/* Center dot */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
         </div>
