@@ -2,8 +2,10 @@ import { useAppDispatch } from "@/store";
 import { useLogoutMutation } from "@/store/services/auth/auth.service";
 import { AuthActions } from "@/store/slices/auth/auth.slice";
 import { handleRequest } from "@/utils/handleRequest";
+import { resetAllApiCaches } from "@/store/config/resetApiCaches";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { persistor } from "@/store";
 
 export const useLogout = () => {
   const navigate = useNavigate();
@@ -19,11 +21,12 @@ export const useLogout = () => {
     }
 
     dispatch(AuthActions.logout());
-    window.localStorage.removeItem("persist:root");
+    resetAllApiCaches(dispatch);
+    await persistor.purge();
     window.localStorage.clear();
     window.sessionStorage.clear();
 
-    toast.success("Logged out successfully");
+    toast.success("Logout realizado com sucesso!");
 
     navigate("/auth/login", { replace: true });
   };
