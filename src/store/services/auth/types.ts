@@ -6,3 +6,13 @@ export interface AuthSessionParams {
 }
 
 export type AuthSessionResponse = User;
+
+export interface RegisterUserParams {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  birthDate?: Date;
+}
+
+export type RegisterUserResponse = User;

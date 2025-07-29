@@ -26,6 +26,7 @@ function Login() {
           <p className="text-sm text-muted-foreground">
             Não tem uma conta?
             <Link to="/auth/register" className="text-primary hover:underline">
+              {" "}
               Registre-se
             </Link>
           </p>

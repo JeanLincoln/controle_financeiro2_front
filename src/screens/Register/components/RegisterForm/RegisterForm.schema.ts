@@ -11,7 +11,7 @@ export const RegisterFormSchema = z.object({
     .max(50, "Sobrenome é muito longo"),
   birthDate: z
     .date()
-    .nullable()
+    .optional()
     .refine(
       (date) => {
         if (!date) return true;
@@ -45,5 +45,5 @@ export const registerFormDefaultValues: RegisterFormSchemaType = {
   lastName: "",
   email: "",
   password: "",
-  birthDate: null
+  birthDate: undefined
 };
