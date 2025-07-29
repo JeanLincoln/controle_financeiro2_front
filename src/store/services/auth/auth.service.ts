@@ -1,4 +1,9 @@
-import type { AuthSessionParams, AuthSessionResponse } from "./types";
+import type {
+  AuthSessionParams,
+  AuthSessionResponse,
+  RegisterUserParams,
+  RegisterUserResponse
+} from "./types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../../config/base-query";
 
@@ -21,8 +26,16 @@ export const AuthService = createApi({
         method: "POST",
         url: `/auth/logout`
       })
+    }),
+    register: builder.mutation<RegisterUserResponse, RegisterUserParams>({
+      query: (params) => ({
+        method: "POST",
+        url: `/users`,
+        body: params
+      })
     })
   })
 });
 
-export const { useLoginMutation, useLogoutMutation } = AuthService;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
+  AuthService;

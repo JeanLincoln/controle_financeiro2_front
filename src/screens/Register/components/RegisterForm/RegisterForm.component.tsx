@@ -8,6 +8,7 @@ import {
   Form
 } from "@/components/Form/Form.component";
 import { Input } from "@/components/Input/Input.component";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { useForm } from "react-hook-form";
 import {
   registerFormDefaultValues,
@@ -27,23 +28,33 @@ import {
 import { useState } from "react";
 import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 import { useNavigate } from "react-router";
+import { useRegisterMutation } from "@/store/services/auth/auth.service";
+import { handleRequest } from "@/utils/handleRequest";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/store";
+import { AuthActions } from "@/store/slices/auth/auth.slice";
 
 export function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const [register, { isLoading }] = useRegisterMutation();
   const form = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: registerFormDefaultValues
   });
 
-  const onSubmit = ({
-    firstName,
-    lastName,
-    email,
-    password,
-    birthDate
-  }: RegisterFormSchemaType) => {
-    console.log({ firstName, lastName, email, password, birthDate });
+  const onSubmit = async (data: RegisterFormSchemaType) => {
+    const [error, response] = await handleRequest(register(data).unwrap());
+
+    if (error) {
+      toast.error("Houve um erro ao cadastrar usuário, tente novamente.");
+      return;
+    }
+
+    dispatch(AuthActions.login(response));
+    toast.success("Cadastro realizado com sucesso!");
+    navigate("/");
   };
 
   return (
@@ -155,6 +166,7 @@ export function RegisterForm() {
             variant="outline"
             className="flex items-center gap-2"
             onClick={() => navigate(-1)}
+            disabled={isLoading}
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar
@@ -162,10 +174,17 @@ export function RegisterForm() {
           <Button
             type="submit"
             variant="outline"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 min-w-[100px]"
+            disabled={isLoading}
           >
-            <LogIn className="h-4 w-4" />
-            Enviar
+            {isLoading ? (
+              <LoadingSpinner size="sm" variant="orbit" />
+            ) : (
+              <>
+                <LogIn className="h-4 w-4" />
+                Enviar
+              </>
+            )}
           </Button>
         </div>
       </form>

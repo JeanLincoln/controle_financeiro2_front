@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/store";
 import { AuthActions } from "@/store/slices/auth/auth.slice";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +45,7 @@ export function LoginForm() {
       return;
     }
 
-    dispatch(AuthActions.login({ user: response }));
+    dispatch(AuthActions.login(response));
     toast.success("Login realizado com sucesso!");
     navigate("/");
   };
@@ -104,11 +105,17 @@ export function LoginForm() {
         <Button
           type="submit"
           variant="outline"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-24"
           disabled={isLoading}
         >
-          <LogIn className="h-4 w-4" />
-          {isLoading ? "Enviando..." : "Enviar"}
+          {isLoading ? (
+            <LoadingSpinner size="sm" variant="orbit" />
+          ) : (
+            <>
+              <LogIn className="h-4 w-4" />
+              Entrar
+            </>
+          )}
         </Button>
       </form>
     </Form>
