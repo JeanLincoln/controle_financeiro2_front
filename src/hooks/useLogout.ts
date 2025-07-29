@@ -20,13 +20,8 @@ export const useLogout = () => {
       return;
     }
 
-    // Clear Redux auth state
     dispatch(AuthActions.logout());
-
-    // Reset all RTK Query caches
     resetAllApiCaches(dispatch);
-
-    // Clear persisted data
     await persistor.purge();
     window.localStorage.clear();
     window.sessionStorage.clear();
