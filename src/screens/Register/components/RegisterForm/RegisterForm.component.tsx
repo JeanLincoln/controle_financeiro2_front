@@ -53,7 +53,7 @@ export function RegisterForm() {
     }
 
     dispatch(AuthActions.login(response));
-    toast.success("Login realizado com sucesso!");
+    toast.success("Cadastro realizado com sucesso!");
     navigate("/");
   };
 
