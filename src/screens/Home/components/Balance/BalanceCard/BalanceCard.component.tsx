@@ -23,7 +23,7 @@ export function BalanceCard({
   variationTotal,
   pastValue = 0
 }: BalanceCardProps) {
-  const pastValueIsPositive = pastValue !== null && pastValue >= 0;
+  const pastValueIsPositive = pastValue >= 0;
   const statusIsPositive =
     variationPercentage !== null && variationPercentage >= 0;
 
@@ -52,10 +52,10 @@ export function BalanceCard({
           <div className="flex flex-col items-start ml-1">
             <div className="flex items-center gap-1 w-full justify-between">
               <span className="text-sm text-muted-foreground">
-                Variação percentil:
+                Variação percentual:
               </span>
               <div className="flex gap-1">
-                <span className={`${statusClassName} text-xs`}>
+                <span className={statusClassName}>
                   {statusIsPositive ? "+" : ""}
                 </span>
                 <span className={statusClassName}>
@@ -68,7 +68,7 @@ export function BalanceCard({
                 Valor mês anterior:
               </span>
               <div className="flex gap-1">
-                <span className={`${pastValueClassName} text-xs`}>
+                <span className={pastValueClassName}>
                   {pastValueIsPositive ? "+" : ""}
                 </span>
                 <span className={pastValueClassName}>
@@ -81,7 +81,7 @@ export function BalanceCard({
                 Variação valor:
               </span>
               <div className="flex gap-1">
-                <span className={`${statusClassName} text-xs`}>
+                <span className={statusClassName}>
                   {statusIsPositive ? "+" : ""}
                 </span>
                 <span className={statusClassName}>
