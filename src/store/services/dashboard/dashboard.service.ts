@@ -23,9 +23,13 @@ export const DashboardService = createApi({
       TransactionsGraphResponse,
       TransactionsGraphParams
     >({
-      query: (params) => ({
+      query: ({ startDate, endDate }) => ({
         method: "GET",
-        url: `/dashboard/transaction-graph?startDate=${params.startDate}&endDate=${params.endDate}`
+        url: "/dashboard/transaction-graph",
+        params: {
+          startDate: startDate.toString(),
+          endDate: endDate.toString()
+        }
       })
     })
   })
