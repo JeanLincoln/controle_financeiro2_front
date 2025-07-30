@@ -22,19 +22,17 @@ import {
   Form
 } from "@/components/Form/Form.component";
 import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
-import { useLazyTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
-import { handleRequest } from "@/utils/handleRequest";
-import { toast } from "sonner";
 import { useEffect } from "react";
 import { handleInitialRangeDate } from "./utils/handleInitialDate";
 import { balanceChartSchema, type BalanceChartSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig";
+import { useGetGraphData } from "./hooks/useGetGraphData";
 
 const { from: defaultFrom, to: defaultTo } = handleInitialRangeDate();
 
 export function BalanceChart() {
-  const [getGraphData, { data: graphData }] = useLazyTransactionsGraphQuery();
+  const { fetchGraphData, graphData } = useGetGraphData();
   const form = useForm<BalanceChartSchema>({
     resolver: zodResolver(balanceChartSchema),
     defaultValues: {
@@ -46,25 +44,21 @@ export function BalanceChart() {
   });
 
   const onSubmit = async (data: BalanceChartSchema) => {
-    const startDate = data.rangeDate?.from;
-    const endDate = data.rangeDate?.to;
-    const [error] = await handleRequest(
-      getGraphData({ startDate, endDate }).unwrap()
-    );
-
-    if (error) {
-      toast.error(
-        "Houve um erro ao carregar os dados do gráfico. Tente novamente."
-      );
-      return;
-    }
+    fetchGraphData({
+      rangeDate: {
+        from: data.rangeDate.from,
+        to: data.rangeDate.to
+      }
+    });
   };
 
   useEffect(() => {
-    getGraphData({
-      startDate: defaultFrom,
-      endDate: defaultTo
-    }).unwrap();
+    fetchGraphData({
+      rangeDate: {
+        from: defaultFrom,
+        to: defaultTo
+      }
+    });
   }, []);
 
   return (
