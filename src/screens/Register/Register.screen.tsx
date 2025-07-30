@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent
-} from "@/components/Card/Card";
+} from "@/components/Card/Card.component";
 import { RegisterForm } from "./components/RegisterForm/RegisterForm.component";
 
 export default function Register() {

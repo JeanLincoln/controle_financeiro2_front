@@ -26,13 +26,13 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { useState } from "react";
-import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 import { useNavigate } from "react-router";
 import { useRegisterMutation } from "@/store/services/auth/auth.service";
 import { handleRequest } from "@/utils/handleRequest";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/store";
 import { AuthActions } from "@/store/slices/auth/auth.slice";
+import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 
 export function RegisterForm() {
   const navigate = useNavigate();
