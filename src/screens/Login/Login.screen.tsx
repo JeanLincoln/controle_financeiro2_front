@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter
-} from "@/components/Card/Card";
+} from "@/components/Card/Card.component";
 import { LoginForm } from "./components/LoginForm/LoginForm.component";
 import { Link } from "react-router";
 

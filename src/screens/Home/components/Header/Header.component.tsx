@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardDescription,
   CardAction
-} from "@/components/Card/Card";
+} from "@/components/Card/Card.component";
 import { useLogout } from "@/hooks/useLogout";
 import { useAppSelector } from "@/store";
 import { User, LogOut } from "lucide-react";

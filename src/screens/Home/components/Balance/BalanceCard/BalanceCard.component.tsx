@@ -3,7 +3,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent
-} from "@/components/Card/Card";
+} from "@/components/Card/Card.component";
 import { toBRLCurrency } from "@/utils/toBRLCurrency";
 
 interface BalanceCardProps {

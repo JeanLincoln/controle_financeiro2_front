@@ -27,3 +27,19 @@ export type BalanceResponse = {
     };
   };
 };
+
+export interface TransactionsGraphParams {
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface TransactionsGraphData {
+  date: string;
+  expense: number;
+  income: number;
+  balance: number;
+}
+
+export interface TransactionsGraphResponse {
+  data: TransactionsGraphData[];
+}

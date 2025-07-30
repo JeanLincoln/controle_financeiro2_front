@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent
-} from "@/components/Card/Card";
+} from "@/components/Card/Card.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { useBalanceQuery } from "@/store/services/dashboard/dashboard.service";
 import { BalanceCard } from "./BalanceCard/BalanceCard.component";
