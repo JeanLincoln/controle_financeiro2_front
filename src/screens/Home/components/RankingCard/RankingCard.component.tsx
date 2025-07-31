@@ -17,8 +17,8 @@ import {
 import { TransactionType } from "@/entities/transaction.entity";
 import type { RankingParams } from "@/store/services/dashboard/types";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
-import { ArrowUpCircle, ArrowDownCircle, BarChart3Icon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { RankingCardSkeleton } from "./RankingCard.skeleton";
 import { RankingCardEmptyState } from "./RankingCard.empty-state";
 
@@ -33,13 +33,15 @@ interface RankingCardProps<T extends BaseRowProps> {
   fetchTrigger: (type: RankingParams) => void;
   data?: T[];
   isLoading: boolean;
+  icon: React.ReactNode;
 }
 
 export const RankingCard = <T extends BaseRowProps>({
   name,
   data,
   fetchTrigger,
-  isLoading
+  isLoading,
+  icon
 }: RankingCardProps<T>) => {
   const [type, setType] = useState<RankingParams["type"]>();
 
@@ -66,7 +68,7 @@ export const RankingCard = <T extends BaseRowProps>({
         <Card className="w-[49%]">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <BarChart3Icon className="h-5 w-5" />
+              {icon}
               Ranking de {titleEntityName}
             </CardTitle>
             <CardAction>
