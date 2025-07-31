@@ -9,7 +9,7 @@ export function Aside() {
   const logout = useLogout();
 
   return (
-    <aside className="fixed group flex min-h-screen w-24 hover:w-52 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out overflow-hidden z-10">
+    <aside className="peer fixed group flex min-h-screen w-24 hover:w-52 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out overflow-hidden z-10">
       <div className="flex items-center justify-center group-hover:justify-start p-6 border-b border-border transition-all duration-300">
         <Link
           to="/profile"
