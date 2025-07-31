@@ -3,7 +3,7 @@ import { BalanceChart } from "./components/BalanceChart/BalanceChart.component";
 import { RankingCard } from "./components/RankingCard/RankingCard.component";
 import { RankingRequests } from "./hooks/rankingRequests.hook";
 
-export default function Home() {
+export default function HomeScreen() {
   const { category, subCategory, origin, transaction } = RankingRequests();
 
   return (

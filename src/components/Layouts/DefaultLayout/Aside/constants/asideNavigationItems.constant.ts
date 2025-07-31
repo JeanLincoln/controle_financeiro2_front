@@ -1,6 +1,17 @@
-import { Building2, FolderOpen, Tags, CreditCard } from "lucide-react";
+import {
+  Building2,
+  FolderOpen,
+  Tags,
+  CreditCard,
+  ChartNoAxesCombined
+} from "lucide-react";
 
 export const asideNavigationItems = [
+  {
+    name: "Dashboard",
+    href: "/",
+    icon: ChartNoAxesCombined
+  },
   {
     name: "Origin",
     href: "/origin",
@@ -13,7 +24,7 @@ export const asideNavigationItems = [
   },
   {
     name: "Sub Category",
-    href: "/subcategory",
+    href: "/sub-category",
     icon: Tags
   },
   {

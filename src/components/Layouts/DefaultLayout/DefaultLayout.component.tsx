@@ -5,7 +5,7 @@ function DefaultLayout() {
   return (
     <div className="bg-background min-h-screen">
       <Aside />
-      <main className="transition-all duration-300 ease-in-out">
+      <main className="w-full min-h-full transition-all duration-300 ease-in-out">
         <Outlet />
       </main>
     </div>
