@@ -1,5 +1,5 @@
 import { useLazyTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
-import { handleRequest } from "@/utils/handleRequest";
+import { handleRequest } from "@/utils/handleRequest.utils";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
