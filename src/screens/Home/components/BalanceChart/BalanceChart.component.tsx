@@ -29,6 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig";
 import { useGetGraphData } from "./hooks/useGetGraphData";
 import { BalanceChartSkeleton } from "./BalanceChart.skeleton";
+import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 
 const { from: defaultFrom, to: defaultTo } = handleInitialRangeDate();
 
@@ -68,7 +69,7 @@ export function BalanceChart() {
   return (
     <>
       {isLoading && <BalanceChartSkeleton />}
-      {isEmpty && <></>}
+      {isEmpty && <BalanceChartEmptyState />}
       {isLoaded && (
         <Card className="pt-0 w-full">
           <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">

@@ -30,7 +30,7 @@ export const RankingRequests = () => {
     const [error] = await handleRequest(triggerOriginRanking(type).unwrap());
 
     if (error) {
-      toast.error(`Houve um erro ao carregar o raking de origens`);
+      toast.error(`Houve um erro ao carregar o ranking de origens`);
       return;
     }
   };
@@ -41,7 +41,7 @@ export const RankingRequests = () => {
     );
 
     if (error) {
-      toast.error(`Houve um erro ao carregar o raking de subcategorias`);
+      toast.error(`Houve um erro ao carregar o ranking de subcategorias`);
       return;
     }
   };
@@ -52,7 +52,7 @@ export const RankingRequests = () => {
     );
 
     if (error) {
-      toast.error(`Houve um erro ao carregar o raking de transações`);
+      toast.error(`Houve um erro ao carregar o ranking de transações`);
       return;
     }
   };
@@ -61,7 +61,7 @@ export const RankingRequests = () => {
     const [error] = await handleRequest(triggerCategoryRanking(type).unwrap());
 
     if (error) {
-      toast.error(`Houve um erro ao carregar o raking de categorias`);
+      toast.error(`Houve um erro ao carregar o ranking de categorias`);
       return;
     }
   };
