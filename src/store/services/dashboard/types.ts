@@ -1,3 +1,11 @@
+import type { CategoryRanking } from "@/entities/category.entity";
+import type { OriginRanking } from "@/entities/origin.entity";
+import type { SubCategoryRanking } from "@/entities/subCategory.entity";
+import type {
+  TransactionRanking,
+  TransactionType
+} from "@/entities/transaction.entity";
+
 export type BalanceParams = void;
 export type BalanceResponse = {
   currentMonth: {
@@ -43,3 +51,12 @@ export interface TransactionsGraphData {
 export interface TransactionsGraphResponse {
   data: TransactionsGraphData[];
 }
+
+export interface RankingParams {
+  type?: keyof typeof TransactionType;
+}
+
+export type CategoryRankingResponse = CategoryRanking;
+export type SubCategoryRankingResponse = SubCategoryRanking;
+export type OriginRankingResponse = OriginRanking;
+export type TransactionRankingResponse = TransactionRanking;

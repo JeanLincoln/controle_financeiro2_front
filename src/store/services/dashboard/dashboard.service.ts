@@ -3,6 +3,11 @@ import { baseQueryWithAuth } from "../../config/base-query";
 import type {
   BalanceParams,
   BalanceResponse,
+  CategoryRankingResponse,
+  OriginRankingResponse,
+  RankingParams,
+  SubCategoryRankingResponse,
+  TransactionRankingResponse,
   TransactionsGraphParams,
   TransactionsGraphResponse
 } from "./types";
@@ -31,9 +36,57 @@ export const DashboardService = createApi({
           endDate: endDate.toString()
         }
       })
+    }),
+    categoryRanking: builder.query<CategoryRankingResponse, RankingParams>({
+      query: ({ type }) => ({
+        method: "GET",
+        url: "/dashboard/category-ranking",
+        params: {
+          type
+        }
+      })
+    }),
+    subCategoryRanking: builder.query<
+      SubCategoryRankingResponse,
+      RankingParams
+    >({
+      query: ({ type }) => ({
+        method: "GET",
+        url: "/dashboard/sub-category-ranking",
+        params: {
+          type
+        }
+      })
+    }),
+    transactionRanking: builder.query<
+      TransactionRankingResponse,
+      RankingParams
+    >({
+      query: ({ type }) => ({
+        method: "GET",
+        url: "/dashboard/transaction-ranking",
+        params: {
+          type
+        }
+      })
+    }),
+    originRanking: builder.query<OriginRankingResponse, RankingParams>({
+      query: ({ type }) => ({
+        method: "GET",
+        url: "/dashboard/origin-ranking",
+        params: {
+          type
+        }
+      })
     })
   })
 });
 
-export const { useBalanceQuery, useLazyTransactionsGraphQuery } =
-  DashboardService;
+export const {
+  useBalanceQuery,
+  useLazyTransactionsGraphQuery,
+  useLazyOriginRankingQuery,
+  useLazySubCategoryRankingQuery,
+  useLazyTransactionRankingQuery,
+  useLazyCategoryRankingQuery
+} = DashboardService;
