@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardContent
 } from "@/components/Card/Card.component";
-import { toBRLCurrency } from "@/utils/toBRLCurrency";
+import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
 
 interface BalanceCardProps {
   title: string;

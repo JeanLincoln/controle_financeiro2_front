@@ -23,11 +23,14 @@ import {
 } from "@/components/Form/Form.component";
 import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
 import { useEffect } from "react";
-import { handleInitialRangeDate } from "./utils/handleInitialDate";
-import { balanceChartSchema, type BalanceChartSchema } from "./schema";
+import { handleInitialRangeDate } from "./utils/handleInitialDate.utils";
+import {
+  balanceChartSchema,
+  type BalanceChartSchema
+} from "./BalanceChart.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig";
-import { useGetGraphData } from "./hooks/useGetGraphData";
+import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig.constant";
+import { useGetGraphData } from "./hooks/useGetGraphData.hook";
 import { BalanceChartSkeleton } from "./BalanceChart.skeleton";
 import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 

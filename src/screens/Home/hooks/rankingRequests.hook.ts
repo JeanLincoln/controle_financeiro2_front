@@ -5,7 +5,7 @@ import {
   useLazyCategoryRankingQuery
 } from "@/store/services/dashboard/dashboard.service";
 import type { RankingParams } from "@/store/services/dashboard/types";
-import { handleRequest } from "@/utils/handleRequest";
+import { handleRequest } from "@/utils/handleRequest.utils";
 import { toast } from "sonner";
 
 export const RankingRequests = () => {

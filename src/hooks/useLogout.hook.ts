@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@/store";
 import { useLogoutMutation } from "@/store/services/auth/auth.service";
 import { AuthActions } from "@/store/slices/auth/auth.slice";
-import { handleRequest } from "@/utils/handleRequest";
+import { handleRequest } from "@/utils/handleRequest.utils";
 import { resetAllApiCaches } from "@/store/config/resetApiCaches";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";

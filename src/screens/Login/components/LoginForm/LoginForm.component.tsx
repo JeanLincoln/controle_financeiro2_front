@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Lock, LogIn, Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import { useLoginMutation } from "@/store/services/auth/auth.service";
-import { handleRequest } from "@/utils/handleRequest";
+import { handleRequest } from "@/utils/handleRequest.utils";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/store";

@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/cn.utils";
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 

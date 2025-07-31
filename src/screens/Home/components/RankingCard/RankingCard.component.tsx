@@ -16,7 +16,7 @@ import {
 } from "@/components/Table/Table.component";
 import { TransactionType } from "@/entities/transaction.entity";
 import type { RankingParams } from "@/store/services/dashboard/types";
-import { toBRLCurrency } from "@/utils/toBRLCurrency";
+import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
 import { ArrowUpCircle, ArrowDownCircle, BarChart3Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RankingCardSkeleton } from "./RankingCard.skeleton";
