@@ -4,7 +4,7 @@ import {
   useLazyTransactionRankingQuery,
   useLazyCategoryRankingQuery
 } from "@/store/services/dashboard/dashboard.service";
-import type { RankingParams } from "@/store/services/dashboard/types";
+import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 import { handleRequest } from "@/utils/handleRequest.utils";
 import { toast } from "sonner";
 

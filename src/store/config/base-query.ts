@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   type FetchBaseQueryError
 } from "@reduxjs/toolkit/query";
-import type { ReduxErrorProps } from "../types";
+import type { ReduxErrorProps } from "../store.types";
 
 type ExtraOptions = Record<string, unknown>;
 
