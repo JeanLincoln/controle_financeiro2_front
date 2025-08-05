@@ -1,6 +1,11 @@
 import * as React from "react";
 
 import { cn } from "@/utils/cn.utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from "../Tooltip/Tooltip.component";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -28,23 +33,71 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
+type CardTitleProps = React.ComponentProps<"div"> & {
+  withTooltip?: boolean;
+};
+
+function CardTitle({
+  className,
+  children,
+  withTooltip = false,
+  ...props
+}: CardTitleProps) {
+  return withTooltip ? (
+    <Tooltip>
+      <TooltipTrigger className="flex items-start w-fit text-start">
+        <div
+          data-slot="card-title"
+          className={cn("leading-none font-semibold", className)}
+          {...props}
+        >
+          {children}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-70">{children}</TooltipContent>
+    </Tooltip>
+  ) : (
     <div
       data-slot="card-title"
       className={cn("leading-none font-semibold", className)}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
+type CardDescriptionProps = React.ComponentProps<"div"> & {
+  withTooltip?: boolean;
+};
+
+function CardDescription({
+  className,
+  children,
+  withTooltip = false,
+  ...props
+}: CardDescriptionProps) {
+  return withTooltip ? (
+    <Tooltip>
+      <TooltipTrigger className="flex items-start w-fit text-start">
+        <div
+          data-slot="card-description"
+          className={cn("text-muted-foreground text-sm", className)}
+          {...props}
+        >
+          {children}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-100">{children}</TooltipContent>
+    </Tooltip>
+  ) : (
     <div
       data-slot="card-description"
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }
 
