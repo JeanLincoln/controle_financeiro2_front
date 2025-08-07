@@ -29,3 +29,12 @@ export type SortAndPaginationProps<T> = PaginationProps & {
   sortOrder?: SortOrder;
   sortBy?: T;
 };
+
+type OptionProps = {
+  id: number;
+  name: string;
+};
+
+export type GetOptionsProps = PaginationResponse & {
+  data: OptionProps[];
+};

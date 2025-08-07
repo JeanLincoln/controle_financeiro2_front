@@ -1,7 +1,10 @@
 import type { Origin } from "@/entities/origin.entity";
 import type {
+  GetOptionsProps,
+  PaginationProps,
   PaginationResponse,
-  SortAndPaginationProps
+  SortAndPaginationProps,
+  SortOrder
 } from "../services.types";
 
 export type OriginFindAllFilters = {
@@ -26,8 +29,16 @@ export type OriginFindAllResponse = PaginationResponse & {
   data: Origin[];
 };
 
-export type OriginFindByIdParams = {
-  id: string;
+export type OriginFindByIdParams = Pick<Origin, "id">;
+export type OriginFindByIdResponse = Origin;
+
+export type UpdateOriginParams = Omit<Origin, "createdAt" | "updatedAt">;
+export type CreateOriginParams = Omit<UpdateOriginParams, "id">;
+export type DeleteOriginParams = OriginFindByIdParams;
+
+export type OriginOptionsParams = PaginationProps & {
+  sortOrder: SortOrder;
+  search?: string;
 };
 
-export type OriginFindByIdResponse = Origin;
+export type OriginOptionsResponse = GetOptionsProps;

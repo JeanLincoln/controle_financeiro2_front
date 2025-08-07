@@ -1,3 +1,4 @@
+import { AlertDialogTrigger } from "@/components/AlertDialog/AlertDialog.component";
 import {
   Card,
   CardAction,
@@ -6,11 +7,11 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/Card/Card.component";
+import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
+import type { HandleKeyProps } from "@/hooks/useAppSearchParams";
 import type { OriginFindAllResponse } from "@/store/services/origin/originService.types";
 import { Pencil, Trash } from "lucide-react";
 import { OriginsListSectionSkeleton } from "./OriginsListSectionSkeleton.skeleton";
-import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
-import type { HandleKeyProps } from "@/hooks/useAppSearchParams";
 
 type OriginsListSectionProps = {
   origins?: OriginFindAllResponse["data"];
@@ -39,7 +40,14 @@ export function OriginsListSection({
                   {origin.description || "Sem descrição"}
                 </CardDescription>
                 <CardAction className="flex items-center gap-4">
-                  <Trash className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 " />
+                  <AlertDialogTrigger asChild>
+                    <Trash
+                      className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 "
+                      onClick={() =>
+                        handleAddSearchParam({ key: "id", value: origin.id })
+                      }
+                    />
+                  </AlertDialogTrigger>
                   <DrawerTrigger asChild>
                     <Pencil
                       className="w-4 h-4 text-blue-500 transition-all cursor-pointer hover:scale-120"
