@@ -6,7 +6,9 @@ import { useAppSearchParams } from "@/hooks/useAppSearchParams";
 import { useFindOriginById } from "@/requests/origin/useFindOriginById.request";
 import { useOriginCreate } from "@/requests/origin/useOriginCreate.request";
 import { useOriginUpdate } from "@/requests/origin/useOriginUpdate.request";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
+import type { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 import { useEffect, useMemo } from "react";
 import {
   OriginFormSchema,
@@ -18,7 +20,12 @@ export type CreateOrUpdateOrigin = Omit<
   "id" | "createdAt" | "updatedAt"
 >;
 
+const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
+  dispatch(ShowAndHideActions.hide());
+};
+
 export function useOriginForm() {
+  const dispatch = useAppDispatch();
   const {
     idParam,
     getOrigin,
@@ -32,8 +39,13 @@ export function useOriginForm() {
     resolver: zodResolver(OriginFormSchema),
     defaultValues: useMemo(() => originFormDefaultValues(origin), [origin])
   });
-  const { handleCreateOrigin, isLoading: isCreating } = useOriginCreate();
-  const { handleUpdateOrigin, isLoading: isUpdating } = useOriginUpdate();
+
+  const { handleCreateOrigin, isLoading: isCreating } = useOriginCreate({
+    successCallback: () => onCreateOrUpdateSuccess(dispatch)
+  });
+  const { handleUpdateOrigin, isLoading: isUpdating } = useOriginUpdate({
+    successCallback: () => onCreateOrUpdateSuccess(dispatch)
+  });
 
   const colorWatch = form.watch("color");
 
