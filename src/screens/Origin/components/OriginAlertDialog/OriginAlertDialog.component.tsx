@@ -36,6 +36,7 @@ export function OriginAlertDialog() {
               variant="default"
               className="flex items-center gap-2 w-fit text-white "
               disabled={isLoading}
+              onClick={() => handleRemoveKey({ key: "id" })}
             >
               <X className="h-4 w-4" />
               Cancelar
