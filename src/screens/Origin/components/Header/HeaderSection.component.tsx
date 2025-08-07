@@ -1,20 +1,17 @@
 import { Button } from "@/components/Button/Button.component";
 import {
   Card,
-  CardHeader,
-  CardTitle,
+  CardAction,
   CardDescription,
-  CardAction
+  CardHeader,
+  CardTitle
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
-import type { HandleKeyProps } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams";
 import { Building2 } from "lucide-react";
 
-interface HeaderSectionProps {
-  handleRemoveSearchParam: ({ key }: Pick<HandleKeyProps, "key">) => void;
-}
-
-export function HeaderSection({ handleRemoveSearchParam }: HeaderSectionProps) {
+export function HeaderSection() {
+  const { handleRemoveKey } = useAppSearchParams();
   return (
     <Card>
       <CardHeader>
@@ -24,7 +21,7 @@ export function HeaderSection({ handleRemoveSearchParam }: HeaderSectionProps) {
             <Button
               className="flex items-center w-24 gap-2"
               variant="outline"
-              onClick={() => handleRemoveSearchParam({ key: "id" })}
+              onClick={() => handleRemoveKey({ key: "id" })}
             >
               Criar
               <Building2 />

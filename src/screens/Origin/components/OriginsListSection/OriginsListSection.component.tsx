@@ -8,7 +8,7 @@ import {
   CardTitle
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
-import type { HandleKeyProps } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams";
 import type { OriginFindAllResponse } from "@/store/services/origin/originService.types";
 import { Pencil, Trash } from "lucide-react";
 import { OriginsListSectionSkeleton } from "./OriginsListSectionSkeleton.skeleton";
@@ -16,14 +16,14 @@ import { OriginsListSectionSkeleton } from "./OriginsListSectionSkeleton.skeleto
 type OriginsListSectionProps = {
   origins?: OriginFindAllResponse["data"];
   loading: boolean;
-  handleAddSearchParam: (params: HandleKeyProps) => void;
 };
 
 export function OriginsListSection({
   origins,
-  loading,
-  handleAddSearchParam
+  loading
 }: OriginsListSectionProps) {
+  const { handleAddKey } = useAppSearchParams();
+
   const dataIsLoaded = !loading && origins && origins.length > 0;
   return (
     <div className="flex flex-col  justify-between h-[512px]">
@@ -44,7 +44,7 @@ export function OriginsListSection({
                     <Trash
                       className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 "
                       onClick={() =>
-                        handleAddSearchParam({ key: "id", value: origin.id })
+                        handleAddKey({ key: "id", value: origin.id })
                       }
                     />
                   </AlertDialogTrigger>
@@ -52,7 +52,7 @@ export function OriginsListSection({
                     <Pencil
                       className="w-4 h-4 text-blue-500 transition-all cursor-pointer hover:scale-120"
                       onClick={() =>
-                        handleAddSearchParam({ key: "id", value: origin.id })
+                        handleAddKey({ key: "id", value: origin.id })
                       }
                     />
                   </DrawerTrigger>
