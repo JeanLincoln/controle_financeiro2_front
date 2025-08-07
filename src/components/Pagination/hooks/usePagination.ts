@@ -11,7 +11,6 @@ export const usePagination = ({
   totalPages,
   limitSiblings = 4
 }: PaginationProps) => {
-  // const [goToPageButtonDisabled, setGoToPageButtonDisabled] = useState(true);
   const pageItemSiblings = 3;
   const totalItemsIsBiggerThanLimitSiblings =
     totalPages > limitSiblings + pageItemSiblings;
@@ -44,17 +43,6 @@ export const usePagination = ({
     }
   };
 
-  // const handleSelectPageButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-  //   const value = parseInt(input.value);
-  //   const isValidValue = value >= 1 && value <= totalPages;
-
-  //   if (isValidValue) {
-  //     handleChangePage(value);
-  //     return;
-  //   }
-  // };
-
   const handleChangePage = (page: number) => onChangePage(page);
   const handleGoBack = () => onChangePage(page === 1 ? 1 : page - 1);
   const handleGoForward = () =>
@@ -72,7 +60,5 @@ export const usePagination = ({
     handleGoBack,
     handleGoForward,
     handleSelectPageInput
-    // handleSelectPageButton,
-    // goToPageButtonDisabled
   };
 };
