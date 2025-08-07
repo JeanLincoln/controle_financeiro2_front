@@ -6,10 +6,10 @@ import {
 import * as React from "react";
 
 import { Button, buttonVariants } from "@/components/Button/Button.component";
-import { cn } from "@/utils/cn.utils";
 import type { PaginationResponse } from "@/store/services/services.types";
-import { usePagination } from "./hooks/usePagination";
+import { cn } from "@/utils/cn.utils";
 import { Input } from "../Input/Input.component";
+import { usePagination } from "./hooks/usePagination";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -147,115 +147,108 @@ function StandardPagination({
     handleSelectPageInput
   } = usePagination({ page, onChangePage, totalPages });
 
-  const renderPageItems = () => {
-    if (!farFromStart && farFromEnd)
-      return (
-        <>
-          {arrayFarFromStart.map((renderPage) => (
-            <PaginationItem key={renderPage}>
-              <PaginationLink
-                isActive={renderPage === page}
-                onClick={() => handleChangePage(renderPage)}
-              >
-                {renderPage}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              isActive={page === lastPage}
-              onClick={() => handleChangePage(lastPage)}
-            >
-              {lastPage}
-            </PaginationLink>
-          </PaginationItem>
-        </>
-      );
+  const renderPageItemsFromStart = () => (
+    <>
+      {arrayFarFromStart.map((renderPage) => (
+        <PaginationItem key={renderPage}>
+          <PaginationLink
+            isActive={renderPage === page}
+            onClick={() => handleChangePage(renderPage)}
+          >
+            {renderPage}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+      <PaginationItem>
+        <PaginationEllipsis />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink
+          isActive={page === lastPage}
+          onClick={() => handleChangePage(lastPage)}
+        >
+          {lastPage}
+        </PaginationLink>
+      </PaginationItem>
+    </>
+  );
 
-    if (farFromStart && !farFromEnd)
-      return (
-        <>
-          <PaginationItem>
-            <PaginationLink
-              isActive={page === firstPage}
-              onClick={() => handleChangePage(firstPage)}
-            >
-              {firstPage}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          {arrayFarFromEnd.map((renderPage) => (
-            <PaginationItem key={renderPage}>
-              <PaginationLink
-                isActive={renderPage === page}
-                onClick={() => handleChangePage(renderPage)}
-              >
-                {renderPage}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-        </>
-      );
+  const renderPageItemsFromEnd = () => (
+    <>
+      <PaginationItem>
+        <PaginationLink
+          isActive={page === firstPage}
+          onClick={() => handleChangePage(firstPage)}
+        >
+          {firstPage}
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationEllipsis />
+      </PaginationItem>
+      {arrayFarFromEnd.map((renderPage) => (
+        <PaginationItem key={renderPage}>
+          <PaginationLink
+            isActive={renderPage === page}
+            onClick={() => handleChangePage(renderPage)}
+          >
+            {renderPage}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+    </>
+  );
 
-    if (farFromStart && farFromEnd) {
-      return (
-        <>
-          <PaginationItem>
-            <PaginationLink
-              isActive={false}
-              onClick={() => handleChangePage(firstPage)}
-            >
-              {firstPage}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              isActive={false}
-              onClick={() => handleChangePage(page - 1)}
-            >
-              {page - 1}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              isActive={true}
-              onClick={() => handleChangePage(page)}
-            >
-              {firstPage}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              isActive={false}
-              onClick={() => handleChangePage(page + 1)}
-            >
-              {page + 1}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              isActive={page === lastPage}
-              onClick={() => handleChangePage(lastPage)}
-            >
-              {lastPage}
-            </PaginationLink>
-          </PaginationItem>
-        </>
-      );
-    }
+  const renderPageItemsFromMiddle = () => (
+    <>
+      <PaginationItem>
+        <PaginationLink
+          isActive={false}
+          onClick={() => handleChangePage(firstPage)}
+        >
+          {firstPage}
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationEllipsis />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink
+          isActive={false}
+          onClick={() => handleChangePage(page - 1)}
+        >
+          {page - 1}
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink isActive={true} onClick={() => handleChangePage(page)}>
+          {firstPage}
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink
+          isActive={false}
+          onClick={() => handleChangePage(page + 1)}
+        >
+          {page + 1}
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationEllipsis />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink
+          isActive={page === lastPage}
+          onClick={() => handleChangePage(lastPage)}
+        >
+          {lastPage}
+        </PaginationLink>
+      </PaginationItem>
+    </>
+  );
 
-    return allItemsArray.map((renderedPage) => (
+  const renderAllPageItems = () =>
+    allItemsArray.map((renderedPage) => (
       <PaginationItem key={renderedPage}>
         <PaginationLink
           isActive={renderedPage === page}
@@ -265,37 +258,56 @@ function StandardPagination({
         </PaginationLink>
       </PaginationItem>
     ));
+
+  const renderPageItems = () => {
+    if (!farFromStart && farFromEnd) return renderPageItemsFromStart();
+
+    if (farFromStart && !farFromEnd) return renderPageItemsFromEnd();
+
+    if (farFromStart && farFromEnd) return renderPageItemsFromMiddle();
+
+    return renderAllPageItems();
   };
+
+  const renderGoToPreviousButton = () =>
+    hasPrevious && (
+      <>
+        <PaginationItem>
+          <PaginationPrevious onClick={handleGoBack} />
+        </PaginationItem>
+      </>
+    );
+
+  const renderGoToNextButton = () =>
+    hasNext && (
+      <>
+        <PaginationItem>
+          <PaginationNext href="#" onClick={handleGoForward} />
+        </PaginationItem>
+      </>
+    );
+
+  const renderGoToPageInput = () => (
+    <div className="flex items-center justify-center gap-2">
+      <Input
+        className=" [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+        type="number"
+        min={1}
+        max={totalPages}
+        onChange={handleSelectPageInput}
+      />
+      <span>/ {totalPages}</span>
+    </div>
+  );
 
   return (
     <Pagination className={cn("h-fit flex gap-2", className)}>
       <PaginationContent>
-        {hasPrevious && (
-          <>
-            <PaginationItem>
-              <PaginationPrevious onClick={handleGoBack} />
-            </PaginationItem>
-          </>
-        )}
+        {renderGoToPreviousButton()}
         {renderPageItems()}
-        {hasNext && (
-          <>
-            <PaginationItem>
-              <PaginationNext href="#" onClick={handleGoForward} />
-            </PaginationItem>
-          </>
-        )}
+        {renderGoToNextButton()}
       </PaginationContent>
-      <div className="flex items-center justify-center gap-2">
-        <Input
-          className=" [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-          type="number"
-          min={1}
-          max={totalPages}
-          onChange={handleSelectPageInput}
-        />
-        <span>/ {totalPages}</span>
-      </div>
+      {renderGoToPageInput()}
     </Pagination>
   );
 }
