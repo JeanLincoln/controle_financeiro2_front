@@ -1,15 +1,14 @@
 import type { Origin } from "@/entities/origin.entity";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
 import { useAppSearchParams } from "@/hooks/useAppSearchParams";
 import { useFindOriginById } from "@/requests/origin/useFindOriginById.request";
 import { useOriginCreate } from "@/requests/origin/useOriginCreate.request";
 import { useOriginUpdate } from "@/requests/origin/useOriginUpdate.request";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 import { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
 import {
   OriginFormSchema,
   originFormDefaultValues
@@ -25,6 +24,7 @@ const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
 };
 
 export function useOriginForm() {
+  const { isVisible } = useAppSelector((state) => state.showAndHide);
   const dispatch = useAppDispatch();
   const {
     idParam,
@@ -33,8 +33,8 @@ export function useOriginForm() {
     origin
   } = useFindOriginById();
 
-  const { isVisible } = useAppSelector((state) => state.showAndHide);
   const { handleRemoveKey } = useAppSearchParams();
+
   const form = useForm({
     resolver: zodResolver(OriginFormSchema),
     defaultValues: useMemo(() => originFormDefaultValues(origin), [origin])
