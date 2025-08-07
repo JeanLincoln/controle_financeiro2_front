@@ -1,11 +1,9 @@
 import { StandardPagination } from "@/components/Pagination/Pagination.component";
 import { FiltersSection } from "./components/FiltersSection/FiltersSection.component";
 import { HeaderSection } from "./components/Header/HeaderSection.component";
-import { OriginAlertDialog } from "./components/OriginAlertDialog/OriginAlertDialog.component";
-import { OriginDrawer } from "./components/OriginDrawer/OriginDrawer.drawer";
+import { OriginProviders } from "./components/OriginProviders/OriginProviders.provider";
 import { OriginsListSection } from "./components/OriginsListSection/OriginsListSection.component";
 import { OriginsListSectionEmptyState } from "./components/OriginsListSection/OriginsListSectionEmptyState.empty-state";
-import { OriginProviders } from "./components/providers/origin.providers";
 import { useOriginScreen } from "./hooks/useOriginScreen.hook";
 
 export default function OriginScreen() {
@@ -33,8 +31,6 @@ export default function OriginScreen() {
           </>
         )}
       </div>
-      <OriginDrawer />
-      <OriginAlertDialog />
     </OriginProviders>
   );
 }
