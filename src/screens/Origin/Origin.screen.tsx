@@ -21,13 +21,7 @@ export default function OriginScreen() {
         <HeaderSection handleRemoveSearchParam={handleRemoveKey} />
         <FiltersSection form={form} />
         {dataIsEmpty && (
-          <OriginsListSectionEmptyState>
-            <span className="text-muted-foreground">
-              {nameSearch
-                ? "Não foi encontrada nenhuma origem com este nome"
-                : "Não há origens cadastradas, crie uma!"}
-            </span>
-          </OriginsListSectionEmptyState>
+          <OriginsListSectionEmptyState nameSearch={nameSearch} />
         )}
         {!dataIsEmpty && (
           <>
