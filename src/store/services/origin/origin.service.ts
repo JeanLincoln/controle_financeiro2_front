@@ -9,6 +9,7 @@ import type {
   OriginFindByIdParams,
   OriginFindByIdResponse,
   OriginOptionsParams,
+  OriginOptionsResponse,
   UpdateOriginParams
 } from "./originService.types";
 
@@ -35,7 +36,10 @@ export const OriginService = createApi({
         providesTags: ["Origin"]
       }
     ),
-    getOriginsOptions: builder.query<void, OriginOptionsParams>({
+    getOriginsOptions: builder.query<
+      OriginOptionsResponse,
+      OriginOptionsParams
+    >({
       query: (params) => ({
         method: "GET",
         url: "/origin/options",

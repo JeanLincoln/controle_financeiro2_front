@@ -5,8 +5,8 @@ export const OriginFormSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório").max(254, "Nome é muito longo"),
   description: z
     .string()
-    .min(1, "Nome é obrigatório")
-    .max(254, "Nome é muito longo"),
+    .min(1, "Descrição é obrigatória")
+    .max(254, "Descrição é muito longa"),
   color: z
     .string()
     .min(1, "Cor é obrigatória")
