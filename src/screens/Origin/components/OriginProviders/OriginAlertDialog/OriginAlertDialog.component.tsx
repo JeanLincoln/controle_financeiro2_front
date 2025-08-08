@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/Button/Button.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams";
-import { useDeleteOrigin } from "@/requests/origin/useDeleteOrigin.request";
+import { useDeleteOrigin } from "@/store/requests/origin/useDeleteOrigin.request";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "react-router";
 

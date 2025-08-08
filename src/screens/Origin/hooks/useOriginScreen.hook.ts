@@ -1,5 +1,5 @@
 import { usePromiseDebounce } from "@/hooks/usePromiseDebounce.hook";
-import { useFindAllOrigins } from "@/requests/origin/useFindAllOrigins.request";
+import { useFindAllOrigins } from "@/store/requests/origin/useFindAllOrigins.request";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {

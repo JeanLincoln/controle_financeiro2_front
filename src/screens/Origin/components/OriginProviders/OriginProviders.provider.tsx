@@ -3,8 +3,8 @@ import { Drawer } from "@/components/Drawer/Drawer.component";
 import type { PropsWithChildren } from "react";
 import { useOriginDialogVisibility } from "../../hooks/useOriginAlertDialogVisibility.hook";
 import { useOriginDrawerVisibility } from "../../hooks/useOriginDrawerVisibility.hook";
-import { OriginAlertDialog } from "../OriginAlertDialog/OriginAlertDialog.component";
-import { OriginDrawer } from "../OriginDrawer/OriginDrawer.drawer";
+import { OriginAlertDialog } from "./OriginAlertDialog/OriginAlertDialog.component";
+import { OriginDrawer } from "./OriginDrawer/OriginDrawer.drawer";
 
 export function OriginProviders({ children }: PropsWithChildren) {
   const { isVisible: drawerIsVisible, onOpenChange: onDrawerOpenChange } =
