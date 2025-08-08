@@ -222,7 +222,7 @@ function StandardPagination({
       </PaginationItem>
       <PaginationItem>
         <PaginationLink isActive={true} onClick={() => handleChangePage(page)}>
-          {firstPage}
+          {page}
         </PaginationLink>
       </PaginationItem>
       <PaginationItem>
