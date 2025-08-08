@@ -3,7 +3,7 @@ import type {
   AuthSessionResponse,
   RegisterUserParams,
   RegisterUserResponse
-} from "./types";
+} from "./authService.types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../../config/base-query";
 

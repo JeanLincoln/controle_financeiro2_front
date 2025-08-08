@@ -10,8 +10,8 @@ import type {
   TransactionRankingResponse,
   TransactionsGraphParams,
   TransactionsGraphResponse
-} from "./types";
-import { CACHE_TIME_INTERVALS } from "../constants";
+} from "./dashboardService.types";
+import { CACHE_TIME_INTERVALS } from "../services.constants";
 
 export const DashboardService = createApi({
   reducerPath: "dashboard-service",

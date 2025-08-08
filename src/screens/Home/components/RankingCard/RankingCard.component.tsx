@@ -15,7 +15,7 @@ import {
   Table
 } from "@/components/Table/Table.component";
 import { TransactionType } from "@/entities/transaction.entity";
-import type { RankingParams } from "@/store/services/dashboard/types";
+import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
 import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";

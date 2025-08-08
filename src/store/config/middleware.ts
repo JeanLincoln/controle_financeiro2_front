@@ -1,6 +1,7 @@
 import type { Middleware } from "@reduxjs/toolkit";
 import { AuthService } from "../services/auth/auth.service";
 import { DashboardService } from "../services/dashboard/dashboard.service";
+import { OriginService } from "../services/origin/origin.service";
 
 interface MiddlewareOptions {
   serializableCheck?: boolean | object;
@@ -12,7 +13,11 @@ type GetDefaultMiddlewareType = (options?: MiddlewareOptions) => Middleware[];
 export default (getDefaultMiddleware: GetDefaultMiddlewareType) => {
   const middleware = getDefaultMiddleware({
     serializableCheck: false
-  }).concat(AuthService.middleware, DashboardService.middleware);
+  }).concat(
+    AuthService.middleware,
+    DashboardService.middleware,
+    OriginService.middleware
+  );
 
   return middleware;
 };
