@@ -26,7 +26,7 @@ export function CategoryAlertDialog() {
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
           <AlertDialogDescription>
-            Isso vai remover essa origem de todas as transações que a têm.
+            Isso vai remover essa categoria de todas as transações que a têm.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,9 +1,8 @@
 import {
   Building2,
-  FolderOpen,
-  Tags,
+  ChartNoAxesCombined,
   CreditCard,
-  ChartNoAxesCombined
+  FolderOpen
 } from "lucide-react";
 
 export const asideNavigationItems = [
@@ -21,11 +20,6 @@ export const asideNavigationItems = [
     name: "Category",
     href: "/category",
     icon: FolderOpen
-  },
-  {
-    name: "Sub Category",
-    href: "/sub-category",
-    icon: Tags
   },
   {
     name: "Transaction",

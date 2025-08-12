@@ -1,4 +1,5 @@
 import type { Category } from "@/entities/category.entity";
+import type { SubCategory } from "@/entities/subCategory.entity";
 import type {
   GetOptionsProps,
   PaginationProps,
@@ -25,8 +26,13 @@ export type CategoryFindAllSortAndPaginationProps =
   SortAndPaginationProps<CategorySortBy>;
 
 export type CategoryFindAllParams = CategoryFindAllSortAndPaginationProps;
+
+export type CategoryWithSubCategoriesTags = Category & {
+  subCategories: Pick<SubCategory, "id" | "name" | "icon" | "color">[];
+};
+
 export type CategoryFindAllResponse = PaginationResponse & {
-  data: Category[];
+  data: CategoryWithSubCategoriesTags[];
 };
 
 export type CategoryFindByIdParams = Pick<Category, "id">;

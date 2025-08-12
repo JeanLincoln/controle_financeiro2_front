@@ -18,7 +18,7 @@ export function useCategoryCreate({
     const [error] = await handleRequest(createCategory(categoryData).unwrap());
 
     if (error) {
-      toast.error("Houve um erro ao criar a origem");
+      toast.error("Houve um erro ao criar a categoria");
       errorCallback?.();
       return;
     }

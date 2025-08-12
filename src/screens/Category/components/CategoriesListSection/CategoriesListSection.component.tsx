@@ -13,7 +13,7 @@ import { useAppSearchParams } from "@/hooks/useAppSearchParams";
 import type { CategoryFindAllResponse } from "@/store/services/category/categoryService.types";
 import { Pencil, Trash } from "lucide-react";
 import { CategoriesListSectionSkeleton } from "./CategoriesListSectionSkeleton.skeleton";
-
+import { SubCategoriesSection } from "./SubCategoriesSection.component";
 type CategoriesListSectionProps = {
   categories?: CategoryFindAllResponse["data"];
   loading: boolean;
@@ -36,7 +36,7 @@ export function CategoriesListSection({
 
             return (
               <Card
-                className="relative w-full gap-3 h-35 max-w-74"
+                className="relative w-full gap-3 h-45 max-w-74"
                 key={category.id}
               >
                 <CardHeader>
@@ -74,6 +74,9 @@ export function CategoriesListSection({
                     <b>Atualizado Em:</b>{" "}
                     {new Date(category.updatedAt).toLocaleDateString()}
                   </span>
+                  <SubCategoriesSection
+                    subCategories={category.subCategories}
+                  />
                 </CardContent>
                 {SelectedIcon && (
                   <div

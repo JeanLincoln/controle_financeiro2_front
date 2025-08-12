@@ -13,7 +13,7 @@ export function useDeleteCategory() {
     );
 
     if (error) {
-      toast.error("Houve um erro ao excluir a origem");
+      toast.error("Houve um erro ao excluir a categoria");
       return;
     }
   }

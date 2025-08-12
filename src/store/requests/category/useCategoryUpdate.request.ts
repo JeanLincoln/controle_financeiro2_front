@@ -23,7 +23,7 @@ export function useCategoryUpdate({
     );
 
     if (error) {
-      toast.error("Houve um erro ao atualizar a origem");
+      toast.error("Houve um erro ao atualizar a categoria");
       errorCallback?.();
       return;
     }

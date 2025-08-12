@@ -18,7 +18,7 @@ export function useFindCategoryById() {
     );
 
     if (error) {
-      toast.error("Erro ao buscar origem");
+      toast.error("Erro ao buscar categoria");
       return;
     }
   }
