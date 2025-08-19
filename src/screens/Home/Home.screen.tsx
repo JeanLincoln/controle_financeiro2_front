@@ -1,15 +1,20 @@
+import { useCategoryRanking } from "@/store/requests/dashboard/useCategoryRanking.request";
+import { useOriginRanking } from "@/store/requests/dashboard/useOriginRanking.request";
+import { useSubCategoryRanking } from "@/store/requests/dashboard/useSubCategoryRanking.request";
+import { useTransactionRanking } from "@/store/requests/dashboard/useTransactionRanking.request";
 import { Building2, CreditCard, FolderOpen, Tags } from "lucide-react";
 import { Balance } from "./components/Balance/Balance.component";
 import { BalanceChart } from "./components/BalanceChart/BalanceChart.component";
 import { RankingCard } from "./components/RankingCard/RankingCard.component";
-import { RankingRequests } from "./hooks/rankingRequests.hook";
 
 export default function HomeScreen() {
-  const { category, subCategory, origin, transaction } = RankingRequests();
+  const category = useCategoryRanking();
+  const subCategory = useSubCategoryRanking();
+  const origin = useOriginRanking();
+  const transaction = useTransactionRanking();
 
   return (
     <div className="container flex flex-col mx-auto p-6 gap-8">
-      {/* <Header /> */}
       <Balance />
       <div className="flex gap-2 flex-wrap justify-between">
         <RankingCard

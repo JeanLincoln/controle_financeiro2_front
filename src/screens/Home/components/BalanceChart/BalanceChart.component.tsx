@@ -1,4 +1,3 @@
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -13,31 +12,32 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from "@/components/Chart/Chart.component";
-import { useForm } from "react-hook-form";
+import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
-  FormMessage,
-  Form
+  FormMessage
 } from "@/components/Form/Form.component";
-import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
+import { useGetTransactionGraphData } from "@/store/requests/dashboard/useGetTransactionGraphData.request";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { handleInitialRangeDate } from "./utils/handleInitialDate.utils";
+import { useForm } from "react-hook-form";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 import {
   balanceChartSchema,
   type BalanceChartSchema
 } from "./BalanceChart.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig.constant";
-import { useGetGraphData } from "./hooks/useGetGraphData.hook";
 import { BalanceChartSkeleton } from "./BalanceChart.skeleton";
-import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
+import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig.constant";
+import { handleInitialRangeDate } from "./utils/handleInitialDate.utils";
 
 const { from: defaultFrom, to: defaultTo } = handleInitialRangeDate();
 
 export function BalanceChart() {
-  const { fetchGraphData, graphData, isLoading } = useGetGraphData();
+  const { fetchGraphData, graphData, isLoading } = useGetTransactionGraphData();
   const form = useForm<BalanceChartSchema>({
     resolver: zodResolver(balanceChartSchema),
     defaultValues: {

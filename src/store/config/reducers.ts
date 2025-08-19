@@ -4,7 +4,6 @@ import { CategoryService } from "../services/category/category.service";
 import { DashboardService } from "../services/dashboard/dashboard.service";
 import { OriginService } from "../services/origin/origin.service";
 import { AuthSlice } from "../slices/auth/auth.slice";
-import { OriginSlice } from "../slices/origin/origin.slice";
 import { ShowAndHideSlice } from "../slices/showAndHide/showAndHide.slice";
 
 const reducer = combineReducers({
@@ -15,7 +14,6 @@ const reducer = combineReducers({
   [CategoryService.reducerPath]: CategoryService.reducer,
   // Slices
   [AuthSlice.name]: AuthSlice.reducer,
-  [OriginSlice.name]: OriginSlice.reducer,
   [ShowAndHideSlice.name]: ShowAndHideSlice.reducer
 });
 
