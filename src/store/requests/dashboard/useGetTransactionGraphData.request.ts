@@ -1,25 +1,29 @@
 import { useLazyTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
+import * as dateFns from "date-fns";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-interface RangeDateAPIProps {
+type RangeDateAPIProps = {
   rangeDate: {
     from: Date;
     to: Date;
   };
-}
+};
 
-export const useGetGraphData = () => {
+export function useGetTransactionGraphData() {
   const [getGraphData, { data: graphData, isLoading }] =
     useLazyTransactionsGraphQuery();
 
   const fetchGraphData = useCallback(
     async ({ rangeDate }: RangeDateAPIProps) => {
-      const startDate = rangeDate.from;
-      const endDate = rangeDate.to;
+      const preferCacheValue = true;
+
+      const startDate = dateFns.format(rangeDate.from, "yyyy-MM-dd");
+      const endDate = dateFns.format(rangeDate.to, "yyyy-MM-dd");
+
       const [error] = await handleRequest(
-        getGraphData({ startDate, endDate }).unwrap()
+        getGraphData({ startDate, endDate }, preferCacheValue).unwrap()
       );
 
       if (error) {
@@ -37,4 +41,4 @@ export const useGetGraphData = () => {
     graphData,
     isLoading
   };
-};
+}
