@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithAuth } from "../../config/base-query";
+import { CACHE_TIME_INTERVALS } from "../services.constants";
 import type {
   BalanceParams,
   BalanceResponse,
@@ -11,7 +12,6 @@ import type {
   TransactionsGraphParams,
   TransactionsGraphResponse
 } from "./dashboardService.types";
-import { CACHE_TIME_INTERVALS } from "../services.constants";
 
 export const DashboardService = createApi({
   reducerPath: "dashboard-service",
@@ -32,8 +32,8 @@ export const DashboardService = createApi({
         method: "GET",
         url: "/dashboard/transaction-graph",
         params: {
-          startDate: startDate.toString(),
-          endDate: endDate.toString()
+          startDate: startDate,
+          endDate: endDate
         }
       })
     }),
