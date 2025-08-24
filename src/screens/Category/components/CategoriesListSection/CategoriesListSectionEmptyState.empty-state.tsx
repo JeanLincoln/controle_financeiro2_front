@@ -12,7 +12,7 @@ export function CategoriesListSectionEmptyState({
       <FolderOpen size={100} className="text-muted-foreground" />
       <span className="text-muted-foreground">
         {nameSearch
-          ? "Não foi encontrada nenhuma origem com este nome"
+          ? "Não foi encontrada nenhuma categoria com este nome"
           : "Não há categorias cadastradas, crie uma!"}
       </span>
     </div>
