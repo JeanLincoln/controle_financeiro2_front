@@ -8,8 +8,9 @@ import {
   CardTitle
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
+import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { CategoryFindAllResponse } from "@/store/services/category/categoryService.types";
 import { Pencil, Trash } from "lucide-react";
 import { CategoriesListSectionSkeleton } from "./CategoriesListSectionSkeleton.skeleton";
@@ -51,7 +52,10 @@ export function CategoriesListSection({
                       <Trash
                         className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 "
                         onClick={() =>
-                          handleAddKey({ key: "id", value: category.id })
+                          handleAddKey({
+                            key: CATEGORY_ID_FORM_KEY,
+                            value: category.id
+                          })
                         }
                       />
                     </AlertDialogTrigger>
@@ -59,7 +63,10 @@ export function CategoriesListSection({
                       <Pencil
                         className="w-4 h-4 text-blue-500 transition-all cursor-pointer hover:scale-120"
                         onClick={() =>
-                          handleAddKey({ key: "id", value: category.id })
+                          handleAddKey({
+                            key: CATEGORY_ID_FORM_KEY,
+                            value: category.id
+                          })
                         }
                       />
                     </DrawerTrigger>

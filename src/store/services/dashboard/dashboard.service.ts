@@ -16,6 +16,7 @@ import type {
 export const DashboardService = createApi({
   reducerPath: "dashboard-service",
   baseQuery: baseQueryWithAuth,
+  refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
     balance: builder.query<BalanceResponse, BalanceParams>({
@@ -84,9 +85,9 @@ export const DashboardService = createApi({
 
 export const {
   useBalanceQuery,
-  useLazyTransactionsGraphQuery,
-  useLazyOriginRankingQuery,
-  useLazySubCategoryRankingQuery,
-  useLazyTransactionRankingQuery,
-  useLazyCategoryRankingQuery
+  useTransactionsGraphQuery,
+  useOriginRankingQuery,
+  useSubCategoryRankingQuery,
+  useTransactionRankingQuery,
+  useCategoryRankingQuery
 } = DashboardService;

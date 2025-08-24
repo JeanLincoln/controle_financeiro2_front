@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { CreateOrUpdateCategory } from "./hooks/useCategoryForm.hook";
+import type { CreateOrUpdateCategory } from "../hooks/useCategoryForm.hook";
 
 export const CategoryFormSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório").max(254, "Nome é muito longo"),

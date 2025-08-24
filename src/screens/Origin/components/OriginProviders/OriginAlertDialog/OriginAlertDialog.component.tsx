@@ -9,7 +9,7 @@ import {
 } from "@/components/AlertDialog/AlertDialog.component";
 import { Button } from "@/components/Button/Button.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useDeleteOrigin } from "@/store/requests/origin/useDeleteOrigin.request";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "react-router";

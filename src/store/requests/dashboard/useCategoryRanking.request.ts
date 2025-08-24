@@ -1,26 +1,17 @@
-import { useLazyCategoryRankingQuery } from "@/store/services/dashboard/dashboard.service";
+import { useCategoryRankingQuery } from "@/store/services/dashboard/dashboard.service";
 import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
-import { handleRequest } from "@/utils/handleRequest.utils";
 import { toast } from "sonner";
 
-export function useCategoryRanking() {
-  const [
-    triggerCategoryRanking,
-    { data: categoryData, isLoading: isLoadingCategory }
-  ] = useLazyCategoryRankingQuery();
+export function useCategoryRanking({ type }: RankingParams) {
+  const {
+    data: categoryData,
+    isLoading: isLoadingCategory,
+    isError
+  } = useCategoryRankingQuery({ type: type || undefined });
 
-  const fetchCategoriesRanking = async (type: RankingParams) => {
-    const preferCacheValue = true;
+  if (isError) {
+    toast.error(`Houve um erro ao carregar o ranking de categorias`);
+  }
 
-    const [error] = await handleRequest(
-      triggerCategoryRanking(type, preferCacheValue).unwrap()
-    );
-
-    if (error) {
-      toast.error(`Houve um erro ao carregar o ranking de categorias`);
-      return;
-    }
-  };
-
-  return { fetchCategoriesRanking, categoryData, isLoadingCategory };
+  return { categoryData, isLoadingCategory };
 }

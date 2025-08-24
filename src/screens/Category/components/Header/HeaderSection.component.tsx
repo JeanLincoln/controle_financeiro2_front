@@ -7,8 +7,9 @@ import {
   CardTitle
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
-import { Building2 } from "lucide-react";
+import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
+import { FolderOpen } from "lucide-react";
 
 export function HeaderSection() {
   const { handleRemoveKey } = useAppSearchParams();
@@ -21,10 +22,10 @@ export function HeaderSection() {
             <Button
               className="flex items-center w-24 gap-2"
               variant="outline"
-              onClick={() => handleRemoveKey({ key: "id" })}
+              onClick={() => handleRemoveKey({ key: CATEGORY_ID_FORM_KEY })}
             >
               Criar
-              <Building2 />
+              <FolderOpen />
             </Button>
           </DrawerTrigger>
         </CardAction>

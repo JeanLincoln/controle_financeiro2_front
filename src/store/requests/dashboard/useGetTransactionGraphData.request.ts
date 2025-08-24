@@ -1,43 +1,38 @@
-import { useLazyTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
-import { handleRequest } from "@/utils/handleRequest.utils";
-import * as dateFns from "date-fns";
-import { useCallback } from "react";
+import { handleInitialRangeDate } from "@/screens/Home/components/BalanceChart/utils/handleInitialDate.utils";
+import { useTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
+import { format } from "date-fns";
+import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 
-type RangeDateAPIProps = {
-  rangeDate: {
-    from: Date;
-    to: Date;
-  };
-};
+const { from, to } = handleInitialRangeDate();
+const defaultFrom = format(from, "yyyy-MM-dd");
+const defaultTo = format(to, "yyyy-MM-dd");
 
 export function useGetTransactionGraphData() {
-  const [getGraphData, { data: graphData, isLoading }] =
-    useLazyTransactionsGraphQuery();
+  const [params] = useSearchParams();
 
-  const fetchGraphData = useCallback(
-    async ({ rangeDate }: RangeDateAPIProps) => {
-      const preferCacheValue = true;
+  const graphDate = params.get("graphDate");
 
-      const startDate = dateFns.format(rangeDate.from, "yyyy-MM-dd");
-      const endDate = dateFns.format(rangeDate.to, "yyyy-MM-dd");
+  const [startDate, endDate] = graphDate
+    ? graphDate.split("_")
+    : [defaultFrom, defaultTo];
 
-      const [error] = await handleRequest(
-        getGraphData({ startDate, endDate }, preferCacheValue).unwrap()
-      );
+  const {
+    data: graphData,
+    isLoading,
+    isError
+  } = useTransactionsGraphQuery({
+    startDate,
+    endDate
+  });
 
-      if (error) {
-        toast.error(
-          "Houve um erro ao carregar os dados do gráfico. Tente novamente."
-        );
-        return;
-      }
-    },
-    [getGraphData]
-  );
+  if (isError) {
+    toast.error(
+      "Houve um erro ao buscar os dados do gráfico, tente novamente mais tarde!"
+    );
+  }
 
   return {
-    fetchGraphData,
     graphData,
     isLoading
   };

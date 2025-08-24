@@ -1,4 +1,4 @@
-import * as dateFns from "date-fns";
+import { getDaysInMonth } from "date-fns";
 
 export const handleInitialRangeDate = () => {
   const threeMonthsBefore = 3;
@@ -14,7 +14,7 @@ export const handleInitialRangeDate = () => {
   const fromDay = 1;
 
   const from = new Date(fromYear, fromMonth, fromDay);
-  const to = new Date(thisYear, thisMonth, dateFns.getDaysInMonth(new Date()));
+  const to = new Date(thisYear, thisMonth, getDaysInMonth(new Date()));
 
   return { from, to };
 };

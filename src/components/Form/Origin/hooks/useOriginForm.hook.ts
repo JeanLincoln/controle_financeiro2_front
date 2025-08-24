@@ -1,5 +1,5 @@
 import type { Origin } from "@/entities/origin.entity";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useFindOriginById } from "@/store/requests/origin/useFindOriginById.request";
 import { useOriginCreate } from "@/store/requests/origin/useOriginCreate.request";

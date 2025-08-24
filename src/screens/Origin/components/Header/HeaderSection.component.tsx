@@ -7,7 +7,7 @@ import {
   CardTitle
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { Building2 } from "lucide-react";
 
 export function HeaderSection() {

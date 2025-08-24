@@ -9,7 +9,7 @@ import { Button, buttonVariants } from "@/components/Button/Button.component";
 import type { PaginationResponse } from "@/store/services/services.types";
 import { cn } from "@/utils/cn.utils";
 import { Input } from "../Input/Input.component";
-import { usePagination } from "./hooks/usePagination";
+import { usePagination } from "./hooks/usePagination.hook";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

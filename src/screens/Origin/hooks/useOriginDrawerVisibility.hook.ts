@@ -1,4 +1,4 @@
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 import { useEffect } from "react";

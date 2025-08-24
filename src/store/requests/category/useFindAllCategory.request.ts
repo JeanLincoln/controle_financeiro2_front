@@ -8,8 +8,10 @@ export function useFindAllCategories() {
     useLazyFindAllCategoriesQuery();
 
   async function handleFetchCategories(params: CategoryFindAllParams) {
+    const preferCacheValue = true;
+
     const [error] = await handleRequest(
-      fetchCategoriesTrigger(params).unwrap()
+      fetchCategoriesTrigger(params, preferCacheValue).unwrap()
     );
 
     if (error) {

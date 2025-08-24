@@ -17,6 +17,7 @@ export const CategoryService = createApi({
   reducerPath: "category-service",
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Category"],
+  refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
     findAllCategories: builder.query<

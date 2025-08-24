@@ -1,4 +1,5 @@
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 import { useEffect } from "react";
@@ -11,7 +12,7 @@ export function useCategoryDrawerVisibility() {
   useEffect(() => {
     return () => {
       dispatch(ShowAndHideActions.hide());
-      handleRemoveKey({ key: "id" });
+      handleRemoveKey({ key: CATEGORY_ID_FORM_KEY });
     };
   }, []);
 

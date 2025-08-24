@@ -36,10 +36,15 @@ export type CategoryFindAllResponse = PaginationResponse & {
 };
 
 export type CategoryFindByIdParams = Pick<Category, "id">;
-export type CategoryFindByIdResponse = Category;
+export type CategoryFindByIdResponse = Category & {
+  subCategories: SubCategory[];
+};
 
 export type UpdateCategoryParams = Omit<Category, "createdAt" | "updatedAt">;
 export type CreateCategoryParams = Omit<UpdateCategoryParams, "id">;
+export type CreateCategoryResponse = {
+  id: number;
+};
 export type DeleteCategoryParams = CategoryFindByIdParams;
 
 export type CategoryOptionsParams = PaginationProps & {

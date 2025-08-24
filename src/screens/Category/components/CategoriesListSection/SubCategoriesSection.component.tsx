@@ -33,38 +33,40 @@ export function SubCategoriesSection({
           </div>
         );
       })}
-      <Popover>
-        <PopoverTrigger asChild>
-          <div className="flex items-center justify-center bg-background rounded-full p-1 mr-auto cursor-pointer hover:scale-120">
-            <Tags className="w-4 h-4 flex-shrink-0" />
-          </div>
-        </PopoverTrigger>
-        <PopoverContent className="w-full p-0 max-w-50" align="start">
-          <div className="flex flex-wrap gap-1 p-2">
-            {subCategories.map((subCategory) => {
-              const SelectedIcon = getIconComponent(subCategory.icon);
-              return (
-                <div
-                  key={subCategory.id}
-                  className="flex items-center gap-2 p-2 rounded"
-                >
-                  {SelectedIcon && (
-                    <SelectedIcon
-                      className="w-5 h-5 text-secondary rounded-full flex-shrink-0 p-0.5"
-                      style={{
-                        backgroundColor: subCategory.color
-                      }}
-                    />
-                  )}
-                  <span className="text-xs line-clamp-1">
-                    {subCategory.name}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </PopoverContent>
-      </Popover>
+      {subCategories.length > 2 && (
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="flex items-center justify-center bg-background rounded-full p-1 mr-auto cursor-pointer hover:scale-120">
+              <Tags className="w-4 h-4 flex-shrink-0" />
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0 max-w-50" align="start">
+            <div className="flex flex-wrap items-center justify-center gap-1 p-2">
+              {subCategories.map((subCategory) => {
+                const SelectedIcon = getIconComponent(subCategory.icon);
+                return (
+                  <div
+                    key={subCategory.id}
+                    className="flex items-center gap-2 p-2 rounded"
+                  >
+                    {SelectedIcon && (
+                      <SelectedIcon
+                        className="w-5 h-5 text-secondary rounded-full flex-shrink-0 p-0.5"
+                        style={{
+                          backgroundColor: subCategory.color
+                        }}
+                      />
+                    )}
+                    <span className="text-xs line-clamp-1">
+                      {subCategory.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
     </div>
   );
 }

@@ -8,15 +8,16 @@ import {
   AlertDialogTitle
 } from "@/components/AlertDialog/AlertDialog.component";
 import { Button } from "@/components/Button/Button.component";
+import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useDeleteCategory } from "@/store/requests/category/useDeleteCategory.request";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "react-router";
 
 export function CategoryAlertDialog() {
   const [params] = useSearchParams();
-  const id = params.get("id");
+  const id = params.get(CATEGORY_ID_FORM_KEY);
   const { handleRemoveKey } = useAppSearchParams();
   const { handleDeleteCategory, isLoading } = useDeleteCategory();
 
@@ -36,7 +37,7 @@ export function CategoryAlertDialog() {
               variant="default"
               className="flex items-center gap-2 w-fit text-white "
               disabled={isLoading}
-              onClick={() => handleRemoveKey({ key: "id" })}
+              onClick={() => handleRemoveKey({ key: CATEGORY_ID_FORM_KEY })}
             >
               <X className="h-4 w-4" />
               Cancelar
@@ -50,7 +51,7 @@ export function CategoryAlertDialog() {
               disabled={isLoading}
               onClick={() => {
                 handleDeleteCategory(Number(id));
-                handleRemoveKey({ key: "id" });
+                handleRemoveKey({ key: CATEGORY_ID_FORM_KEY });
               }}
             >
               {isLoading ? (
@@ -58,7 +59,7 @@ export function CategoryAlertDialog() {
               ) : (
                 <>
                   <Trash className="h-4 w-4" />
-                  Deletar origem
+                  Deletar categoria
                 </>
               )}
             </Button>
