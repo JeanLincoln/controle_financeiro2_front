@@ -13,8 +13,10 @@ export function useFindOriginById() {
   async function getOrigin() {
     if (!id) return;
 
+    const preferCacheValue = true;
+
     const [error] = await handleRequest(
-      fetchOrigin({ id: Number(id) }).unwrap()
+      fetchOrigin({ id: Number(id) }, preferCacheValue).unwrap()
     );
 
     if (error) {

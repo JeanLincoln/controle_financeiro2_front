@@ -37,8 +37,8 @@ export type BalanceResponse = {
 };
 
 export interface TransactionsGraphParams {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
 
 export interface TransactionsGraphData {

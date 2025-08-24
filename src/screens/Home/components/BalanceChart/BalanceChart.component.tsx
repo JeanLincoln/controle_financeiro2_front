@@ -1,4 +1,3 @@
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -13,31 +12,35 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from "@/components/Chart/Chart.component";
-import { useForm } from "react-hook-form";
+import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
-  FormMessage,
-  Form
+  FormMessage
 } from "@/components/Form/Form.component";
-import { RangeDatePicker } from "@/components/DatesPicker/RangeDatePicker/RangeDatePicker.component";
-import { useEffect } from "react";
-import { handleInitialRangeDate } from "./utils/handleInitialDate.utils";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
+import { useGetTransactionGraphData } from "@/store/requests/dashboard/useGetTransactionGraphData.request";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { useForm } from "react-hook-form";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 import {
   balanceChartSchema,
   type BalanceChartSchema
 } from "./BalanceChart.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig.constant";
-import { useGetGraphData } from "./hooks/useGetGraphData.hook";
 import { BalanceChartSkeleton } from "./BalanceChart.skeleton";
-import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
+import { TRANSACTION_CHART_CONFIG } from "./constants/chartConfig.constant";
+import { handleInitialRangeDate } from "./utils/handleInitialDate.utils";
 
 const { from: defaultFrom, to: defaultTo } = handleInitialRangeDate();
 
 export function BalanceChart() {
-  const { fetchGraphData, graphData, isLoading } = useGetGraphData();
+  const { handleAddKey } = useAppSearchParams();
+  const { graphData, isLoading } = useGetTransactionGraphData();
+
   const form = useForm<BalanceChartSchema>({
     resolver: zodResolver(balanceChartSchema),
     defaultValues: {
@@ -49,22 +52,11 @@ export function BalanceChart() {
   });
 
   const onSubmit = async (data: BalanceChartSchema) => {
-    fetchGraphData({
-      rangeDate: {
-        from: data.rangeDate.from,
-        to: data.rangeDate.to
-      }
-    });
-  };
+    const startDate = format(data.rangeDate.from, "yyyy-MM-dd");
+    const endDate = format(data.rangeDate.to, "yyyy-MM-dd");
 
-  useEffect(() => {
-    fetchGraphData({
-      rangeDate: {
-        from: defaultFrom,
-        to: defaultTo
-      }
-    });
-  }, []);
+    await handleAddKey({ key: "graphDate", value: `${startDate}_${endDate}` });
+  };
 
   const isEmpty = !isLoading && graphData && !graphData.data.length;
   const isLoaded = !isLoading && graphData && !!graphData.data.length;
@@ -72,37 +64,37 @@ export function BalanceChart() {
   return (
     <>
       {isLoading && <BalanceChartSkeleton />}
-      {isEmpty && <BalanceChartEmptyState />}
-      {isLoaded && (
-        <Card className="pt-0 w-full">
-          <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
-            <div className="grid flex-1 gap-1">
-              <CardTitle>Gráfico de transações</CardTitle>
-              <CardDescription>
-                Mostrando o total de transações por tipo e data
-              </CardDescription>
-            </div>
-            <Form {...form}>
-              <FormField
-                control={form.control}
-                name="rangeDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <RangeDatePicker
-                        rangeDate={field.value}
-                        onSelectDate={(value) => {
-                          field.onChange(value);
-                          form.handleSubmit(onSubmit)();
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </Form>
-          </CardHeader>
+      <Card className="pt-0 w-full">
+        <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+          <div className="grid flex-1 gap-1">
+            <CardTitle>Gráfico de transações</CardTitle>
+            <CardDescription>
+              Mostrando o total de transações por tipo e data
+            </CardDescription>
+          </div>
+          <Form {...form}>
+            <FormField
+              control={form.control}
+              name="rangeDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <RangeDatePicker
+                      rangeDate={field.value}
+                      onSelectDate={(value) => {
+                        field.onChange(value);
+                        form.handleSubmit(onSubmit)();
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </Form>
+        </CardHeader>
+        {isEmpty && <BalanceChartEmptyState />}
+        {isLoaded && (
           <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
             {!!graphData?.data.length && (
               <ChartContainer
@@ -155,8 +147,8 @@ export function BalanceChart() {
               </ChartContainer>
             )}
           </CardContent>
-        </Card>
-      )}
+        )}
+      </Card>
     </>
   );
 }

@@ -9,7 +9,7 @@ import {
 } from "@/components/Card/Card.component";
 import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { OriginFindAllResponse } from "@/store/services/origin/originService.types";
 import { Pencil, Trash } from "lucide-react";
 import { OriginsListSectionSkeleton } from "./OriginsListSectionSkeleton.skeleton";

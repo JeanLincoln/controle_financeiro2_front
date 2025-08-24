@@ -17,6 +17,7 @@ export const OriginService = createApi({
   reducerPath: "origin-service",
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Origin"],
+  refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
     findAllOrigins: builder.query<OriginFindAllResponse, OriginFindAllParams>({

@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithAuth } from "../../config/base-query";
+import { CACHE_TIME_INTERVALS } from "../services.constants";
 import type {
   BalanceParams,
   BalanceResponse,
@@ -11,11 +12,11 @@ import type {
   TransactionsGraphParams,
   TransactionsGraphResponse
 } from "./dashboardService.types";
-import { CACHE_TIME_INTERVALS } from "../services.constants";
 
 export const DashboardService = createApi({
   reducerPath: "dashboard-service",
   baseQuery: baseQueryWithAuth,
+  refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
     balance: builder.query<BalanceResponse, BalanceParams>({
@@ -32,8 +33,8 @@ export const DashboardService = createApi({
         method: "GET",
         url: "/dashboard/transaction-graph",
         params: {
-          startDate: startDate.toString(),
-          endDate: endDate.toString()
+          startDate: startDate,
+          endDate: endDate
         }
       })
     }),
@@ -84,9 +85,9 @@ export const DashboardService = createApi({
 
 export const {
   useBalanceQuery,
-  useLazyTransactionsGraphQuery,
-  useLazyOriginRankingQuery,
-  useLazySubCategoryRankingQuery,
-  useLazyTransactionRankingQuery,
-  useLazyCategoryRankingQuery
+  useTransactionsGraphQuery,
+  useOriginRankingQuery,
+  useSubCategoryRankingQuery,
+  useTransactionRankingQuery,
+  useCategoryRankingQuery
 } = DashboardService;

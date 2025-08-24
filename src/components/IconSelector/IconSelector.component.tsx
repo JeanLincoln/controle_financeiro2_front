@@ -14,7 +14,7 @@ import {
   PopoverTrigger
 } from "@/components/Popover/Popover.component";
 import { cn } from "@/utils/cn.utils";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, X } from "lucide-react";
 import { useIconSelector } from "./hooks/useIconSelector.hook";
 import { getIconComponent } from "./utils/iconSelector.utils";
 
@@ -80,15 +80,12 @@ export function IconSelector({
           </div>
           <div className="flex items-center gap-1">
             {value && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-4 h-4 p-0 hover:bg-destructive hover:text-destructive-foreground"
+              <span
+                className="flex items-center justify-center w-4 h-4 p-0 hover:bg-destructive hover:text-destructive-foreground rounded"
                 onClick={handleClear}
-                type="button"
               >
-                ×
-              </Button>
+                <X />
+              </span>
             )}
             <ChevronDown className="w-4 h-4 opacity-50 shrink-0" />
           </div>

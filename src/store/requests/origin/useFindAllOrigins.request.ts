@@ -8,7 +8,11 @@ export function useFindAllOrigins() {
     useLazyFindAllOriginsQuery();
 
   async function handleFetchOrigins(params: OriginFindAllParams) {
-    const [error] = await handleRequest(fetchOriginsTrigger(params).unwrap());
+    const preferCacheValue = true;
+
+    const [error] = await handleRequest(
+      fetchOriginsTrigger(params, preferCacheValue).unwrap()
+    );
 
     if (error) {
       toast.error(

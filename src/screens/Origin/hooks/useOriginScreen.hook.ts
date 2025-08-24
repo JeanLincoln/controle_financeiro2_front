@@ -6,7 +6,7 @@ import {
   OriginFormSchema,
   originFormDefaultValues,
   type OriginFormSchemaType
-} from "../components/FiltersSection/origin.schema";
+} from "../components/FiltersSection/Origin.schema";
 
 export function useOriginScreen() {
   const { data: response, isLoading, handleFetchOrigins } = useFindAllOrigins();

@@ -6,12 +6,12 @@ import {
 } from "@/components/Card/Card.component";
 
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormMessage,
-  Form
+  FormMessage
 } from "@/components/Form/Form.component";
 import { Input } from "@/components/Input/Input.component";
 import {
@@ -23,12 +23,12 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/Select/Select.component";
+import { OriginSortableFields } from "@/store/services/origin/originService.types";
+import { SortOrder } from "@/store/services/services.types";
+import { handleSortOrderChange } from "@/utils/handleSortOrderChange.utils";
 import { ArrowDown, ArrowUp, LetterText, ListOrderedIcon } from "lucide-react";
 import { type UseFormReturn } from "react-hook-form";
-import { SortOrder } from "@/store/services/services.types";
-import { OriginSortableFields } from "@/store/services/origin/originService.types";
-import { type OriginFormSchemaType } from "./origin.schema";
-import { handleSortOrderChange } from "@/utils/handleSortOrderChange.utils";
+import { type OriginFormSchemaType } from "./Origin.schema";
 
 type FiltersSectionProps = {
   form: UseFormReturn<OriginFormSchemaType>;

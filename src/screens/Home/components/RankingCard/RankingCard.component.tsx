@@ -7,20 +7,22 @@ import {
   CardTitle
 } from "@/components/Card/Card.component";
 import {
-  TableHeader,
-  TableRow,
-  TableHead,
+  Table,
   TableBody,
   TableCell,
-  Table
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/Table/Table.component";
 import { TransactionType } from "@/entities/transaction.entity";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
-import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { RankingCardSkeleton } from "./RankingCard.skeleton";
+import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import React, { useState } from "react";
+import { RANKING_FILTERS } from "../../hooks/useRankingFilters.hook";
 import { RankingCardEmptyState } from "./RankingCard.empty-state";
+import { RankingCardSkeleton } from "./RankingCard.skeleton";
 
 interface BaseRowProps {
   name: string;
@@ -30,7 +32,6 @@ interface BaseRowProps {
 
 interface RankingCardProps<T extends BaseRowProps> {
   name: string;
-  fetchTrigger: (type: RankingParams) => void;
   data?: T[];
   isLoading: boolean;
   icon: React.ReactNode;
@@ -39,20 +40,24 @@ interface RankingCardProps<T extends BaseRowProps> {
 export const RankingCard = <T extends BaseRowProps>({
   name,
   data,
-  fetchTrigger,
   isLoading,
   icon
 }: RankingCardProps<T>) => {
+  const { handleAddKey, handleRemoveKey } = useAppSearchParams();
   const [type, setType] = useState<RankingParams["type"]>();
 
-  useEffect(() => {
-    fetchTrigger({ type: undefined });
-  }, []);
+  const entityKeyFilter = RANKING_FILTERS[name as keyof typeof RANKING_FILTERS];
 
   const handleTypeChange = (newType: RankingParams["type"]) => {
     const validatedType = newType === type ? undefined : newType;
     setType(validatedType);
-    fetchTrigger({ type: validatedType });
+
+    if (!validatedType) {
+      handleRemoveKey({ key: entityKeyFilter });
+      return;
+    }
+
+    handleAddKey({ key: entityKeyFilter, value: validatedType });
   };
 
   const titleEntityName = name[0].toUpperCase() + name.slice(1);
@@ -63,34 +68,34 @@ export const RankingCard = <T extends BaseRowProps>({
   return (
     <>
       {isLoading && <RankingCardSkeleton />}
-      {dataIsEmpty && <RankingCardEmptyState name={name} />}
-      {dataLoaded && (
-        <Card className="w-[49%]">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              {icon}
-              Ranking de {titleEntityName}
-            </CardTitle>
-            <CardAction>
-              <div className="flex items-center gap-2">
-                <ArrowUpCircle
-                  className={`${
-                    type === "INCOME" ? "bg-green-700" : "text-green-700"
-                  } rounded-full cursor-pointer`}
-                  onClick={() => handleTypeChange("INCOME")}
-                />
-                <ArrowDownCircle
-                  className={`${
-                    type === "EXPENSE" ? "bg-red-700" : "text-red-700"
-                  } rounded-full cursor-pointer`}
-                  onClick={() => handleTypeChange("EXPENSE")}
-                />
-              </div>
-            </CardAction>
-            <CardDescription>
-              {titleEntityName} com maior gasto ou receita deste mês.
-            </CardDescription>
-          </CardHeader>
+      <Card className="w-[49%]">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {icon}
+            Ranking de {titleEntityName}
+          </CardTitle>
+          <CardAction>
+            <div className="flex items-center gap-2">
+              <ArrowUpCircle
+                className={`${
+                  type === "INCOME" ? "bg-green-700" : "text-green-700"
+                } rounded-full cursor-pointer`}
+                onClick={() => handleTypeChange("INCOME")}
+              />
+              <ArrowDownCircle
+                className={`${
+                  type === "EXPENSE" ? "bg-red-700" : "text-red-700"
+                } rounded-full cursor-pointer`}
+                onClick={() => handleTypeChange("EXPENSE")}
+              />
+            </div>
+          </CardAction>
+          <CardDescription>
+            {titleEntityName} com maior gasto ou receita deste mês.
+          </CardDescription>
+        </CardHeader>
+        {dataIsEmpty && <RankingCardEmptyState />}
+        {dataLoaded && (
           <CardContent>
             <Table>
               <TableHeader>
@@ -118,8 +123,8 @@ export const RankingCard = <T extends BaseRowProps>({
               </TableBody>
             </Table>
           </CardContent>
-        </Card>
-      )}
+        )}
+      </Card>
     </>
   );
 };
