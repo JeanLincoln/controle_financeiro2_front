@@ -11,14 +11,8 @@ type ExtraOptions = Record<string, unknown>;
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
-const prepareHeaders = (headers: Headers) => {
-  headers.set("Content-Type", "application/json");
-  return headers;
-};
-
 export const baseQuery = fetchBaseQuery({
   baseUrl,
-  prepareHeaders,
   credentials: "include"
 });
 
