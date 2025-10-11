@@ -1,3 +1,7 @@
+import type { Category } from "./category.entity";
+import type { Origin } from "./origin.entity";
+import type { SubCategory } from "./subCategory.entity";
+
 export const TransactionType = {
   INCOME: "INCOME",
   EXPENSE: "EXPENSE"
@@ -15,6 +19,10 @@ export interface Transaction {
   transactionDate: Date;
   createdAt: Date;
   updatedAt: Date;
+  userId: number;
+  origin: Origin;
+  categories: Category[];
+  subCategories: SubCategory[];
 }
 
 export type TransactionRanking = {

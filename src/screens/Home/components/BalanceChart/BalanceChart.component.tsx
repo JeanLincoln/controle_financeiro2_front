@@ -22,8 +22,8 @@ import {
 } from "@/components/Form/Form.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useGetTransactionGraphData } from "@/store/requests/dashboard/useGetTransactionGraphData.request";
+import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
@@ -52,8 +52,8 @@ export function BalanceChart() {
   });
 
   const onSubmit = async (data: BalanceChartSchema) => {
-    const startDate = format(data.rangeDate.from, "yyyy-MM-dd");
-    const endDate = format(data.rangeDate.to, "yyyy-MM-dd");
+    const startDate = formatDateToApi(data.rangeDate.from);
+    const endDate = formatDateToApi(data.rangeDate.to);
 
     await handleAddKey({ key: "graphDate", value: `${startDate}_${endDate}` });
   };

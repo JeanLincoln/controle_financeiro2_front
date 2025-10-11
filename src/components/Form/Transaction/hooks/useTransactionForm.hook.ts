@@ -1,0 +1,95 @@
+import type { Transaction } from "@/entities/transaction.entity";
+import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useFindTransactionById } from "@/store/requests/transaction/useFindTransactionById.request";
+import { useTransactionCreate } from "@/store/requests/transaction/useTransactionCreate.request";
+import { useTransactionUpdate } from "@/store/requests/transaction/useTransactionUpdate.request";
+import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { Dispatch, UnknownAction } from "@reduxjs/toolkit";
+import { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import {
+  TransactionFormSchema,
+  transactionFormDefaultValues
+} from "../TransactionForm.schema";
+
+export type CreateOrUpdateTransaction = Omit<
+  Transaction,
+  | "id"
+  | "createdAt"
+  | "updatedAt"
+  | "userId"
+  | "origin"
+  | "categories"
+  | "subCategories"
+> & {
+  origin: number;
+  categories: number[];
+  subCategories: number[];
+};
+
+const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
+  dispatch(ShowAndHideActions.hide());
+};
+
+export function useTransactionForm() {
+  const { isVisible } = useAppSelector((state) => state.showAndHide);
+  const dispatch = useAppDispatch();
+  const {
+    idParam,
+    getTransaction,
+    isLoading: isLoadingTransaction,
+    transaction
+  } = useFindTransactionById();
+
+  const { handleRemoveKey } = useAppSearchParams();
+
+  const form = useForm({
+    resolver: zodResolver(TransactionFormSchema),
+    defaultValues: useMemo(
+      () => transactionFormDefaultValues(transaction),
+      [transaction]
+    )
+  });
+
+  const { handleCreateTransaction, isLoading: isCreating } =
+    useTransactionCreate({
+      successCallback: () => onCreateOrUpdateSuccess(dispatch)
+    });
+  const { handleUpdateTransaction, isLoading: isUpdating } =
+    useTransactionUpdate({
+      successCallback: () => onCreateOrUpdateSuccess(dispatch)
+    });
+
+  const onSubmit = (data: CreateOrUpdateTransaction) => {
+    if (transaction) {
+      handleUpdateTransaction(transaction.id, data);
+      return;
+    }
+
+    handleCreateTransaction(data);
+  };
+
+  const isLoading = isCreating || isUpdating;
+
+  useEffect(() => {
+    form.reset(transactionFormDefaultValues(transaction));
+  }, [transaction, isLoadingTransaction]);
+
+  useEffect(() => {
+    if (isVisible) return;
+    handleRemoveKey({ key: "id" });
+  }, [isVisible]);
+
+  useEffect(() => {
+    getTransaction();
+  }, [idParam]);
+
+  return {
+    form,
+    onSubmit,
+    isLoading,
+    isLoadingTransaction
+  };
+}

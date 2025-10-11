@@ -22,7 +22,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from "@/components/Select/Select.component";
+} from "@/components/Select/ShadcnSelect/Select.component";
 import { OriginSortableFields } from "@/store/services/origin/originService.types";
 import { SortOrder } from "@/store/services/services.types";
 import { handleSortOrderChange } from "@/utils/handleSortOrderChange.utils";

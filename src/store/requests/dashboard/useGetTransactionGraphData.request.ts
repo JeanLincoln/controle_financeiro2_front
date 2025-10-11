@@ -1,12 +1,12 @@
 import { handleInitialRangeDate } from "@/screens/Home/components/BalanceChart/utils/handleInitialDate.utils";
 import { useTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
-import { format } from "date-fns";
+import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 
 const { from, to } = handleInitialRangeDate();
-const defaultFrom = format(from, "yyyy-MM-dd");
-const defaultTo = format(to, "yyyy-MM-dd");
+const defaultFrom = formatDateToApi(from);
+const defaultTo = formatDateToApi(to);
 
 export function useGetTransactionGraphData() {
   const [params] = useSearchParams();

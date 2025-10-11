@@ -43,7 +43,6 @@ export function useHandleDeleteSubCategoryTimeout() {
         className="w-4 h-4 shrink-0 transition-all cursor-pointer hover:scale-120 hover:text-destructive animate-bounce text-destructive"
         onClick={() => {
           if (!timeoutId) return;
-          console.log({ timeoutId });
           handleClearTimeout(timeoutId);
           deleteCallback();
         }}

@@ -22,8 +22,6 @@ export function usePromiseDebounce<T extends Record<string, unknown>>({
 
   const formatAndValidateFields = Object.entries(fields).reduce(
     (acc: ValidatedFields<T>, [key, value]) => {
-      if (!value) return acc;
-
       acc.callbackArgs[key as keyof T] = value as T[keyof T];
       acc.dependencies.push(`${key}-${value}`);
       return acc;

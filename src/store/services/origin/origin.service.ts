@@ -1,6 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithAuth } from "../../config/base-query";
-import { CACHE_TIME_INTERVALS } from "../services.constants";
+import {
+  CACHE_TIME_INTERVALS,
+  DEFAULT_INFINITE_QUERY_OPTIONS
+} from "../services.constants";
+import type { OmitPagination, PaginationProps } from "../services.types";
 import type {
   CreateOriginParams,
   DeleteOriginParams,
@@ -37,14 +41,19 @@ export const OriginService = createApi({
         providesTags: ["Origin"]
       }
     ),
-    getOriginsOptions: builder.query<
+    getOriginsOptions: builder.infiniteQuery<
       OriginOptionsResponse,
-      OriginOptionsParams
+      OmitPagination<OriginOptionsParams>,
+      PaginationProps
     >({
-      query: (params) => ({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
         method: "GET",
         url: "/origin/options",
-        params
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
       }),
       providesTags: ["Origin"]
     }),
@@ -77,8 +86,8 @@ export const OriginService = createApi({
 export const {
   useLazyFindAllOriginsQuery,
   useLazyFindOriginByIdQuery,
-  useLazyGetOriginsOptionsQuery,
   useCreateOriginMutation,
   useUpdateOriginMutation,
-  useDeleteOriginMutation
+  useDeleteOriginMutation,
+  useGetOriginsOptionsInfiniteQuery
 } = OriginService;
