@@ -1,7 +1,6 @@
 import type { Transaction } from "@/entities/transaction.entity";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { useFindTransactionById } from "@/store/requests/transaction/useFindTransactionById.request";
 import { useTransactionCreate } from "@/store/requests/transaction/useTransactionCreate.request";
 import { useTransactionUpdate } from "@/store/requests/transaction/useTransactionUpdate.request";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
@@ -33,15 +32,9 @@ const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
   dispatch(ShowAndHideActions.hide());
 };
 
-export function useTransactionForm() {
+export function useTransactionForm(transaction: Transaction | undefined) {
   const { isVisible } = useAppSelector((state) => state.showAndHide);
   const dispatch = useAppDispatch();
-  const {
-    idParam,
-    getTransaction,
-    isLoading: isLoadingTransaction,
-    transaction
-  } = useFindTransactionById();
 
   const { handleRemoveKey } = useAppSearchParams();
 
@@ -75,21 +68,17 @@ export function useTransactionForm() {
 
   useEffect(() => {
     form.reset(transactionFormDefaultValues(transaction));
-  }, [transaction, isLoadingTransaction]);
+  }, [transaction]);
 
   useEffect(() => {
     if (isVisible) return;
     handleRemoveKey({ key: "id" });
+    handleRemoveKey({ key: "edit" });
   }, [isVisible]);
-
-  useEffect(() => {
-    getTransaction();
-  }, [idParam]);
 
   return {
     form,
     onSubmit,
-    isLoading,
-    isLoadingTransaction
+    isLoading
   };
 }

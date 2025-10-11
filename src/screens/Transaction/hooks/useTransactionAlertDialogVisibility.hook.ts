@@ -16,7 +16,7 @@ export function useTransactionDialogVisibility() {
   }, [isVisible]);
 
   return {
-    isVisible: isVisible && key?.includes("dialog"),
+    isVisible: isVisible && key === "dialog",
     transactionVisible: isVisible && key === "transaction",
     onOpenChange: () => dispatch(ShowAndHideActions.toggle({ key: "dialog" }))
   };

@@ -13,6 +13,7 @@ export function useTransactionDrawerVisibility() {
 
     dispatch(ShowAndHideActions.hide());
     handleRemoveKey({ key: "id" });
+    handleRemoveKey({ key: "edit" });
   }, [isVisible]);
 
   return {

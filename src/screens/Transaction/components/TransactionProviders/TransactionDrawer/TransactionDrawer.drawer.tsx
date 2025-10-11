@@ -8,6 +8,7 @@ import {
   DrawerHeader,
   DrawerTitle
 } from "@/components/Drawer/Drawer.component";
+import { TransactionForm } from "@/components/Form/Transaction/Transaction.form";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { Separator } from "@/components/Separator/Separator.component";
@@ -16,7 +17,9 @@ import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useFindTransactionById } from "@/store/requests/transaction/useFindTransactionById.request";
 import { cn } from "@/utils/cn.utils";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
+import { format } from "date-fns";
 import {
+  ArrowLeft,
   Banknote,
   Building2,
   Calendar,
@@ -27,15 +30,23 @@ import {
   TrendingUp,
   X
 } from "lucide-react";
+import { useSearchParams } from "react-router";
 
 export const TransactionDrawer = () => {
+  const [params] = useSearchParams();
+  const isEditMode = params.get("edit") === "true";
+
   const { transaction, isLoading } = useFindTransactionById();
-  const { handleAddKey } = useAppSearchParams();
+  const { handleAddKey, handleRemoveKey } = useAppSearchParams();
 
   const handleEditClick = () => {
-    // Navigate to edit drawer/form - you'll need to implement this based on your routing
-    // For now, this is a placeholder that adds an edit flag
+    if (!transaction) return;
+
     handleAddKey({ key: "edit", value: "true" });
+  };
+
+  const handleBackToView = () => {
+    handleRemoveKey({ key: "edit" });
   };
 
   const handleGetIcon = (iconName: string, className?: string) => {
@@ -44,6 +55,37 @@ export const TransactionDrawer = () => {
       <IconComponent className={cn("w-5 h-5 text-black", className)} />
     ) : null;
   };
+
+  if (isEditMode && !isLoading && transaction) {
+    return (
+      <DrawerContent className="w-full max-w-3xl mx-auto">
+        <DrawerHeader>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleBackToView}
+              className="shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <div className="flex-1">
+              <DrawerTitle>Editar Transação</DrawerTitle>
+              <DrawerDescription>Edite os dados da transação</DrawerDescription>
+            </div>
+            <DrawerClose asChild>
+              <Button variant="ghost" size="icon" className="shrink-0">
+                <X className="w-4 h-4" />
+              </Button>
+            </DrawerClose>
+          </div>
+        </DrawerHeader>
+        <div className="flex-1 overflow-y-auto px-4">
+          <TransactionForm transaction={transaction} />
+        </div>
+      </DrawerContent>
+    );
+  }
 
   return (
     <DrawerContent className="w-full max-w-3xl mx-auto max-h-[90vh]">
@@ -215,17 +257,12 @@ export const TransactionDrawer = () => {
                     </h3>
                   </div>
                   <p className="text-sm font-medium">
-                    {new Date(transaction.transactionDate).toLocaleDateString(
-                      "pt-BR",
-                      {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric"
-                      }
+                    {format(
+                      new Date(transaction.transactionDate),
+                      "dd 'de' MMMM 'de' yyyy"
                     )}
                   </p>
                 </div>
-
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <FileText className="w-4 h-4 text-muted-foreground" />
@@ -234,17 +271,12 @@ export const TransactionDrawer = () => {
                     </h3>
                   </div>
                   <p className="text-sm font-medium">
-                    {new Date(transaction.createdAt).toLocaleDateString(
-                      "pt-BR",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric"
-                      }
+                    {format(
+                      new Date(transaction.createdAt),
+                      "dd 'de' MMMM 'de' yyyy"
                     )}
                   </p>
                 </div>
-
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <FileText className="w-4 h-4 text-muted-foreground" />
@@ -253,20 +285,15 @@ export const TransactionDrawer = () => {
                     </h3>
                   </div>
                   <p className="text-sm font-medium">
-                    {new Date(transaction.updatedAt).toLocaleDateString(
-                      "pt-BR",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric"
-                      }
+                    {format(
+                      new Date(transaction.updatedAt),
+                      "dd 'de' MMMM 'de' yyyy"
                     )}
                   </p>
                 </div>
               </div>
             </div>
           </div>
-
           <DrawerFooter className="border-t">
             <div className="flex items-center gap-3 w-full">
               <Button
