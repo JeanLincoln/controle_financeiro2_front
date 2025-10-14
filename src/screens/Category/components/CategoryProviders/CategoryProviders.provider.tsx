@@ -1,6 +1,8 @@
+import type { PropsWithChildren } from "react";
+
 import { AlertDialog } from "@/components/AlertDialog/AlertDialog.component";
 import { Drawer } from "@/components/Drawer/Drawer.component";
-import type { PropsWithChildren } from "react";
+
 import { useCategoryDialogVisibility } from "../../hooks/useCategoryAlertDialogVisibility.hook";
 import { useCategoryDrawerVisibility } from "../../hooks/useCategoryDrawerVisibility.hook";
 import { CategoryAlertDialog } from "./CategoryAlertDialog/CategoryAlertDialog.component";

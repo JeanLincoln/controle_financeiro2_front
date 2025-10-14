@@ -1,3 +1,5 @@
+import { ArrowDownCircle, ArrowUpCircle, Info, Trash } from "lucide-react";
+
 import { AlertDialogTrigger } from "@/components/AlertDialog/AlertDialog.component";
 import {
   Card,
@@ -16,7 +18,7 @@ import {
 } from "@/components/Tooltip/Tooltip.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { TransactionFindAllResponse } from "@/store/services/transaction/transactionService.types";
-import { ArrowDownCircle, ArrowUpCircle, Info, Trash } from "lucide-react";
+
 import { TransactionsListSectionSkeleton } from "./TransactionsListSectionSkeleton.skeleton";
 
 type TransactionsListSectionProps = {
@@ -32,9 +34,9 @@ export function TransactionsListSection({
 
   const dataIsLoaded = !loading && transactions && transactions.length > 0;
   return (
-    <div className="flex flex-col  justify-between h-[512px]">
+    <div className="flex h-[512px] flex-col justify-between">
       {loading && <TransactionsListSectionSkeleton />}
-      <div className="flex flex-wrap w-full gap-4 ">
+      <div className="flex w-full flex-wrap gap-4">
         {dataIsLoaded &&
           transactions.map((transaction) => {
             const SelectedIcon = getIconComponent(transaction.origin.icon);
@@ -45,7 +47,7 @@ export function TransactionsListSection({
 
             return (
               <Card
-                className="relative w-full gap-3 h-35 max-w-74"
+                className="relative h-35 w-full max-w-74 gap-3"
                 key={transaction.id}
               >
                 <CardHeader>
@@ -58,7 +60,7 @@ export function TransactionsListSection({
                   <CardAction className="flex flex-col items-center gap-4">
                     <AlertDialogTrigger asChild>
                       <Trash
-                        className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 "
+                        className="h-4 w-4 cursor-pointer text-red-500 transition-all hover:scale-120"
                         onClick={() =>
                           handleAddKey({ key: "id", value: transaction.id })
                         }
@@ -66,7 +68,7 @@ export function TransactionsListSection({
                     </AlertDialogTrigger>
                     <DrawerTrigger asChild>
                       <Info
-                        className="w-4 h-4 text-blue-500 transition-all cursor-pointer hover:scale-120"
+                        className="h-4 w-4 cursor-pointer text-blue-500 transition-all hover:scale-120"
                         onClick={() =>
                           handleAddKey({ key: "id", value: transaction.id })
                         }
@@ -75,34 +77,34 @@ export function TransactionsListSection({
                   </CardAction>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-1">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     <b>Valor: </b>
                     {`R$ ${transaction.amount}`}
                   </span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     <b>Realizada em:</b>{" "}
                     {new Date(transaction.transactionDate).toLocaleDateString()}
                   </span>
                 </CardContent>
-                <div className="absolute top-[-15px] left-[-15px] p-1 rounded-full">
+                <div className="absolute top-[-15px] left-[-15px] rounded-full p-1">
                   {transaction.type === "INCOME" ? (
-                    <ArrowUpCircle className="w-8 h-8 text-green-700 bg-secondary rounded-full" />
+                    <ArrowUpCircle className="bg-secondary h-8 w-8 rounded-full text-green-700" />
                   ) : (
-                    <ArrowDownCircle className="w-8 h-8 text-red-700 bg-secondary rounded-full" />
+                    <ArrowDownCircle className="bg-secondary h-8 w-8 rounded-full text-red-700" />
                   )}
                 </div>
                 {SelectedIcon && (
                   <div
                     style={{ backgroundColor: transaction.origin.color }}
-                    className="absolute top-[-10px] left-[25px] p-1 rounded-full"
+                    className="absolute top-[-10px] left-[25px] rounded-full p-1"
                   >
                     <Tooltip>
-                      <TooltipTrigger className="flex items-start w-fit text-start">
+                      <TooltipTrigger className="flex w-fit items-start text-start">
                         <div
                           data-slot="card-description"
                           className="text-muted-foreground text-sm"
                         >
-                          <SelectedIcon className="w-5 h-5 text-secondary" />
+                          <SelectedIcon className="text-secondary h-5 w-5" />
                         </div>
                       </TooltipTrigger>
                       <TooltipContent className="max-w-100">
@@ -124,17 +126,15 @@ export function TransactionsListSection({
                             backgroundColor: transaction.origin.color,
                             left: xPosition
                           }}
-                          className="
-                            absolute top-[-10px] p-1 rounded-full
-                          "
+                          className="absolute top-[-10px] rounded-full p-1"
                         >
                           <Tooltip>
-                            <TooltipTrigger className="flex items-start w-fit text-start">
+                            <TooltipTrigger className="flex w-fit items-start text-start">
                               <div
                                 data-slot="card-description"
                                 className="text-muted-foreground text-sm"
                               >
-                                <CategoryItem className="w-5 h-5 text-secondary" />
+                                <CategoryItem className="text-secondary h-5 w-5" />
                               </div>
                             </TooltipTrigger>
                             <TooltipContent className="max-w-100">

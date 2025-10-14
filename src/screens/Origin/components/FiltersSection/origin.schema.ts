@@ -1,6 +1,7 @@
+import { z } from "zod";
+
 import { OriginSortableFields } from "@/store/services/origin/originService.types";
 import { SortOrder } from "@/store/services/services.types";
-import { z } from "zod";
 
 export const OriginFormSchema = z.object({
   name: z.string().optional(),

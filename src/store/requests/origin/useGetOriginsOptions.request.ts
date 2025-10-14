@@ -1,10 +1,11 @@
+import { toast } from "sonner";
+
 import { useGetOriginsOptionsInfiniteQuery } from "@/store/services/origin/origin.service";
 import type { OriginOptionsParams } from "@/store/services/origin/originService.types";
 import {
   SortOrder,
   type OmitPagination
 } from "@/store/services/services.types";
-import { toast } from "sonner";
 
 type UseGetInfiniteOriginOptionsProps = Partial<
   OmitPagination<OriginOptionsParams>

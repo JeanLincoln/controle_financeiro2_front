@@ -1,3 +1,7 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+
 import {
   Card,
   CardContent,
@@ -23,9 +27,7 @@ import {
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useGetTransactionGraphData } from "@/store/requests/dashboard/useGetTransactionGraphData.request";
 import { formatDateToApi } from "@/utils/formatDateToApi.utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+
 import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 import {
   balanceChartSchema,
@@ -64,7 +66,7 @@ export function BalanceChart() {
   return (
     <>
       {isLoading && <BalanceChartSkeleton />}
-      <Card className="pt-0 w-full">
+      <Card className="w-full pt-0">
         <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
           <div className="grid flex-1 gap-1">
             <CardTitle>Gráfico de transações</CardTitle>

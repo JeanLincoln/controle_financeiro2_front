@@ -1,3 +1,15 @@
+import {
+  Banknote,
+  Building2,
+  Calendar,
+  FileText,
+  Save,
+  Tag,
+  Tags,
+  TrendingDown,
+  TrendingUp
+} from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 import { Input } from "@/components/Input/Input.component";
@@ -19,17 +31,7 @@ import { TransactionType } from "@/entities/transaction.entity";
 import { useGetInfiniteCategoryOptions } from "@/store/requests/category/useGetCategoryOptions.request";
 import { useGetInfiniteOriginOptions } from "@/store/requests/origin/useGetOriginsOptions.request";
 import { useGetInfiniteSubCategoryOptions } from "@/store/requests/subCategory/useGetSubCategoriesOptions.request";
-import {
-  Banknote,
-  Building2,
-  Calendar,
-  FileText,
-  Save,
-  Tag,
-  Tags,
-  TrendingDown,
-  TrendingUp
-} from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -65,6 +67,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
     subCategoriesOptions,
     isLoading: subCategoriesOptionsLoading,
     fetchNextPage: fetchNextPageSubCategoriesOptions,
+
     hasNextPage: hasNextPageSubCategoriesOptions
   } = useGetInfiniteSubCategoryOptions({
     categoriesIds: form.watch("categories")
@@ -74,7 +77,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center w-full p-6 space-y-6 max-w-240"
+        className="flex w-full max-w-240 flex-col items-center justify-center space-y-6 p-6"
       >
         <div className="flex w-full gap-4">
           <FormField
@@ -83,7 +86,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <FileText className="w-4 h-4" />
+                  <FileText className="h-4 w-4" />
                   Nome
                 </FormLabel>
                 <FormControl>
@@ -104,11 +107,11 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel className="flex items-center gap-2">
-                <FileText className="w-4 h-4" />
+                <FileText className="h-4 w-4" />
                 Descrição
               </FormLabel>
               <FormControl>
-                <Textarea {...field} className="resize-none h-30" />
+                <Textarea {...field} className="h-30 resize-none" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,7 +124,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Tag className="w-4 h-4" />
+                  <Tag className="h-4 w-4" />
                   Tipo
                 </FormLabel>
                 <FormControl>
@@ -134,13 +137,13 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
                         <SelectLabel>Tipo de Transação</SelectLabel>
                         <SelectItem value={TransactionType.INCOME}>
                           <div className="flex items-center gap-2">
-                            <TrendingUp className="w-4 h-4" />
+                            <TrendingUp className="h-4 w-4" />
                             Receita
                           </div>
                         </SelectItem>
                         <SelectItem value={TransactionType.EXPENSE}>
                           <div className="flex items-center gap-2">
-                            <TrendingDown className="w-4 h-4" />
+                            <TrendingDown className="h-4 w-4" />
                             Despesa
                           </div>
                         </SelectItem>
@@ -158,7 +161,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Banknote className="w-4 h-4" />
+                  <Banknote className="h-4 w-4" />
                   Valor
                 </FormLabel>
                 <FormControl>
@@ -182,7 +185,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="h-4 w-4" />
                   Data da Transação
                 </FormLabel>
                 <FormControl>
@@ -206,7 +209,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Building2 className="w-4 h-4" />
+                  <Building2 className="h-4 w-4" />
                   Origem
                 </FormLabel>
                 <FormControl>
@@ -235,7 +238,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Tag className="w-4 h-4" />
+                  <Tag className="h-4 w-4" />
                   Categorias
                 </FormLabel>
                 <FormControl>
@@ -261,7 +264,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel className="flex items-center gap-2">
-                  <Tags className="w-4 h-4" />
+                  <Tags className="h-4 w-4" />
                   Subcategorias
                 </FormLabel>
                 <FormControl>
@@ -285,14 +288,14 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
         <Button
           type="submit"
           variant="default"
-          className="flex items-center w-full gap-2"
+          className="flex w-full items-center gap-2"
           disabled={isLoading}
         >
           {isLoading ? (
             <LoadingSpinner size="sm" variant="orbit" />
           ) : (
             <>
-              <Save className="w-4 h-4" />
+              <Save className="h-4 w-4" />
               Salvar Transação
             </>
           )}

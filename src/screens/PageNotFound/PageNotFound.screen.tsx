@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+
 import { Button } from "@/components/Button/Button.component";
 
 export default function PageNotFound() {
@@ -13,23 +14,23 @@ export default function PageNotFound() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center space-y-6 px-4">
+    <div className="bg-background flex min-h-screen items-center justify-center">
+      <div className="space-y-6 px-4 text-center">
         <div className="space-y-2">
-          <h1 className="text-9xl font-bold text-primary/20 select-none">
+          <h1 className="text-primary/20 text-9xl font-bold select-none">
             404
           </h1>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+          <div className="bg-primary mx-auto h-1 w-24 rounded-full"></div>
         </div>
         <div className="space-y-4">
-          <h2 className="text-3xl font-semibold text-foreground">
+          <h2 className="text-foreground text-3xl font-semibold">
             Página não encontrada
           </h2>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">
+          <p className="text-muted-foreground mx-auto max-w-md text-lg">
             Ops! A página que você está procurando não existe ou foi movida.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+        <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
           <Button onClick={handleGoHome} className="w-full sm:w-auto">
             Voltar ao início
           </Button>
@@ -41,8 +42,8 @@ export default function PageNotFound() {
             Página anterior
           </Button>
         </div>
-        <div className="pt-8 border-t border-border/50">
-          <p className="text-sm text-muted-foreground">
+        <div className="border-border/50 border-t pt-8">
+          <p className="text-muted-foreground text-sm">
             Se você acredita que isso é um erro, entre em contato com o suporte.
           </p>
         </div>

@@ -8,7 +8,7 @@ export function CategoriesListSectionEmptyState({
   nameSearch
 }: CategoriesListSectionEmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center flex-1 flex-wrap w-full gap-4">
+    <div className="flex w-full flex-1 flex-col flex-wrap items-center justify-center gap-4">
       <FolderOpen size={100} className="text-muted-foreground" />
       <span className="text-muted-foreground">
         {nameSearch

@@ -1,3 +1,5 @@
+import { Pencil, Trash } from "lucide-react";
+
 import { AlertDialogTrigger } from "@/components/AlertDialog/AlertDialog.component";
 import {
   Card,
@@ -11,7 +13,7 @@ import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { OriginFindAllResponse } from "@/store/services/origin/originService.types";
-import { Pencil, Trash } from "lucide-react";
+
 import { OriginsListSectionSkeleton } from "./OriginsListSectionSkeleton.skeleton";
 
 type OriginsListSectionProps = {
@@ -27,16 +29,16 @@ export function OriginsListSection({
 
   const dataIsLoaded = !loading && origins && origins.length > 0;
   return (
-    <div className="flex flex-col  justify-between h-[512px]">
+    <div className="flex h-[512px] flex-col justify-between">
       {loading && <OriginsListSectionSkeleton />}
-      <div className="flex flex-wrap w-full gap-4 ">
+      <div className="flex w-full flex-wrap gap-4">
         {dataIsLoaded &&
           origins.map((origin) => {
             const SelectedIcon = getIconComponent(origin.icon);
 
             return (
               <Card
-                className="relative w-full gap-3 h-35 max-w-74"
+                className="relative h-35 w-full max-w-74 gap-3"
                 key={origin.id}
               >
                 <CardHeader>
@@ -49,7 +51,7 @@ export function OriginsListSection({
                   <CardAction className="flex flex-col items-center gap-4">
                     <AlertDialogTrigger asChild>
                       <Trash
-                        className="w-4 h-4 text-red-500 transition-all cursor-pointer hover:scale-120 "
+                        className="h-4 w-4 cursor-pointer text-red-500 transition-all hover:scale-120"
                         onClick={() =>
                           handleAddKey({ key: "id", value: origin.id })
                         }
@@ -57,7 +59,7 @@ export function OriginsListSection({
                     </AlertDialogTrigger>
                     <DrawerTrigger asChild>
                       <Pencil
-                        className="w-4 h-4 text-blue-500 transition-all cursor-pointer hover:scale-120"
+                        className="h-4 w-4 cursor-pointer text-blue-500 transition-all hover:scale-120"
                         onClick={() =>
                           handleAddKey({ key: "id", value: origin.id })
                         }
@@ -66,11 +68,11 @@ export function OriginsListSection({
                   </CardAction>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-1">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     <b>Criado Em:</b>{" "}
                     {new Date(origin.createdAt).toLocaleDateString()}
                   </span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     <b>Atualizado Em:</b>{" "}
                     {new Date(origin.updatedAt).toLocaleDateString()}
                   </span>
@@ -78,9 +80,9 @@ export function OriginsListSection({
                 {SelectedIcon && (
                   <div
                     style={{ backgroundColor: origin.color }}
-                    className="absolute top-[-10px] left-[-10px] p-1 rounded-full"
+                    className="absolute top-[-10px] left-[-10px] rounded-full p-1"
                   >
-                    <SelectedIcon className="w-5 h-5 text-secondary" />
+                    <SelectedIcon className="text-secondary h-5 w-5" />
                   </div>
                 )}
               </Card>

@@ -1,4 +1,5 @@
 import { StandardPagination } from "@/components/Pagination/Pagination.component";
+
 import { CategoriesListSection } from "./components/CategoriesListSection/CategoriesListSection.component";
 import { CategoriesListSectionEmptyState } from "./components/CategoriesListSection/CategoriesListSectionEmptyState.empty-state";
 import { CategoryProviders } from "./components/CategoryProviders/CategoryProviders.provider";
@@ -12,7 +13,7 @@ export default function CategoryScreen() {
 
   return (
     <CategoryProviders>
-      <div className="container flex flex-col min-h-screen gap-4 p-6 mx-auto">
+      <div className="container mx-auto flex min-h-screen flex-col gap-4 p-6">
         <HeaderSection />
         <FiltersSection form={form} />
         {dataIsEmpty && (

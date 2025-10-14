@@ -1,8 +1,9 @@
+import { useSearchParams } from "react-router";
+import { toast } from "sonner";
+
 import { handleInitialRangeDate } from "@/screens/Home/components/BalanceChart/utils/handleInitialDate.utils";
 import { useTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
 import { formatDateToApi } from "@/utils/formatDateToApi.utils";
-import { useSearchParams } from "react-router";
-import { toast } from "sonner";
 
 const { from, to } = handleInitialRangeDate();
 const defaultFrom = formatDateToApi(from);

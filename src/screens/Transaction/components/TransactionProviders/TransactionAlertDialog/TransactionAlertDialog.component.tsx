@@ -1,3 +1,6 @@
+import { useSearchParams } from "react-router";
+import { Trash, X } from "lucide-react";
+
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -11,8 +14,6 @@ import { Button } from "@/components/Button/Button.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useDeleteTransaction } from "@/store/requests/transaction/useDeleteTransaction.request";
-import { Trash, X } from "lucide-react";
-import { useSearchParams } from "react-router";
 
 export function TransactionAlertDialog() {
   const [params] = useSearchParams();
@@ -34,7 +35,7 @@ export function TransactionAlertDialog() {
             <Button
               type="button"
               variant="default"
-              className="flex items-center gap-2 w-fit text-white "
+              className="flex w-fit items-center gap-2 text-white"
               disabled={isLoading}
               onClick={() => handleRemoveKey({ key: "id" })}
             >
@@ -46,7 +47,7 @@ export function TransactionAlertDialog() {
             <Button
               type="button"
               variant="destructive"
-              className="flex items-center gap-2 w-fit text-white"
+              className="flex w-fit items-center gap-2 text-white"
               disabled={isLoading}
               onClick={() => {
                 handleDeleteTransaction(Number(id));

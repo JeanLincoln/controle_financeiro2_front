@@ -1,13 +1,14 @@
 import {
   Card,
-  CardHeader,
-  CardTitle,
+  CardContent,
   CardDescription,
-  CardContent
+  CardHeader,
+  CardTitle
 } from "@/components/Card/Card.component";
 import { useBalanceQuery } from "@/store/services/dashboard/dashboard.service";
-import { BalanceCard } from "./BalanceCard/BalanceCard.component";
+
 import { BalanceSkeleton } from "./Balance.skeleton";
+import { BalanceCard } from "./BalanceCard/BalanceCard.component";
 
 export function Balance() {
   const { data: balance, isLoading } = useBalanceQuery();

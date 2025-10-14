@@ -1,10 +1,11 @@
+import { toast } from "sonner";
+
 import {
   SortOrder,
   type OmitPagination
 } from "@/store/services/services.types";
 import { useGetSubCategoriesOptionsInfiniteQuery } from "@/store/services/subCategory/subCategory.service";
 import type { SubCategoryOptionsParams } from "@/store/services/subCategory/subCategoryService.types";
-import { toast } from "sonner";
 
 type UseGetInfiniteSubCategoryOptionsProps = Partial<
   OmitPagination<SubCategoryOptionsParams>

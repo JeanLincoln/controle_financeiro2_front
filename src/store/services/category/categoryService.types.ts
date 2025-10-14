@@ -1,5 +1,6 @@
 import type { Category } from "@/entities/category.entity";
 import type { SubCategory } from "@/entities/subCategory.entity";
+
 import type {
   GetOptionsProps,
   PaginationProps,

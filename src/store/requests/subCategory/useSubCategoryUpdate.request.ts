@@ -1,8 +1,9 @@
+import { toast } from "sonner";
+
 import type { CreateOrUpdateSubCategory } from "@/components/Form/Category/SubCategorySection/hooks/useSubCategoryForm.hook";
 import { useAppDispatch } from "@/store";
 import { useUpdateSubCategoryMutation } from "@/store/services/subCategory/subCategory.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 type UseSubCategoryUpdateProps = {
   successCallback: () => void;

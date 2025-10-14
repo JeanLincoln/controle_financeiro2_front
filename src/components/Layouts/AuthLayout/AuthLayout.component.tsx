@@ -1,7 +1,8 @@
-import type { IRootState } from "@/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router";
+
+import type { IRootState } from "@/store";
 
 export default function AuthLayout() {
   const { user } = useSelector((state: IRootState) => state.auth);

@@ -1,5 +1,7 @@
-import { baseQueryWithAuth } from "@/store/config/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
+
+import { baseQueryWithAuth } from "@/store/config/base-query";
+
 import {
   CACHE_TIME_INTERVALS,
   DEFAULT_INFINITE_QUERY_OPTIONS

@@ -1,17 +1,19 @@
+import { Link } from "react-router";
+
 import {
   Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
   CardContent,
-  CardFooter
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from "@/components/Card/Card.component";
+
 import { LoginForm } from "./components/LoginForm/LoginForm.component";
-import { Link } from "react-router";
 
 function Login() {
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
+    <div className="flex min-h-screen w-full items-center justify-center">
       <Card className="w-full max-w-md p-6">
         <CardHeader>
           <CardTitle>Login</CardTitle>
@@ -23,7 +25,7 @@ function Login() {
           <LoginForm />
         </CardContent>
         <CardFooter>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Não tem uma conta?
             <Link to="/auth/register" className="text-primary hover:underline">
               {" "}

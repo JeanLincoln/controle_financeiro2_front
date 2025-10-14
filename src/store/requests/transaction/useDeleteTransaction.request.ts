@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useDeleteTransactionMutation } from "@/store/services/transaction/transaction.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useDeleteTransaction() {
   const [deleteTransaction, { isLoading }] = useDeleteTransactionMutation();

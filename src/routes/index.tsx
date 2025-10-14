@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router";
-import { APP_ROUTES } from "./routes";
-import PageNotFound from "@/screens/PageNotFound/PageNotFound.screen";
+
+import AuthLayout from "@/components/Layouts/AuthLayout/AuthLayout.component";
 import { DefaultLayout } from "@/components/Layouts/DefaultLayout/DefaultLayout.component";
 import { Login } from "@/screens/Login/Login.screen";
+import PageNotFound from "@/screens/PageNotFound/PageNotFound.screen";
 import Register from "@/screens/Register/Register.screen";
-import AuthLayout from "@/components/Layouts/AuthLayout/AuthLayout.component";
+
+import { APP_ROUTES } from "./routes";
 
 export const router = createBrowserRouter([
   {

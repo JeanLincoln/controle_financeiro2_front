@@ -1,3 +1,5 @@
+import { useSearchParams } from "react-router";
+
 import {
   DrawerContent,
   DrawerDescription,
@@ -5,14 +7,13 @@ import {
   DrawerTitle
 } from "@/components/Drawer/Drawer.component";
 import { TransactionForm } from "@/components/Form/Transaction/Transaction.form";
-import { useSearchParams } from "react-router";
 
 export const TransactionFormDrawer = () => {
   const [params] = useSearchParams();
   const id = params.get("id");
 
   return (
-    <DrawerContent className="w-full max-w-2xl mx-auto">
+    <DrawerContent className="mx-auto w-full max-w-2xl">
       <DrawerHeader>
         <DrawerTitle>{id ? "Editar Transação" : "Nova Transação"}</DrawerTitle>
         <DrawerDescription>
@@ -21,7 +22,7 @@ export const TransactionFormDrawer = () => {
             : "Preencha os dados para criar uma nova origem"}
         </DrawerDescription>
       </DrawerHeader>
-      <div className="p-4 flex items-center justify-center">
+      <div className="flex items-center justify-center p-4">
         <TransactionForm />
       </div>
     </DrawerContent>

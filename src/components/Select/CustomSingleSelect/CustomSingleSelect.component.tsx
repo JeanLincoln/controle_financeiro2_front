@@ -1,8 +1,11 @@
+import { createPortal } from "react-dom";
+import { ChevronDownIcon, ChevronUpIcon, X } from "lucide-react";
+
 import { useInfiniteQueryObserver } from "@/hooks/useInfiniteQueryObserver.hook";
 import { cn } from "@/utils/cn.utils";
-import { ChevronDownIcon, ChevronUpIcon, X } from "lucide-react";
-import { createPortal } from "react-dom";
+
 import "./customSelect.custom-styles.css";
+
 import { useCustomSingleSelect } from "./hooks/useCustomSingleSelect.hook";
 
 export type SingleSelectOptionProps = {
@@ -77,12 +80,12 @@ export const CustomSingleSelect = ({
     <div
       ref={dropdownRef}
       className={cn(
-        "w-full h-[36px] relative flex flex-1 flex-col items-center justify-center  rounded-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary",
+        "focus:ring-primary relative flex h-[36px] w-full flex-1 cursor-pointer flex-col items-center justify-center rounded-sm focus:ring-2 focus:outline-none",
         className
       )}
     >
       {label && (
-        <div className="w-full absolute top-[-13px] left-[8px] z-10 flex items-center justify-start bg-background px-1">
+        <div className="bg-background absolute top-[-13px] left-[8px] z-10 flex w-full items-center justify-start px-1">
           <span>
             {label} {required && <span className="text-destructive">*</span>}
           </span>
@@ -91,8 +94,8 @@ export const CustomSingleSelect = ({
       <button
         type="button"
         className={cn(
-          "relative w-full h-full flex items-center justify-start gap-[8px] p-[8px] bg-secondary rounded-md border border-input cursor-pointer overflow-y-hidden overflow-x-auto custom-scrollbar",
-          !!error && "border border-destructive"
+          "bg-secondary border-input custom-scrollbar relative flex h-full w-full cursor-pointer items-center justify-start gap-[8px] overflow-x-auto overflow-y-hidden rounded-md border p-[8px]",
+          !!error && "border-destructive border"
         )}
         disabled={isLoadingOptions || !options.length || disabled}
         onClick={() => {
@@ -108,7 +111,7 @@ export const CustomSingleSelect = ({
           <span>Não há opções disponíveis!</span>
         )}
         {!isLoadingOptions && !!options.length && (
-          <span className="whitespace-nowrap overflow-hidden text-ellipsis text-sm">
+          <span className="overflow-hidden text-sm text-ellipsis whitespace-nowrap">
             {handleFindSelectedOption(value)?.name || placeholder}
           </span>
         )}
@@ -138,7 +141,7 @@ export const CustomSingleSelect = ({
         >
           <div
             className={cn(
-              "flex flex-col gap-2 transition-all duration-200 ease-in-out bg-popover border border-border rounded-md shadow-lg overflow-y-auto overflow-x-hidden custom-scrollbar px-1",
+              "bg-popover border-border custom-scrollbar flex flex-col gap-2 overflow-x-hidden overflow-y-auto rounded-md border px-1 shadow-lg transition-all duration-200 ease-in-out",
               isOpen && !isLoadingOptions
                 ? "content-container-open"
                 : "content-container-closed"
@@ -147,7 +150,7 @@ export const CustomSingleSelect = ({
             <button
               type="button"
               onClick={() => handleClearSelection(onChange)}
-              className="w-[95%] mx-auto mt-2 bg-transparent border border-border rounded-md py-1 px-0 cursor-pointer hover:bg-accent transition-colors duration-200 text-sm"
+              className="border-border hover:bg-accent mx-auto mt-2 w-[95%] cursor-pointer rounded-md border bg-transparent px-0 py-1 text-sm transition-colors duration-200"
             >
               Limpar seleção
             </button>
@@ -157,14 +160,14 @@ export const CustomSingleSelect = ({
                 type="text"
                 onChange={(e) => setSearchInput(e.target.value)}
                 value={searchInput}
-                className="sticky top-0 w-full p-2 bg-accent border-0 text-sm outline-0 rounded-md"
+                className="bg-accent sticky top-0 w-full rounded-md border-0 p-2 text-sm outline-0"
               />
               <button
                 type="button"
                 onClick={() => {
                   setSearchInput("");
                 }}
-                className="clear-search-button absolute top-1/2 right-[2%] -translate-y-1/2 w-4 h-4 p-1 flex items-center justify-center bg-primary rounded-full border-0 cursor-pointer transition-all duration-200"
+                className="clear-search-button bg-primary absolute top-1/2 right-[2%] flex h-4 w-4 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 p-1 transition-all duration-200"
               >
                 <X size={12} className="text-secondary" />
               </button>
@@ -184,9 +187,9 @@ export const CustomSingleSelect = ({
 
                     handleToggleOption(option, onChange, value);
                   }}
-                  className="w-full h-[35px] flex items-center justify-between p-2 bg-transparent border-0 cursor-pointer transition-all duration-200 text-left hover:bg-accent rounded-md"
+                  className="hover:bg-accent flex h-[35px] w-full cursor-pointer items-center justify-between rounded-md border-0 bg-transparent p-2 text-left transition-all duration-200"
                 >
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis text-sm">
+                  <span className="overflow-hidden text-sm text-ellipsis whitespace-nowrap">
                     {option.name}
                   </span>
                   <span>{value === option.id && "✓"}</span>
@@ -202,8 +205,8 @@ export const CustomSingleSelect = ({
                 }}
                 disabled={!isOpen}
                 className={cn(
-                  "absolute -bottom-[30px] left-0 w-full mx-auto mt-2 bg-transparent border border-border rounded-md py-1 px-0 cursor-pointer hover:bg-muted transition-colors duration-200 text-sm",
-                  !isOpen ? "hidden pointer-events-none" : "block"
+                  "border-border hover:bg-muted absolute -bottom-[30px] left-0 mx-auto mt-2 w-full cursor-pointer rounded-md border bg-transparent px-0 py-1 text-sm transition-colors duration-200",
+                  !isOpen ? "pointer-events-none hidden" : "block"
                 )}
               >
                 Ação
@@ -213,7 +216,7 @@ export const CustomSingleSelect = ({
         </div>,
         document.body
       )}
-      <div className="absolute -bottom-5 left-0 text-destructive text-xs mb-1">
+      <div className="text-destructive absolute -bottom-5 left-0 mb-1 text-xs">
         {error && <span>{error}</span>}
       </div>
     </div>

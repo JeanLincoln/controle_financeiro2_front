@@ -1,10 +1,11 @@
 import {
+  fetchBaseQuery,
   type BaseQueryApi,
   type BaseQueryFn,
   type FetchArgs,
-  fetchBaseQuery,
   type FetchBaseQueryError
 } from "@reduxjs/toolkit/query";
+
 import type { ReduxErrorProps } from "../store.types";
 
 type ExtraOptions = Record<string, unknown>;

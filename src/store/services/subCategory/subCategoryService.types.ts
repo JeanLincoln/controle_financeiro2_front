@@ -1,4 +1,5 @@
 import type { SubCategory } from "@/entities/subCategory.entity";
+
 import type {
   GetOptionsProps,
   PaginationProps,

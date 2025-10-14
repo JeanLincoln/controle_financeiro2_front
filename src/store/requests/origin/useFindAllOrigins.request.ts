@@ -1,7 +1,8 @@
+import { toast } from "sonner";
+
 import { useLazyFindAllOriginsQuery } from "@/store/services/origin/origin.service";
 import type { OriginFindAllParams } from "@/store/services/origin/originService.types";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useFindAllOrigins() {
   const [fetchOriginsTrigger, { data, isLoading }] =

@@ -3,23 +3,17 @@
   "trailingComma": "none",
   "singleQuote": false,
   "printWidth": 80,
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
   "importOrder": [
     "^react$",
     "^react",
     "<THIRD_PARTY_MODULES>",
-    "interface",
-    "(?=content|api)",
-    "context/",
-    "mock/",
-    "config",
-    "utils/",
-    "hooks/",
-    "(components/|./index)",
-    ".svg",
-    "^../(.*)$",
-    "(?=./styles.module.scss)"
-  ],
-  "importOrderSeparation": false,
-  "importOrderSortSpecifiers": true,
-  "importOrderCaseInsensitive": true
+    "",
+    "^@/(.*)$",
+    "",
+    "^[./]"
+  ]
 }

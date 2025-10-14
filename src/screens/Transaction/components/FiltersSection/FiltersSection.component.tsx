@@ -1,10 +1,23 @@
+import { type UseFormReturn } from "react-hook-form";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  Building2,
+  Calendar as CalendarIcon,
+  FolderOpen,
+  LetterText,
+  ListOrdered,
+  ListOrderedIcon,
+  Tags
+} from "lucide-react";
+
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle
 } from "@/components/Card/Card.component";
-
 import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 import {
   Form,
@@ -33,19 +46,7 @@ import { useGetInfiniteSubCategoryOptions } from "@/store/requests/subCategory/u
 import { SortOrder } from "@/store/services/services.types";
 import { TransactionSortableFields } from "@/store/services/transaction/transactionService.types";
 import { handleSortOrderChange } from "@/utils/handleSortOrderChange.utils";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  Building2,
-  Calendar as CalendarIcon,
-  FolderOpen,
-  LetterText,
-  ListOrdered,
-  ListOrderedIcon,
-  Tags
-} from "lucide-react";
-import { type UseFormReturn } from "react-hook-form";
+
 import { type TransactionFormSchemaType } from "./Transaction.schema";
 import { handleTransactionTypeFilterChange } from "./utils/handleTransactionTypeFilterChange";
 
@@ -82,15 +83,15 @@ export function FiltersSection({ form }: FiltersSectionProps) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="flex flex-col items-start flex-wrap w-full  gap-4 ">
-            <div className="w-full flex flex-wrap gap-4">
+          <form className="flex w-full flex-col flex-wrap items-start gap-4">
+            <div className="flex w-full flex-wrap gap-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-106">
+                  <FormItem className="min-w-106 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <LetterText className="w-4 h-4" />
+                      <LetterText className="h-4 w-4" />
                       nome
                     </FormLabel>
                     <FormControl>
@@ -108,9 +109,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="amount"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-40">
+                  <FormItem className="min-w-40 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <ListOrdered className="w-4 h-4" />
+                      <ListOrdered className="h-4 w-4" />
                       Valor
                     </FormLabel>
                     <FormControl>
@@ -124,9 +125,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="transactionDate"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-40 ">
+                  <FormItem className="min-w-40 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4" />
+                      <CalendarIcon className="h-4 w-4" />
                       Data da Transação
                     </FormLabel>
                     <FormControl>
@@ -144,14 +145,14 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 name="type"
                 render={({ field }) => (
                   <FormItem className="w-20">
-                    <FormLabel className="flex items-center gap-2 shrink-0 min-w-15">
-                      <ArrowUpDown className="w-4 h-4" />
+                    <FormLabel className="flex min-w-15 shrink-0 items-center gap-2">
+                      <ArrowUpDown className="h-4 w-4" />
                       Tipo
                     </FormLabel>
                     <FormControl>
                       <button
                         type="button"
-                        className="flex items-center justify-center w-full bg-input/30 border-input h-9 cursor-pointer hover:bg-input/60 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                        className="bg-input/30 border-input hover:bg-input/60 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full cursor-pointer items-center justify-center rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                         onClick={() =>
                           handleTransactionTypeFilterChange(
                             form.setValue,
@@ -176,9 +177,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="originId"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-50">
+                  <FormItem className="min-w-50 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <Building2 className="w-4 h-4" />
+                      <Building2 className="h-4 w-4" />
                       Origem
                     </FormLabel>
                     <FormControl>
@@ -202,9 +203,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="categoriesIds"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-50">
+                  <FormItem className="min-w-50 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <FolderOpen className="w-4 h-4" />
+                      <FolderOpen className="h-4 w-4" />
                       Categorias
                     </FormLabel>
                     <FormControl>
@@ -228,9 +229,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="subCategoriesIds"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-50">
+                  <FormItem className="min-w-50 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <Tags className="w-4 h-4" />
+                      <Tags className="h-4 w-4" />
                       Sub-Categorias
                     </FormLabel>
                     <FormControl>
@@ -254,9 +255,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="createdAt"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-40">
+                  <FormItem className="min-w-40 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4" />
+                      <CalendarIcon className="h-4 w-4" />
                       Criada em
                     </FormLabel>
                     <FormControl>
@@ -273,9 +274,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="updatedAt"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-40">
+                  <FormItem className="min-w-40 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4" />
+                      <CalendarIcon className="h-4 w-4" />
                       Atualizada em:
                     </FormLabel>
                     <FormControl>
@@ -292,9 +293,9 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 control={form.control}
                 name="sortBy"
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-30">
+                  <FormItem className="min-w-30 flex-1">
                     <FormLabel className="flex items-center gap-2">
-                      <ListOrderedIcon className="w-4 h-4" />
+                      <ListOrderedIcon className="h-4 w-4" />
                       Ordem por
                     </FormLabel>
                     <FormControl>
@@ -329,13 +330,13 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                 render={({ field }) => (
                   <FormItem className="w-20">
                     <FormLabel className="flex items-center gap-2">
-                      <ListOrderedIcon className="w-4 h-4" />
+                      <ListOrderedIcon className="h-4 w-4" />
                       Ordem
                     </FormLabel>
                     <FormControl>
                       <button
                         type="button"
-                        className="flex items-center justify-center w-full bg-input/30 border-input h-9 cursor-pointer hover:bg-input/60 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                        className="bg-input/30 border-input hover:bg-input/60 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full cursor-pointer items-center justify-center rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                         onClick={() =>
                           handleSortOrderChange(form.setValue, field.value)
                         }

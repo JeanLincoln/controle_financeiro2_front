@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/utils/cn.utils";
+
 import {
   Tooltip,
   TooltipContent,
@@ -45,7 +46,7 @@ function CardTitle({
 }: CardTitleProps) {
   return withTooltip ? (
     <Tooltip>
-      <TooltipTrigger className="flex items-start w-fit text-start">
+      <TooltipTrigger className="flex w-fit items-start text-start">
         <div
           data-slot="card-title"
           className={cn("leading-none font-semibold", className)}
@@ -79,7 +80,7 @@ function CardDescription({
 }: CardDescriptionProps) {
   return withTooltip ? (
     <Tooltip>
-      <TooltipTrigger className="flex items-start w-fit text-start">
+      <TooltipTrigger className="flex w-fit items-start text-start">
         <div
           data-slot="card-description"
           className={cn("text-muted-foreground text-sm", className)}

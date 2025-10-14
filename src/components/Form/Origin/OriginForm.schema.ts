@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { CreateOrUpdateOrigin } from "./hooks/useOriginForm.hook";
 
 export const OriginFormSchema = z.object({

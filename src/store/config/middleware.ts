@@ -1,4 +1,5 @@
 import type { Middleware } from "@reduxjs/toolkit";
+
 import { AuthService } from "../services/auth/auth.service";
 import { CategoryService } from "../services/category/category.service";
 import { DashboardService } from "../services/dashboard/dashboard.service";

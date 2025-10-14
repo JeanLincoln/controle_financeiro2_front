@@ -1,7 +1,8 @@
+import { toast } from "sonner";
+
 import { useLazyFindAllCategoriesQuery } from "@/store/services/category/category.service";
 import type { CategoryFindAllParams } from "@/store/services/category/categoryService.types";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useFindAllCategories() {
   const [fetchCategoriesTrigger, { data, isLoading }] =

@@ -1,5 +1,6 @@
-import type { User } from "@/entities/user.entity";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+import type { User } from "@/entities/user.entity";
 
 interface AuthState {
   user: User | null;

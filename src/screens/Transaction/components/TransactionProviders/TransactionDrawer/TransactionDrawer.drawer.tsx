@@ -1,3 +1,18 @@
+import { useSearchParams } from "react-router";
+import { format } from "date-fns";
+import {
+  ArrowLeft,
+  Banknote,
+  Building2,
+  Calendar,
+  FileText,
+  Pencil,
+  Tag,
+  TrendingDown,
+  TrendingUp,
+  X
+} from "lucide-react";
+
 import { Badge } from "@/components/Badge/Badge.component";
 import { Button } from "@/components/Button/Button.component";
 import {
@@ -17,20 +32,6 @@ import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useFindTransactionById } from "@/store/requests/transaction/useFindTransactionById.request";
 import { cn } from "@/utils/cn.utils";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
-import { format } from "date-fns";
-import {
-  ArrowLeft,
-  Banknote,
-  Building2,
-  Calendar,
-  FileText,
-  Pencil,
-  Tag,
-  TrendingDown,
-  TrendingUp,
-  X
-} from "lucide-react";
-import { useSearchParams } from "react-router";
 
 export const TransactionDrawer = () => {
   const [params] = useSearchParams();
@@ -52,13 +53,13 @@ export const TransactionDrawer = () => {
   const handleGetIcon = (iconName: string, className?: string) => {
     const IconComponent = getIconComponent(iconName);
     return IconComponent ? (
-      <IconComponent className={cn("w-5 h-5 text-black", className)} />
+      <IconComponent className={cn("h-5 w-5 text-black", className)} />
     ) : null;
   };
 
   if (isEditMode && !isLoading && transaction) {
     return (
-      <DrawerContent className="w-full mx-auto">
+      <DrawerContent className="mx-auto w-full">
         <DrawerHeader>
           <div className="flex items-center gap-3">
             <Button
@@ -67,7 +68,7 @@ export const TransactionDrawer = () => {
               onClick={handleBackToView}
               className="shrink-0"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="h-4 w-4" />
             </Button>
             <div className="flex-1">
               <DrawerTitle>Editar Transação</DrawerTitle>
@@ -75,7 +76,7 @@ export const TransactionDrawer = () => {
             </div>
             <DrawerClose asChild>
               <Button variant="ghost" size="icon" className="shrink-0">
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </Button>
             </DrawerClose>
           </div>
@@ -88,9 +89,9 @@ export const TransactionDrawer = () => {
   }
 
   return (
-    <DrawerContent className="w-full mx-auto max-h-[90vh]">
+    <DrawerContent className="mx-auto max-h-[90vh] w-full">
       {isLoading && (
-        <div className="flex items-center justify-center h-96">
+        <div className="flex h-96 items-center justify-center">
           <LoadingSpinner variant="orbit" size="lg" />
         </div>
       )}
@@ -99,7 +100,7 @@ export const TransactionDrawer = () => {
           <DrawerHeader>
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <DrawerTitle className="text-2xl flex items-center gap-3">
+                <DrawerTitle className="flex items-center gap-3 text-2xl">
                   {transaction.name}
                   <Badge
                     variant={
@@ -111,26 +112,26 @@ export const TransactionDrawer = () => {
                   >
                     {transaction.type === TransactionType.INCOME ? (
                       <>
-                        <TrendingUp className="w-3 h-3" />
+                        <TrendingUp className="h-3 w-3" />
                         Receita
                       </>
                     ) : (
                       <>
-                        <TrendingDown className="w-3 h-3" />
+                        <TrendingDown className="h-3 w-3" />
                         Despesa
                       </>
                     )}
                   </Badge>
                 </DrawerTitle>
                 {transaction.description && (
-                  <DrawerDescription className="text-base mt-2">
+                  <DrawerDescription className="mt-2 text-base">
                     {transaction.description}
                   </DrawerDescription>
                 )}
               </div>
               <DrawerClose asChild>
                 <Button variant="ghost" size="icon" className="shrink-0">
-                  <X className="w-4 h-4" />
+                  <X className="h-4 w-4" />
                 </Button>
               </DrawerClose>
             </div>
@@ -139,13 +140,13 @@ export const TransactionDrawer = () => {
           <div className="flex-1 overflow-y-auto px-6">
             <div className="space-y-6 pb-6">
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Banknote className="w-5 h-5 text-muted-foreground" />
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                <div className="mb-2 flex items-center gap-2">
+                  <Banknote className="text-muted-foreground h-5 w-5" />
+                  <h3 className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">
                     Valor
                   </h3>
                 </div>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="text-foreground text-3xl font-bold">
                   {toBRLCurrency(transaction.amount)}
                 </p>
               </div>
@@ -153,16 +154,16 @@ export const TransactionDrawer = () => {
               {transaction.origin && (
                 <>
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Building2 className="w-5 h-5 text-muted-foreground" />
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                    <div className="mb-3 flex items-center gap-2">
+                      <Building2 className="text-muted-foreground h-5 w-5" />
+                      <h3 className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">
                         Origem
                       </h3>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50">
+                    <div className="bg-secondary/50 flex items-center gap-3 rounded-lg p-3">
                       {transaction.origin.icon && (
                         <div
-                          className="p-2 rounded-full"
+                          className="rounded-full p-2"
                           style={{ backgroundColor: transaction.origin.color }}
                         >
                           {handleGetIcon(transaction.origin.icon)}
@@ -171,7 +172,7 @@ export const TransactionDrawer = () => {
                       <div>
                         <p className="font-medium">{transaction.origin.name}</p>
                         {transaction.origin.description && (
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-muted-foreground text-sm">
                             {transaction.origin.description}
                           </p>
                         )}
@@ -184,9 +185,9 @@ export const TransactionDrawer = () => {
               {transaction.categories && transaction.categories.length > 0 && (
                 <>
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Tag className="w-5 h-5 text-muted-foreground" />
-                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                    <div className="mb-3 flex items-center gap-2">
+                      <Tag className="text-muted-foreground h-5 w-5" />
+                      <h3 className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">
                         Categorias
                       </h3>
                     </div>
@@ -194,17 +195,17 @@ export const TransactionDrawer = () => {
                       {transaction.categories.map((category) => (
                         <div
                           key={category.id}
-                          className="flex items-center gap-2 p-2 px-3 rounded-lg bg-secondary/50"
+                          className="bg-secondary/50 flex items-center gap-2 rounded-lg p-2 px-3"
                         >
                           {handleGetIcon(category.icon) && (
                             <div
-                              className="p-1 rounded-full"
+                              className="rounded-full p-1"
                               style={{ backgroundColor: category.color }}
                             >
                               {handleGetIcon(category.icon)}
                             </div>
                           )}
-                          <span className="font-medium text-sm">
+                          <span className="text-sm font-medium">
                             {category.name}
                           </span>
                         </div>
@@ -218,9 +219,9 @@ export const TransactionDrawer = () => {
                 transaction.subCategories.length > 0 && (
                   <>
                     <div>
-                      <div className="flex items-center gap-2 mb-3">
-                        <Tag className="w-5 h-5 text-muted-foreground" />
-                        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                      <div className="mb-3 flex items-center gap-2">
+                        <Tag className="text-muted-foreground h-5 w-5" />
+                        <h3 className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">
                           Subcategorias
                         </h3>
                       </div>
@@ -228,17 +229,17 @@ export const TransactionDrawer = () => {
                         {transaction.subCategories.map((subCategory) => (
                           <div
                             key={subCategory.id}
-                            className="flex items-center gap-2 p-2 px-3 rounded-lg bg-secondary/50"
+                            className="bg-secondary/50 flex items-center gap-2 rounded-lg p-2 px-3"
                           >
                             {handleGetIcon(subCategory.icon) && (
                               <div
-                                className="p-1 rounded-full"
+                                className="rounded-full p-1"
                                 style={{ backgroundColor: subCategory.color }}
                               >
                                 {handleGetIcon(subCategory.icon)}
                               </div>
                             )}
-                            <span className="font-medium text-sm">
+                            <span className="text-sm font-medium">
                               {subCategory.name}
                             </span>
                           </div>
@@ -248,11 +249,11 @@ export const TransactionDrawer = () => {
                     <Separator />
                   </>
                 )}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <div className="mb-2 flex items-center gap-2">
+                    <Calendar className="text-muted-foreground h-4 w-4" />
+                    <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
                       Data da Transação
                     </h3>
                   </div>
@@ -264,9 +265,9 @@ export const TransactionDrawer = () => {
                   </p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-4 h-4 text-muted-foreground" />
-                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <div className="mb-2 flex items-center gap-2">
+                    <FileText className="text-muted-foreground h-4 w-4" />
+                    <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
                       Criado em
                     </h3>
                   </div>
@@ -278,9 +279,9 @@ export const TransactionDrawer = () => {
                   </p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-4 h-4 text-muted-foreground" />
-                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <div className="mb-2 flex items-center gap-2">
+                    <FileText className="text-muted-foreground h-4 w-4" />
+                    <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
                       Atualizado em
                     </h3>
                   </div>
@@ -295,13 +296,13 @@ export const TransactionDrawer = () => {
             </div>
           </div>
           <DrawerFooter className="border-t">
-            <div className="flex items-center gap-3 w-full">
+            <div className="flex w-full items-center gap-3">
               <Button
                 variant="default"
-                className="flex-1 flex items-center gap-2"
+                className="flex flex-1 items-center gap-2"
                 onClick={handleEditClick}
               >
-                <Pencil className="w-4 h-4" />
+                <Pencil className="h-4 w-4" />
                 Editar Transação
               </Button>
               <DrawerClose asChild>

@@ -1,6 +1,7 @@
+import { useMemo } from "react";
 import type { LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
-import { useMemo } from "react";
+
 import { FINANCIAL_ICONS } from "../constants/iconSelector.constants";
 
 export function getIconComponent(iconName: string): LucideIcon | null {

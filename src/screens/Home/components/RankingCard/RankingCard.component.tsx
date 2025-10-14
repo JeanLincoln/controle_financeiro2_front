@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+
 import {
   Card,
   CardAction,
@@ -18,8 +21,7 @@ import { TransactionType } from "@/entities/transaction.entity";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
-import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
-import React, { useState } from "react";
+
 import { RANKING_FILTERS } from "../../hooks/useRankingFilters.hook";
 import { RankingCardEmptyState } from "./RankingCard.empty-state";
 import { RankingCardSkeleton } from "./RankingCard.skeleton";
@@ -79,13 +81,13 @@ export const RankingCard = <T extends BaseRowProps>({
               <ArrowUpCircle
                 className={`${
                   type === "INCOME" ? "bg-green-700" : "text-green-700"
-                } rounded-full cursor-pointer`}
+                } cursor-pointer rounded-full`}
                 onClick={() => handleTypeChange("INCOME")}
               />
               <ArrowDownCircle
                 className={`${
                   type === "EXPENSE" ? "bg-red-700" : "text-red-700"
-                } rounded-full cursor-pointer`}
+                } cursor-pointer rounded-full`}
                 onClick={() => handleTypeChange("EXPENSE")}
               />
             </div>

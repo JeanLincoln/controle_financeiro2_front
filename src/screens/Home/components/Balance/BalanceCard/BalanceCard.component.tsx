@@ -1,8 +1,8 @@
 import {
   Card,
-  CardTitle,
+  CardContent,
   CardDescription,
-  CardContent
+  CardTitle
 } from "@/components/Card/Card.component";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
 
@@ -41,7 +41,7 @@ export function BalanceCard({
     : negativeVariationClass;
 
   return (
-    <Card className="w-1/3 p-4 gap-2">
+    <Card className="w-1/3 gap-2 p-4">
       <CardTitle>{title}:</CardTitle>
       <CardDescription>{title} do mês atual</CardDescription>
       <CardContent className="p-0">
@@ -49,9 +49,9 @@ export function BalanceCard({
           <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
             {toBRLCurrency(total)}
           </h2>
-          <div className="flex flex-col items-start ml-1">
-            <div className="flex items-center gap-1 w-full justify-between">
-              <span className="text-sm text-muted-foreground">
+          <div className="ml-1 flex flex-col items-start">
+            <div className="flex w-full items-center justify-between gap-1">
+              <span className="text-muted-foreground text-sm">
                 Variação percentual:
               </span>
               <div className="flex gap-1">
@@ -63,8 +63,8 @@ export function BalanceCard({
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-1 w-full justify-between">
-              <span className="text-sm text-muted-foreground">
+            <div className="flex w-full items-center justify-between gap-1">
+              <span className="text-muted-foreground text-sm">
                 Valor mês anterior:
               </span>
               <div className="flex gap-1">
@@ -76,8 +76,8 @@ export function BalanceCard({
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-1 w-full justify-between">
-              <span className="text-sm text-muted-foreground ">
+            <div className="flex w-full items-center justify-between gap-1">
+              <span className="text-muted-foreground text-sm">
                 Variação valor:
               </span>
               <div className="flex gap-1">

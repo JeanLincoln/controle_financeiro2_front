@@ -1,7 +1,8 @@
+import { z } from "zod";
+
 import { TransactionType } from "@/entities/transaction.entity";
 import { SortOrder } from "@/store/services/services.types";
 import { TransactionSortableFields } from "@/store/services/transaction/transactionService.types";
-import { z } from "zod";
 
 export const TransactionFormSchema = z.object({
   name: z.string().optional(),

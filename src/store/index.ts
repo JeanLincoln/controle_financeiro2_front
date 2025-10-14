@@ -1,11 +1,12 @@
 import {
-  type TypedUseSelectorHook,
   useDispatch,
-  useSelector
+  useSelector,
+  type TypedUseSelectorHook
 } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
 import middleware from "./config/middleware";
 import { reducer, type RootState } from "./config/reducers";
 

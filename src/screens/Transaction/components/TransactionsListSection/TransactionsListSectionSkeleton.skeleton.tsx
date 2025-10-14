@@ -2,9 +2,9 @@ import { Skeleton } from "@/components/Skeleton/Skeleton.component";
 
 export function TransactionsListSectionSkeleton() {
   return (
-    <div className="flex flex-wrap w-full gap-4">
+    <div className="flex w-full flex-wrap gap-4">
       {Array.from({ length: 12 }).map((_, index) => (
-        <Skeleton key={index} className="w-full h-40 max-w-74" />
+        <Skeleton key={index} className="h-40 w-full max-w-74" />
       ))}
     </div>
   );

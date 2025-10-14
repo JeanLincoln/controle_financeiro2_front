@@ -1,10 +1,11 @@
-import { TransactionType } from "@/entities/transaction.entity";
 import type {
   FieldValues,
   Path,
   PathValue,
   UseFormSetValue
 } from "react-hook-form";
+
+import { TransactionType } from "@/entities/transaction.entity";
 
 export const handleTransactionTypeFilterChange = <T extends FieldValues>(
   setValue: UseFormSetValue<T>,

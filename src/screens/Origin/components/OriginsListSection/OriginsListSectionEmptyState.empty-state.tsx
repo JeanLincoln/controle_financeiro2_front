@@ -8,7 +8,7 @@ export function OriginsListSectionEmptyState({
   nameSearch
 }: OriginsListSectionEmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center flex-1 flex-wrap w-full gap-4">
+    <div className="flex w-full flex-1 flex-col flex-wrap items-center justify-center gap-4">
       <Building2 size={100} className="text-muted-foreground" />
       <span className="text-muted-foreground">
         {nameSearch
