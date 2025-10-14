@@ -58,7 +58,7 @@ export const TransactionDrawer = () => {
 
   if (isEditMode && !isLoading && transaction) {
     return (
-      <DrawerContent className="w-full max-w-3xl mx-auto">
+      <DrawerContent className="w-full mx-auto">
         <DrawerHeader>
           <div className="flex items-center gap-3">
             <Button
@@ -88,7 +88,7 @@ export const TransactionDrawer = () => {
   }
 
   return (
-    <DrawerContent className="w-full max-w-3xl mx-auto max-h-[90vh]">
+    <DrawerContent className="w-full mx-auto max-h-[90vh]">
       {isLoading && (
         <div className="flex items-center justify-center h-96">
           <LoadingSpinner variant="orbit" size="lg" />

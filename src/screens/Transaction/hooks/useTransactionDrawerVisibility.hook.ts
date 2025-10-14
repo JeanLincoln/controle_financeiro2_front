@@ -9,7 +9,7 @@ export function useTransactionDrawerVisibility() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isVisible) return;
+    if (isVisible || key !== "drawer") return;
 
     dispatch(ShowAndHideActions.hide());
     handleRemoveKey({ key: "id" });

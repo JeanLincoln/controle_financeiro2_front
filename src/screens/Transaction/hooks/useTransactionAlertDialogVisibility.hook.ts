@@ -9,7 +9,7 @@ export function useTransactionDialogVisibility() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isVisible) return;
+    if (isVisible || key !== "dialog") return;
 
     dispatch(ShowAndHideActions.hide());
     handleRemoveKey({ key: "id" });

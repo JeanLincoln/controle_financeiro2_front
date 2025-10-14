@@ -1,6 +1,5 @@
 import type { Transaction } from "@/entities/transaction.entity";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
-import { useAppDispatch, useAppSelector } from "@/store";
+import { useAppDispatch } from "@/store";
 import { useTransactionCreate } from "@/store/requests/transaction/useTransactionCreate.request";
 import { useTransactionUpdate } from "@/store/requests/transaction/useTransactionUpdate.request";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
@@ -33,10 +32,7 @@ const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
 };
 
 export function useTransactionForm(transaction: Transaction | undefined) {
-  const { isVisible } = useAppSelector((state) => state.showAndHide);
   const dispatch = useAppDispatch();
-
-  const { handleRemoveKey } = useAppSearchParams();
 
   const form = useForm({
     resolver: zodResolver(TransactionFormSchema),
@@ -69,12 +65,6 @@ export function useTransactionForm(transaction: Transaction | undefined) {
   useEffect(() => {
     form.reset(transactionFormDefaultValues(transaction));
   }, [transaction]);
-
-  useEffect(() => {
-    if (isVisible) return;
-    handleRemoveKey({ key: "id" });
-    handleRemoveKey({ key: "edit" });
-  }, [isVisible]);
 
   return {
     form,
