@@ -24,6 +24,7 @@ export function TransactionAlertDialog() {
   return (
     <>
       <AlertDialogContent>
+        <AlertDialogTitle>Deletar Transação</AlertDialogTitle>
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
           <AlertDialogDescription>

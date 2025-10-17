@@ -110,7 +110,7 @@
 
 /* Reference container dynamic positioning */
 .reference-container {
-  position: absolute;
+  position: fixed;
   z-index: 50;
 }
 

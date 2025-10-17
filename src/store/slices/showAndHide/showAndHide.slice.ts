@@ -29,7 +29,7 @@ export const ShowAndHideSlice = createSlice({
       action: PayloadAction<Pick<ShowAndHideState, "key">>
     ) => {
       state.isVisible = !state.isVisible;
-      state.key = state.isVisible ? action.payload.key : undefined;
+      state.key = action.payload.key;
     }
   }
 });

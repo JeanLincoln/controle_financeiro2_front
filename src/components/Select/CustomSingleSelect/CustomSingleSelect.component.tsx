@@ -80,7 +80,7 @@ export const CustomSingleSelect = ({
     <div
       ref={dropdownRef}
       className={cn(
-        "focus:ring-primary relative flex h-[36px] w-full flex-1 cursor-pointer flex-col items-center justify-center rounded-sm focus:ring-2 focus:outline-none",
+        "focus:ring-primary pointer-events-auto relative flex h-[36px] w-full flex-1 cursor-pointer flex-col items-center justify-center rounded-sm focus:ring-2 focus:outline-none",
         className
       )}
     >
@@ -132,7 +132,7 @@ export const CustomSingleSelect = ({
       {createPortal(
         <div
           ref={containerRef}
-          className="reference-container"
+          className="reference-container pointer-events-auto"
           style={{
             top: dropdownPositions?.top,
             left: dropdownPositions?.left,
@@ -146,6 +146,9 @@ export const CustomSingleSelect = ({
                 ? "content-container-open"
                 : "content-container-closed"
             )}
+            onWheel={(e) => {
+              e.stopPropagation();
+            }}
           >
             <button
               type="button"
@@ -206,7 +209,9 @@ export const CustomSingleSelect = ({
                 disabled={!isOpen}
                 className={cn(
                   "border-border hover:bg-muted absolute -bottom-[30px] left-0 mx-auto mt-2 w-full cursor-pointer rounded-md border bg-transparent px-0 py-1 text-sm transition-colors duration-200",
-                  !isOpen ? "pointer-events-none hidden" : "block"
+                  isOpen
+                    ? "pointer-events-auto block"
+                    : "pointer-events-none hidden"
                 )}
               >
                 Ação

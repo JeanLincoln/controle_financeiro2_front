@@ -93,7 +93,7 @@ export const CustomMultiSelectDropdown = ({
     <div
       ref={dropdownRef}
       className={cn(
-        "focus:ring-primary relative flex h-[36px] max-w-[300px] min-w-[200px] flex-1 cursor-pointer flex-col items-center justify-center rounded-sm focus:ring-2 focus:outline-none",
+        "focus:ring-primary relative flex h-[36px] w-full min-w-[200px] flex-1 cursor-pointer flex-col items-center justify-center rounded-sm focus:ring-2 focus:outline-none",
         className
       )}
     >
@@ -162,7 +162,7 @@ export const CustomMultiSelectDropdown = ({
       {createPortal(
         <div
           ref={containerRef}
-          className="reference-container"
+          className="reference-container pointer-events-auto scroll-auto"
           style={{
             top: dropdownPositions?.top,
             left: dropdownPositions?.left,
@@ -174,6 +174,9 @@ export const CustomMultiSelectDropdown = ({
               "bg-popover border-border custom-scrollbar flex flex-col gap-2 overflow-x-hidden overflow-y-auto rounded-md border px-1 shadow-lg transition-all duration-200 ease-in-out",
               isOpen ? "content-container-open" : "content-container-closed"
             )}
+            onWheel={(e) => {
+              e.stopPropagation();
+            }}
           >
             <button
               type="button"
@@ -237,7 +240,9 @@ export const CustomMultiSelectDropdown = ({
                 disabled={!isOpen}
                 className={cn(
                   "border-border hover:bg-muted absolute -bottom-[30px] left-0 mx-auto mt-2 w-full cursor-pointer rounded-md border bg-transparent px-0 py-1 text-sm transition-colors duration-200",
-                  !isOpen ? "pointer-events-none hidden" : "block"
+                  isOpen
+                    ? "pointer-events-auto block"
+                    : "pointer-events-none hidden"
                 )}
               >
                 {bottomButtonText}
