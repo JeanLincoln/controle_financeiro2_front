@@ -18,6 +18,7 @@ import {
 } from "@/components/Tooltip/Tooltip.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { TransactionFindAllResponse } from "@/store/services/transaction/transactionService.types";
+import { handleUTCTime } from "@/utils/handleUTCTime";
 
 import { TransactionsListSectionSkeleton } from "./TransactionsListSectionSkeleton.skeleton";
 
@@ -30,7 +31,7 @@ export function TransactionsListSection({
   transactions,
   loading
 }: TransactionsListSectionProps) {
-  const { handleAddKey } = useAppSearchParams();
+  const { handleKeys } = useAppSearchParams();
 
   const dataIsLoaded = !loading && transactions && transactions.length > 0;
   return (
@@ -39,12 +40,7 @@ export function TransactionsListSection({
       <div className="flex w-full flex-wrap gap-4">
         {dataIsLoaded &&
           transactions.map((transaction) => {
-            const SelectedIcon = getIconComponent(transaction.origin.icon);
-            const categoriesAndSubCategories = transaction.categories
-              .concat(transaction.subCategories)
-              .map((item) => ({ name: item.name, icon: item.icon }))
-              .slice(0, 7);
-
+            const OriginIcon = getIconComponent(transaction.origin.icon);
             return (
               <Card
                 className="relative h-35 w-full max-w-74 gap-3"
@@ -62,7 +58,9 @@ export function TransactionsListSection({
                       <Trash
                         className="h-4 w-4 cursor-pointer text-red-500 transition-all hover:scale-120"
                         onClick={() =>
-                          handleAddKey({ key: "id", value: transaction.id })
+                          handleKeys({
+                            add: [{ key: "id", value: transaction.id }]
+                          })
                         }
                       />
                     </AlertDialogTrigger>
@@ -70,7 +68,9 @@ export function TransactionsListSection({
                       <Info
                         className="h-4 w-4 cursor-pointer text-blue-500 transition-all hover:scale-120"
                         onClick={() =>
-                          handleAddKey({ key: "id", value: transaction.id })
+                          handleKeys({
+                            add: [{ key: "id", value: transaction.id }]
+                          })
                         }
                       />
                     </DrawerTrigger>
@@ -83,7 +83,9 @@ export function TransactionsListSection({
                   </span>
                   <span className="text-muted-foreground text-sm">
                     <b>Realizada em:</b>{" "}
-                    {new Date(transaction.transactionDate).toLocaleDateString()}
+                    {handleUTCTime(
+                      new Date(transaction.transactionDate)
+                    ).increased.toLocaleDateString()}
                   </span>
                 </CardContent>
                 <div className="absolute top-[-15px] left-[-15px] rounded-full p-1">
@@ -93,7 +95,7 @@ export function TransactionsListSection({
                     <ArrowDownCircle className="bg-secondary h-8 w-8 rounded-full text-red-700" />
                   )}
                 </div>
-                {SelectedIcon && (
+                {OriginIcon && (
                   <div
                     style={{ backgroundColor: transaction.origin.color }}
                     className="absolute top-[-10px] left-[25px] rounded-full p-1"
@@ -104,7 +106,7 @@ export function TransactionsListSection({
                           data-slot="card-description"
                           className="text-muted-foreground text-sm"
                         >
-                          <SelectedIcon className="text-secondary h-5 w-5" />
+                          <OriginIcon className="text-secondary h-5 w-5" />
                         </div>
                       </TooltipTrigger>
                       <TooltipContent className="max-w-100">
@@ -113,38 +115,41 @@ export function TransactionsListSection({
                     </Tooltip>
                   </div>
                 )}
-                {categoriesAndSubCategories.length > 0 &&
-                  categoriesAndSubCategories.map((category, index) => {
-                    const CategoryItem = getIconComponent(category.icon);
-                    const xPosition = (index + 1) * 35 + 25;
-
-                    return (
-                      CategoryItem && (
-                        <div
-                          key={index}
-                          style={{
-                            backgroundColor: transaction.origin.color,
-                            left: xPosition
-                          }}
-                          className="absolute top-[-10px] rounded-full p-1"
-                        >
-                          <Tooltip>
-                            <TooltipTrigger className="flex w-fit items-start text-start">
-                              <div
-                                data-slot="card-description"
-                                className="text-muted-foreground text-sm"
-                              >
-                                <CategoryItem className="text-secondary h-5 w-5" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-100">
-                              {category.name}
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      )
-                    );
-                  })}
+                {transaction.displayedCategoriesAndSubCategories.length > 0 &&
+                  transaction.displayedCategoriesAndSubCategories.map(
+                    (category, index) => {
+                      const CategoryOrSubCategoryIcon = getIconComponent(
+                        category.icon
+                      );
+                      const xPosition = (index + 1) * 35 + 25;
+                      return (
+                        CategoryOrSubCategoryIcon && (
+                          <div
+                            key={category.id}
+                            style={{
+                              backgroundColor: category.color,
+                              left: xPosition
+                            }}
+                            className="absolute top-[-10px] rounded-full p-1"
+                          >
+                            <Tooltip>
+                              <TooltipTrigger className="flex w-fit items-start text-start">
+                                <div
+                                  data-slot="card-description"
+                                  className="text-muted-foreground text-sm"
+                                >
+                                  <CategoryOrSubCategoryIcon className="text-secondary h-5 w-5" />
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-100">
+                                {category.name}
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                        )
+                      );
+                    }
+                  )}
               </Card>
             );
           })}

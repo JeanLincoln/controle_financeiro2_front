@@ -7,6 +7,7 @@ import {
 } from "@reduxjs/toolkit/query";
 
 import type { ReduxErrorProps } from "../store.types";
+import { paramsSerializer } from "./paramSerializer";
 
 type ExtraOptions = Record<string, unknown>;
 
@@ -14,7 +15,8 @@ const baseUrl = import.meta.env.VITE_API_URL;
 
 export const baseQuery = fetchBaseQuery({
   baseUrl,
-  credentials: "include"
+  credentials: "include",
+  paramsSerializer
 });
 
 export const baseQueryWithAuth: BaseQueryFn<

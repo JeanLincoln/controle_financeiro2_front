@@ -1,8 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
+import type { Transaction } from "@/entities/transaction.entity";
+
 import { baseQueryWithAuth } from "../../config/base-query";
 import { CACHE_TIME_INTERVALS } from "../services.constants";
-import { validateRequestFields } from "../utils/validateRequestFields.utils";
+import type { PaginationResponse } from "../services.types";
 import type {
   CreateTransactionParams,
   DeleteTransactionParams,
@@ -27,9 +29,52 @@ export const TransactionService = createApi({
       query: (params) => ({
         method: "GET",
         url: "/transaction",
-        params: validateRequestFields(params)
+        params
       }),
-      providesTags: ["Transaction"]
+      providesTags: ["Transaction"],
+      transformResponse: (
+        response: PaginationResponse & {
+          data: Transaction[];
+        }
+      ) => {
+        const transactions = [...response.data];
+        const transformedTransactions = transactions.map((transaction) => {
+          const formattedCategories = transaction.categories.map(
+            (category) => ({
+              id: category.id,
+              name: category.name,
+              icon: category.icon,
+              color: category.color
+            })
+          );
+
+          const formattedSubCategories = transaction.subCategories.map(
+            (subCategory) => ({
+              id: subCategory.id,
+              name: subCategory.name,
+              icon: subCategory.icon,
+              color: subCategory.color
+            })
+          );
+
+          const displayedCategoriesAndSubCategories = [
+            ...formattedCategories,
+            ...formattedSubCategories
+          ].map((item, index) => ({
+            id: Math.random() + index,
+            name: item.name,
+            icon: item.icon,
+            color: item.color
+          }));
+
+          return {
+            ...transaction,
+            displayedCategoriesAndSubCategories
+          };
+        });
+
+        return { ...response, data: transformedTransactions };
+      }
     }),
     findTransactionById: builder.query<
       TransactionFindByIdResponse,

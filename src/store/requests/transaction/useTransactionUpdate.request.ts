@@ -1,7 +1,8 @@
 import { toast } from "sonner";
 
-import type { CreateOrUpdateTransaction } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
+import type { TransactionFormValues } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
 import { useUpdateTransactionMutation } from "@/store/services/transaction/transaction.service";
+import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseTransactionUpdateProps = {
@@ -17,10 +18,16 @@ export function useTransactionUpdate({
 
   async function handleUpdateTransaction(
     transactionId: number,
-    transactionData: CreateOrUpdateTransaction
+    transactionData: TransactionFormValues
   ) {
     const [error] = await handleRequest(
-      updateTransaction({ id: transactionId, ...transactionData }).unwrap()
+      updateTransaction({
+        ...transactionData,
+        id: transactionId,
+        transactionDate: formatDateToApi(
+          new Date(transactionData.transactionDate)
+        )
+      }).unwrap()
     );
 
     if (error) {
@@ -29,6 +36,7 @@ export function useTransactionUpdate({
       return;
     }
 
+    toast.success("Transação atualizada com sucesso");
     successCallback();
   }
 

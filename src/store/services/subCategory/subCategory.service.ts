@@ -7,7 +7,6 @@ import {
   DEFAULT_INFINITE_QUERY_OPTIONS
 } from "../services.constants";
 import type { OmitPagination, PaginationProps } from "../services.types";
-import { validateRequestFields } from "../utils/validateRequestFields.utils";
 import type {
   CreateSubCategoryParams,
   DeleteSubCategoryParams,
@@ -46,7 +45,7 @@ export const SubCategoryService = createApi({
         url: "/sub-categories/options",
         params: {
           ...pageParam,
-          ...validateRequestFields(queryArg)
+          ...queryArg
         }
       }),
       providesTags: ["SubCategory"]

@@ -29,25 +29,37 @@ import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.compo
 import { Separator } from "@/components/Separator/Separator.component";
 import { TransactionType } from "@/entities/transaction.entity";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
+import { useAppDispatch } from "@/store";
 import { useFindTransactionById } from "@/store/requests/transaction/useFindTransactionById.request";
+import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 import { cn } from "@/utils/cn.utils";
 import { toBRLCurrency } from "@/utils/toBRLCurrency.utils";
 
 export const TransactionDrawer = () => {
+  const dispatch = useAppDispatch();
   const [params] = useSearchParams();
-  const isEditMode = params.get("edit") === "true";
-
   const { transaction, isLoading } = useFindTransactionById();
-  const { handleAddKey, handleRemoveKey } = useAppSearchParams();
+  const { handleKeys } = useAppSearchParams();
+
+  const transactionId = params.get("id");
+  const isEditMode = params.get("edit") === "true";
+  const isCreateMode = params.get("create") === "true";
+  const editingATransaction = isEditMode && !isLoading && !!transaction;
+  const renderTransactionForm = editingATransaction || isCreateMode;
 
   const handleEditClick = () => {
-    if (!transaction) return;
+    if (!transaction || !transactionId) return;
 
-    handleAddKey({ key: "edit", value: "true" });
+    handleKeys({ add: [{ key: "edit", value: "true" }] });
   };
 
   const handleBackToView = () => {
-    handleRemoveKey({ key: "edit" });
+    if (!transactionId) {
+      dispatch(ShowAndHideActions.hide());
+      return;
+    }
+
+    handleKeys({ remove: ["edit"] });
   };
 
   const handleGetIcon = (iconName: string, className?: string) => {
@@ -57,7 +69,7 @@ export const TransactionDrawer = () => {
     ) : null;
   };
 
-  if (isEditMode && !isLoading && transaction) {
+  if (renderTransactionForm) {
     return (
       <DrawerContent className="mx-auto w-full">
         <DrawerHeader>
@@ -71,8 +83,14 @@ export const TransactionDrawer = () => {
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div className="flex-1">
-              <DrawerTitle>Editar Transação</DrawerTitle>
-              <DrawerDescription>Edite os dados da transação</DrawerDescription>
+              <DrawerTitle>
+                {isCreateMode ? "Criar Transação" : "Editar Transação"}
+              </DrawerTitle>
+              <DrawerDescription>
+                {isCreateMode
+                  ? "Crie uma nova transação"
+                  : "Edite os dados da transação"}
+              </DrawerDescription>
             </div>
             <DrawerClose asChild>
               <Button variant="ghost" size="icon" className="shrink-0">
@@ -90,6 +108,8 @@ export const TransactionDrawer = () => {
 
   return (
     <DrawerContent className="mx-auto max-h-[90vh] w-full">
+      <DrawerTitle />
+      <DrawerDescription />
       {isLoading && (
         <div className="flex h-96 items-center justify-center">
           <LoadingSpinner variant="orbit" size="lg" />

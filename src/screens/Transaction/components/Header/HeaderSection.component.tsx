@@ -12,7 +12,7 @@ import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 
 export function HeaderSection() {
-  const { handleRemoveKey } = useAppSearchParams();
+  const { handleKeys } = useAppSearchParams();
   return (
     <Card>
       <CardHeader>
@@ -22,7 +22,12 @@ export function HeaderSection() {
             <Button
               className="flex w-24 items-center gap-2"
               variant="outline"
-              onClick={() => handleRemoveKey({ key: "id" })}
+              onClick={() => {
+                handleKeys({
+                  add: [{ key: "create", value: "true" }],
+                  remove: ["id"]
+                });
+              }}
             >
               Criar
               <CreditCard />

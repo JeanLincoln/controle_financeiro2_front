@@ -12,7 +12,7 @@ type DropdownPosition = {
   width: number;
 };
 
-const EMPTY_STATE = undefined;
+const EMPTY_STATE = null;
 
 export const useCustomSingleSelect = ({ options }: UseCustomSingleSelect) => {
   const [dropdownPositions, setDropdownPositions] = useState<

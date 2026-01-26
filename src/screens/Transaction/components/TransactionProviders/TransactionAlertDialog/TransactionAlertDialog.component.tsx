@@ -18,15 +18,14 @@ import { useDeleteTransaction } from "@/store/requests/transaction/useDeleteTran
 export function TransactionAlertDialog() {
   const [params] = useSearchParams();
   const id = params.get("id");
-  const { handleRemoveKey } = useAppSearchParams();
+  const { handleKeys } = useAppSearchParams();
   const { handleDeleteTransaction, isLoading } = useDeleteTransaction();
 
   return (
     <>
       <AlertDialogContent>
-        <AlertDialogTitle>Deletar Transação</AlertDialogTitle>
+        <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
         <AlertDialogHeader>
-          <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
           <AlertDialogDescription>
             Isso vai remover essa origem de todas as transações que a têm.
           </AlertDialogDescription>
@@ -38,7 +37,7 @@ export function TransactionAlertDialog() {
               variant="default"
               className="flex w-fit items-center gap-2 text-white"
               disabled={isLoading}
-              onClick={() => handleRemoveKey({ key: "id" })}
+              onClick={() => handleKeys({ remove: ["id"] })}
             >
               <X className="h-4 w-4" />
               Cancelar
@@ -52,7 +51,7 @@ export function TransactionAlertDialog() {
               disabled={isLoading}
               onClick={() => {
                 handleDeleteTransaction(Number(id));
-                handleRemoveKey({ key: "id" });
+                handleKeys({ remove: ["id"] });
               }}
             >
               {isLoading ? (

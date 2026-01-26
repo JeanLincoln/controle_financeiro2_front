@@ -111,7 +111,7 @@
 /* Reference container dynamic positioning */
 .reference-container {
   position: fixed;
-  z-index: 50;
+  z-index: 9999;
 }
 
 /* Content container transition styles */

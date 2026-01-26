@@ -42,16 +42,43 @@ export type TransactionFindAllParams =
     updatedAt?: string;
   };
 
+export type DisplayedCategoriesAndSubCategoriesProps = {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+};
+
+export type FindAllTransformedTransaction = Transaction & {
+  displayedCategoriesAndSubCategories: DisplayedCategoriesAndSubCategoriesProps[];
+};
+
 export type TransactionFindAllResponse = PaginationResponse & {
-  data: Transaction[];
+  data: FindAllTransformedTransaction[];
 };
 
 export type TransactionFindByIdParams = Pick<Transaction, "id">;
 export type TransactionFindByIdResponse = Transaction;
 
-export type UpdateTransactionParams = Omit<
+export type CreateTransactionParams = Omit<
   Transaction,
-  "createdAt" | "updatedAt"
->;
-export type CreateTransactionParams = Omit<UpdateTransactionParams, "id">;
+  | "id"
+  | "transactionDate"
+  | "userId"
+  | "origin"
+  | "categories"
+  | "subCategories"
+  | "createdAt"
+  | "updatedAt"
+> & {
+  transactionDate: string;
+  originId: number;
+  categoriesIds: number[];
+  subCategoriesIds: number[];
+};
+
+export type UpdateTransactionParams = CreateTransactionParams & {
+  id: number;
+};
+
 export type DeleteTransactionParams = TransactionFindByIdParams;

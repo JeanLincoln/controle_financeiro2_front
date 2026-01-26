@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Banknote,
   Building2,
@@ -12,6 +13,7 @@ import {
 
 import { Button } from "@/components/Button/Button.component";
 import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
+import { CurrencyInput } from "@/components/Input/CurrencyInput.component";
 import { Input } from "@/components/Input/Input.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { CustomMultiSelectDropdown } from "@/components/Select/CustomMultiSelectDropdown/CustomMultiSelectDropdown.component";
@@ -43,7 +45,7 @@ import {
 import { useTransactionForm } from "./hooks/useTransactionForm.hook";
 
 export type TransactionFormProps = {
-  transaction: Transaction;
+  transaction?: Transaction;
 };
 
 export function TransactionForm({ transaction }: TransactionFormProps) {
@@ -67,11 +69,19 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
     subCategoriesOptions,
     isLoading: subCategoriesOptionsLoading,
     fetchNextPage: fetchNextPageSubCategoriesOptions,
-
     hasNextPage: hasNextPageSubCategoriesOptions
   } = useGetInfiniteSubCategoryOptions({
-    categoriesIds: form.watch("categories")
+    categoriesIds: form.watch("categoriesIds")
   });
+
+  useEffect(() => {
+    const actualSubCategoriesIds = form.getValues("subCategoriesIds");
+    const filteredSubCategoriesIds = actualSubCategoriesIds.filter((id) =>
+      subCategoriesOptions.some((option) => option.id === id)
+    );
+
+    form.setValue("subCategoriesIds", filteredSubCategoriesIds);
+  }, [subCategoriesOptions]);
 
   return (
     <Form {...form}>
@@ -166,14 +176,10 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
                     Valor
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      placeholder="0.00"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseFloat(e.target.value))
-                      }
+                    <CurrencyInput
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="R$ 0,00"
                     />
                   </FormControl>
                   <FormMessage />
@@ -211,7 +217,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
         <div className="flex h-fit w-full flex-wrap gap-4">
           <FormField
             control={form.control}
-            name="origin"
+            name="originId"
             render={({ field }) => (
               <FormItem className="max-w-[48%] min-w-[48%] flex-1">
                 <FormLabel className="flex items-center gap-2">
@@ -238,7 +244,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
           />
           <FormField
             control={form.control}
-            name="categories"
+            name="categoriesIds"
             render={({ field }) => (
               <FormItem className="max-w-[48%] min-w-[48%] flex-1">
                 <FormLabel className="flex items-center gap-2">
@@ -264,7 +270,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
           />
           <FormField
             control={form.control}
-            name="subCategories"
+            name="subCategoriesIds"
             render={({ field }) => (
               <FormItem className="max-w-[48%] min-w-[48%] flex-1">
                 <FormLabel className="flex items-center gap-2">

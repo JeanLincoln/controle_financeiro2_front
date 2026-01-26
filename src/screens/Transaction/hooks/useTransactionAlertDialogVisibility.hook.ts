@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 
 export function useTransactionDialogVisibility() {
-  const { handleRemoveKey } = useAppSearchParams();
+  const { handleKeys } = useAppSearchParams();
   const { isVisible, key } = useAppSelector((state) => state.showAndHide);
   const dispatch = useAppDispatch();
 
@@ -13,7 +13,9 @@ export function useTransactionDialogVisibility() {
     if (isVisible || key !== "dialog") return;
 
     dispatch(ShowAndHideActions.hide());
-    handleRemoveKey({ key: "id" });
+    handleKeys({
+      remove: ["id"]
+    });
   }, [isVisible]);
 
   return {

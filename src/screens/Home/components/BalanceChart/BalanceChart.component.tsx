@@ -53,11 +53,11 @@ export function BalanceChart() {
     }
   });
 
-  const onSubmit = async (data: BalanceChartSchema) => {
+  const onSubmit = (data: BalanceChartSchema) => {
     const startDate = formatDateToApi(data.rangeDate.from);
     const endDate = formatDateToApi(data.rangeDate.to);
 
-    await handleAddKey({ key: "graphDate", value: `${startDate}_${endDate}` });
+    handleAddKey({ key: "graphDate", value: `${startDate}_${endDate}` });
   };
 
   const isEmpty = !isLoading && graphData && !graphData.data.length;

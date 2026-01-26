@@ -17,6 +17,8 @@ export function useDeleteTransaction() {
       toast.error("Houve um erro ao excluir a transação");
       return;
     }
+
+    toast.success("Transação excluída com sucesso");
   }
 
   return {

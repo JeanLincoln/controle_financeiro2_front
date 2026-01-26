@@ -19,7 +19,7 @@ export function useFindTransactionById() {
   }
 
   return {
-    transaction,
+    transaction: id ? transaction : undefined,
     isLoading: isLoading || isFetching
   };
 }

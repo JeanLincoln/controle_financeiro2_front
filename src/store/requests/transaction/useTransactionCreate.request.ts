@@ -1,7 +1,8 @@
 import { toast } from "sonner";
 
-import type { CreateOrUpdateTransaction } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
+import type { TransactionFormValues } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
 import { useCreateTransactionMutation } from "@/store/services/transaction/transaction.service";
+import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseTransactionCreateProps = {
@@ -16,10 +17,15 @@ export function useTransactionCreate({
   const [createTransaction, { isLoading }] = useCreateTransactionMutation();
 
   async function handleCreateTransaction(
-    transactionData: CreateOrUpdateTransaction
+    transactionData: TransactionFormValues
   ) {
     const [error] = await handleRequest(
-      createTransaction(transactionData).unwrap()
+      createTransaction({
+        ...transactionData,
+        transactionDate: formatDateToApi(
+          new Date(transactionData.transactionDate)
+        )
+      }).unwrap()
     );
 
     if (error) {
@@ -28,6 +34,7 @@ export function useTransactionCreate({
       return;
     }
 
+    toast.success("Transação criada com sucesso");
     successCallback();
   }
 
