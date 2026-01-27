@@ -115,7 +115,20 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                       Valor
                     </FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="0.00" {...field} />
+                      <Input
+                        {...field}
+                        type="number"
+                        placeholder="0.00"
+                        min={1}
+                        onChange={(e) => {
+                          const validatedValue = validateTransactionValueFilter(
+                            e.target.value
+                          );
+
+                          e.target.value = validatedValue;
+                          field.onChange(validatedValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,10 +175,10 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                       >
                         {!field.value && <ArrowUpDown size={18} />}
                         {field.value === TransactionType.INCOME && (
-                          <ArrowUp size={18} />
+                          <ArrowUp size={18} className="text-green-500" />
                         )}
                         {field.value === TransactionType.EXPENSE && (
-                          <ArrowDown size={18} />
+                          <ArrowDown size={18} className="text-red-500" />
                         )}
                       </button>
                     </FormControl>
@@ -358,3 +371,11 @@ export function FiltersSection({ form }: FiltersSectionProps) {
     </Card>
   );
 }
+
+const validateTransactionValueFilter = (value: string): string => {
+  const parsedValue = Number(value);
+  const isLowerThanZero = !isNaN(parsedValue) && parsedValue < 0;
+  const invalidValue = !parsedValue || isLowerThanZero;
+
+  return invalidValue ? "" : value;
+};
