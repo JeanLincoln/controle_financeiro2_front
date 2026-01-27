@@ -8,13 +8,18 @@ export function TransactionsListSectionEmptyState({
   nameSearch
 }: TransactionsListSectionEmptyStateProps) {
   return (
-    <div className="flex w-full flex-1 flex-col flex-wrap items-center justify-center gap-4">
-      <Building2 size={100} className="text-muted-foreground" />
-      <span className="text-muted-foreground">
+    <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
+      <div className="bg-muted/50 mb-4 rounded-full p-6">
+        <Building2 className="text-muted-foreground h-12 w-12" />
+      </div>
+      <h3 className="mb-2 text-lg font-semibold">
+        {nameSearch ? "Nenhuma transação encontrada" : "Nenhuma transação"}
+      </h3>
+      <p className="text-muted-foreground mb-4 max-w-sm text-sm">
         {nameSearch
-          ? "Não foi encontrada nenhuma origem com este nome"
-          : "Não há origens cadastradas, crie uma!"}
-      </span>
+          ? "Não encontramos transações com os filtros aplicados. Tente ajustar sua busca."
+          : "Você ainda não possui transações cadastradas. Clique no botão acima para criar sua primeira transação."}
+      </p>
     </div>
   );
 }

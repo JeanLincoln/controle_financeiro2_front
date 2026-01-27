@@ -79,7 +79,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Filtros</CardTitle>
+        <CardTitle className="text-lg font-semibold">Filtros</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
