@@ -27,7 +27,7 @@ export function TransactionAlertDialog() {
         <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
         <AlertDialogHeader>
           <AlertDialogDescription>
-            Isso vai remover essa origem de todas as transações que a têm.
+            Isso vai remover essa transação definitivamente.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -59,7 +59,7 @@ export function TransactionAlertDialog() {
               ) : (
                 <>
                   <Trash className="h-4 w-4" />
-                  Deletar origem
+                  Deletar transação
                 </>
               )}
             </Button>

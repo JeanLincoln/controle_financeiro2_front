@@ -43,7 +43,7 @@ export type TransactionFindAllParams =
   };
 
 export type DisplayedCategoriesAndSubCategoriesProps = {
-  id: number;
+  id: string;
   name: string;
   icon: string;
   color: string;

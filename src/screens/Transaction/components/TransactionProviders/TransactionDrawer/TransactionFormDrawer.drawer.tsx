@@ -18,8 +18,8 @@ export const TransactionFormDrawer = () => {
         <DrawerTitle>{id ? "Editar Transação" : "Nova Transação"}</DrawerTitle>
         <DrawerDescription>
           {id
-            ? "Edite os dados da origem"
-            : "Preencha os dados para criar uma nova origem"}
+            ? "Edite os dados da transação"
+            : "Preencha os dados para criar uma nova transação"}
         </DrawerDescription>
       </DrawerHeader>
       <div className="flex items-center justify-center p-4">

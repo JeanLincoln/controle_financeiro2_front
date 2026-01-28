@@ -317,7 +317,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                         value={field.value}
                       >
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a fruit" />
+                          <SelectValue placeholder="Selecione um campo" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>

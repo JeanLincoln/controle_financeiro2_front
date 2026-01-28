@@ -76,7 +76,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a fruit" />
+                        <SelectValue placeholder="Selecione um campo" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>

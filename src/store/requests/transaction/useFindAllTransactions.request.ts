@@ -18,7 +18,7 @@ export function useFindAllTransactions() {
 
   if (isError) {
     toast.error(
-      "Houve um erro ao buscar as transações, tente novamente mais tarde!."
+      "Houve um erro ao buscar as transações, tente novamente mais tarde!"
     );
   }
 

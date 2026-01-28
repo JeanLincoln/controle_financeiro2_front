@@ -31,7 +31,5 @@ export const paramsSerializer = (params: ParamsType) => {
     searchParams.append(key, String(value));
   }
 
-  console.log("final-endpoint", searchParams.toString());
-
   return searchParams.toString();
 };

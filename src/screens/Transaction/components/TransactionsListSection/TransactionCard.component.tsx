@@ -170,7 +170,7 @@ const Tag = ({ color, Icon, name }: TagProps) => {
           </span>
         </div>
       </TooltipTrigger>
-      <TooltipContent>Origem: {name}</TooltipContent>
+      <TooltipContent>{name}</TooltipContent>
     </Tooltip>
   );
 };

@@ -61,7 +61,7 @@ export const TransactionService = createApi({
             ...formattedCategories,
             ...formattedSubCategories
           ].map((item, index) => ({
-            id: Math.random() + index,
+            id: `${transaction.id}-${item.id}-${index}`,
             name: item.name,
             icon: item.icon,
             color: item.color
