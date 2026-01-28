@@ -3,7 +3,6 @@ import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -70,63 +69,79 @@ export const RankingCard = <T extends BaseRowProps>({
   return (
     <>
       {isLoading && <RankingCardSkeleton />}
-      <Card className="w-[49%]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {icon}
-            Ranking de {titleEntityName}
-          </CardTitle>
-          <CardAction>
-            <div className="flex items-center gap-2">
-              <ArrowUpCircle
-                className={`${
-                  type === "INCOME" ? "bg-green-700" : "text-green-700"
-                } cursor-pointer rounded-full`}
-                onClick={() => handleTypeChange("INCOME")}
-              />
-              <ArrowDownCircle
-                className={`${
-                  type === "EXPENSE" ? "bg-red-700" : "text-red-700"
-                } cursor-pointer rounded-full`}
-                onClick={() => handleTypeChange("EXPENSE")}
-              />
+      {!isLoading && (
+        <Card className="flex flex-col">
+          <CardHeader className="pb-3">
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-2">
+                {icon}
+                <CardTitle className="text-base font-semibold">
+                  {titleEntityName}
+                </CardTitle>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => handleTypeChange("INCOME")}
+                  className={`rounded-full p-1 transition-colors ${
+                    type === "INCOME"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900/30"
+                      : "text-muted-foreground hover:text-green-700"
+                  }`}
+                  title="Receitas"
+                >
+                  <ArrowUpCircle className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => handleTypeChange("EXPENSE")}
+                  className={`rounded-full p-1 transition-colors ${
+                    type === "EXPENSE"
+                      ? "bg-red-100 text-red-700 dark:bg-red-900/30"
+                      : "text-muted-foreground hover:text-red-700"
+                  }`}
+                  title="Despesas"
+                >
+                  <ArrowDownCircle className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-          </CardAction>
-          <CardDescription>
-            {titleEntityName} com maior gasto ou receita deste mês.
-          </CardDescription>
-        </CardHeader>
-        {dataIsEmpty && <RankingCardEmptyState />}
-        {dataLoaded && (
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">{titleEntityName}</TableHead>
-                  <TableHead>Tipo</TableHead>
-                  <TableHead>Valor</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {!!data?.length &&
-                  data.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="font-medium">{item.name}</TableCell>
-                      <TableCell>
-                        {item.type === TransactionType.EXPENSE
-                          ? "Despesa"
-                          : "Receita"}
-                      </TableCell>
-                      <TableCell>
-                        {toBRLCurrency(Number(item.amount))}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        )}
-      </Card>
+            <CardDescription className="text-xs">
+              Top 5 {titleEntityName} do mês
+            </CardDescription>
+          </CardHeader>
+          {dataIsEmpty && <RankingCardEmptyState />}
+          {dataLoaded && (
+            <CardContent className="flex-1 pt-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-xs">Nome</TableHead>
+                    <TableHead className="text-xs">Tipo</TableHead>
+                    <TableHead className="text-right text-xs">Valor</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {!!data?.length &&
+                    data.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="text-xs font-medium">
+                          {item.name}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {item.type === TransactionType.EXPENSE
+                            ? "Despesa"
+                            : "Receita"}
+                        </TableCell>
+                        <TableCell className="text-right text-xs font-medium">
+                          {toBRLCurrency(Number(item.amount))}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          )}
+        </Card>
+      )}
     </>
   );
 };

@@ -1,66 +1,51 @@
-import { Building2, CreditCard, FolderOpen, Tags } from "lucide-react";
-
-import { useCategoryRanking } from "@/store/requests/dashboard/useCategoryRanking.request";
-import { useOriginRanking } from "@/store/requests/dashboard/useOriginRanking.request";
-import { useSubCategoryRanking } from "@/store/requests/dashboard/useSubCategoryRanking.request";
-import { useTransactionRanking } from "@/store/requests/dashboard/useTransactionRanking.request";
+import { ChartNoAxesCombined } from "lucide-react";
 
 import { Balance } from "./components/Balance/Balance.component";
 import { BalanceChart } from "./components/BalanceChart/BalanceChart.component";
-import { RankingCard } from "./components/RankingCard/RankingCard.component";
-import { useRankingFilters } from "./hooks/useRankingFilters.hook";
+import { RankingCardsSwiper } from "./components/RankingCardsSwiper/RankingCardsSwiper.component";
 
 export default function HomeScreen() {
-  const {
-    categoryRankingType,
-    originRankingType,
-    subCategoryRankingType,
-    transactionRankingType
-  } = useRankingFilters();
-
-  const category = useCategoryRanking({
-    type: categoryRankingType
-  });
-  const subCategory = useSubCategoryRanking({
-    type: subCategoryRankingType
-  });
-  const origin = useOriginRanking({
-    type: originRankingType
-  });
-  const transaction = useTransactionRanking({
-    type: transactionRankingType
-  });
-
   return (
-    <div className="container mx-auto flex flex-col gap-8 p-6">
-      <Balance />
-      <div className="flex flex-wrap justify-between gap-2">
-        <RankingCard
-          name="categorias"
-          data={category.categoryData}
-          isLoading={category.isLoadingCategory}
-          icon={<FolderOpen className="h-5 w-5" />}
-        />
-        <RankingCard
-          name="subcategorias"
-          data={subCategory.subCategoryData}
-          isLoading={subCategory.isLoadingSubCategory}
-          icon={<Tags className="h-5 w-5" />}
-        />
-        <RankingCard
-          name="origens"
-          data={origin.originData}
-          isLoading={origin.isLoadingOrigin}
-          icon={<Building2 className="h-5 w-5" />}
-        />
-        <RankingCard
-          name="transações"
-          data={transaction.transactionData}
-          isLoading={transaction.isLoadingTransaction}
-          icon={<CreditCard className="h-5 w-5" />}
-        />
+    <div className="from-background via-background to-muted/10 min-h-screen bg-gradient-to-br">
+      <div className="container mx-auto space-y-8 p-4 pb-16 md:p-6 md:pb-20 lg:p-8">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <div className="from-primary/20 to-primary/5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br shadow-sm">
+              <ChartNoAxesCombined />
+            </div>
+            <div>
+              <h1 className="text-foreground text-3xl font-bold tracking-tight">
+                Dashboard
+              </h1>
+              <p className="text-muted-foreground text-sm">
+                Visão geral completa das suas finanças
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <Balance />
+        </section>
+
+        <section className="animate-in fade-in slide-in-from-bottom-4 space-y-4 duration-700">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h2 className="text-foreground text-xl font-semibold tracking-tight">
+                Rankings
+              </h2>
+              <p className="text-muted-foreground text-xs">
+                Top 5 maiores movimentações do mês
+              </p>
+            </div>
+          </div>
+          <RankingCardsSwiper />
+        </section>
+
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          <BalanceChart />
+        </section>
       </div>
-      <BalanceChart />
     </div>
   );
 }
