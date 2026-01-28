@@ -1,25 +1,22 @@
 import {
+  fetchBaseQuery,
   type BaseQueryApi,
   type BaseQueryFn,
   type FetchArgs,
-  fetchBaseQuery,
   type FetchBaseQueryError
 } from "@reduxjs/toolkit/query";
+
 import type { ReduxErrorProps } from "../store.types";
+import { paramsSerializer } from "./paramSerializer";
 
 type ExtraOptions = Record<string, unknown>;
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
-const prepareHeaders = (headers: Headers) => {
-  headers.set("Content-Type", "application/json");
-  return headers;
-};
-
 export const baseQuery = fetchBaseQuery({
   baseUrl,
-  prepareHeaders,
-  credentials: "include"
+  credentials: "include",
+  paramsSerializer
 });
 
 export const baseQueryWithAuth: BaseQueryFn<

@@ -1,8 +1,9 @@
+import { useEffect } from "react";
+
 import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
-import { useEffect } from "react";
 
 export function useCategoryDialogVisibility() {
   const { handleRemoveKey } = useAppSearchParams();

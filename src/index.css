@@ -159,6 +159,11 @@
   background: var(--muted);
 }
 
+.hidden-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
 /* Firefox scrollbar styles */
 * {
   scrollbar-width: thin;

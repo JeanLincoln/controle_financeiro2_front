@@ -1,5 +1,7 @@
-import { useAppSelector } from "@/store";
 import { useEffect } from "react";
+
+import { useAppSelector } from "@/store";
+
 import { useAppSearchParams } from "./useAppSearchParams.hook";
 
 type UseShowAndHideSearchParamsClearProps = {

@@ -1,8 +1,10 @@
+import { useEffect } from "react";
+import { useSearchParams } from "react-router";
+
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { useShowAndHideSearchParamsClear } from "@/hooks/useShowAndHideSearchParamsClear.hook";
 import { useFindCategoryById } from "@/store/requests/category/useFindCategoryById.request";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router";
+
 import { CategorySection } from "./CategorySection/CategorySection.component";
 import { SubCategorySection } from "./SubCategorySection/SubCategorySection.component";
 
@@ -29,15 +31,15 @@ export function CategoryForm() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center w-full p-6 space-y-6 ">
+    <div className="flex w-full flex-col items-center justify-center space-y-6 p-6">
       {isLoadingCategory && (
-        <div className="flex items-center justify-center h-50">
+        <div className="flex h-50 items-center justify-center">
           <LoadingSpinner variant="orbit" size="lg" />
         </div>
       )}
       {!isLoadingCategory && (
         <>
-          <div className="w-full flex gap-6 ">
+          <div className="flex w-full gap-6">
             <CategorySection category={category} />
             <SubCategorySection category={category} />
           </div>

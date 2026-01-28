@@ -1,3 +1,7 @@
+import { useState, type ComponentProps } from "react";
+import type { DayPicker } from "react-day-picker";
+import { ChevronDownIcon } from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import { Calendar } from "@/components/Calendar/Calendar.component";
 import {
@@ -5,9 +9,6 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/Popover/Popover.component";
-import { ChevronDownIcon } from "lucide-react";
-import { useState, type ComponentProps } from "react";
-import type { DayPicker } from "react-day-picker";
 
 type DateOfBirthPickerProps = ComponentProps<typeof DayPicker> & {
   date: Date | undefined;
@@ -37,7 +38,7 @@ export function DateOfBirthPicker({
       <PopoverContent className="w-auto overflow-hidden p-0" align="start">
         <Calendar
           mode="single"
-          className="w-auto bg-background"
+          className="bg-background w-auto"
           selected={date}
           captionLayout="dropdown"
           onSelect={(date) => {

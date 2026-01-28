@@ -1,11 +1,12 @@
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+import { baseQuery } from "../../config/base-query";
 import type {
   AuthSessionParams,
   AuthSessionResponse,
   RegisterUserParams,
   RegisterUserResponse
 } from "./authService.types";
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../../config/base-query";
 
 export const AuthService = createApi({
   reducerPath: "auth-service",

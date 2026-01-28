@@ -1,7 +1,8 @@
+import { toast } from "sonner";
+
 import { useAppDispatch } from "@/store";
 import { useDeleteSubCategoryMutation } from "@/store/services/subCategory/subCategory.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useDeleteSubCategory() {
   const dispatch = useAppDispatch();

@@ -1,14 +1,15 @@
+import { LogOut, User } from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import {
   Card,
-  CardHeader,
-  CardTitle,
+  CardAction,
   CardDescription,
-  CardAction
+  CardHeader,
+  CardTitle
 } from "@/components/Card/Card.component";
 import { useLogout } from "@/hooks/useLogout.hook";
 import { useAppSelector } from "@/store";
-import { User, LogOut } from "lucide-react";
 
 export function Header() {
   const logout = useLogout();

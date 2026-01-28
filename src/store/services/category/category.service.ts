@@ -1,6 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { baseQueryWithAuth } from "../../config/base-query";
-import { CACHE_TIME_INTERVALS } from "../services.constants";
+import {
+  CACHE_TIME_INTERVALS,
+  DEFAULT_INFINITE_QUERY_OPTIONS
+} from "../services.constants";
+import type { OmitPagination, PaginationProps } from "../services.types";
 import type {
   CategoryFindAllParams,
   CategoryFindAllResponse,
@@ -41,14 +46,19 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
-    getCategoriesOptions: builder.query<
+    getCategoriesOptions: builder.infiniteQuery<
       CategoryOptionsResponse,
-      CategoryOptionsParams
+      OmitPagination<CategoryOptionsParams>,
+      PaginationProps
     >({
-      query: (params) => ({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
         method: "GET",
         url: "/categories/options",
-        params
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
       }),
       providesTags: ["Category"]
     }),
@@ -81,7 +91,7 @@ export const CategoryService = createApi({
 export const {
   useLazyFindAllCategoriesQuery,
   useLazyFindCategoryByIdQuery,
-  useLazyGetCategoriesOptionsQuery,
+  useGetCategoriesOptionsInfiniteQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation

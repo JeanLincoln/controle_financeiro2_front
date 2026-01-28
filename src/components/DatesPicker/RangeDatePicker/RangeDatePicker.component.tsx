@@ -1,3 +1,7 @@
+import { useState, type ComponentProps } from "react";
+import type { DateRange, DayPicker } from "react-day-picker";
+import { ChevronDownIcon } from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import { Calendar } from "@/components/Calendar/Calendar.component";
 import {
@@ -5,9 +9,6 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/Popover/Popover.component";
-import { ChevronDownIcon } from "lucide-react";
-import { useState, type ComponentProps } from "react";
-import type { DateRange, DayPicker } from "react-day-picker";
 
 type RangeDatePickerProps = ComponentProps<typeof DayPicker> & {
   rangeDate: DateRange | undefined;
@@ -41,7 +42,7 @@ export function RangeDatePicker({
       <PopoverContent className="w-auto overflow-hidden p-0" align="start">
         <Calendar
           mode="range"
-          className="w-auto bg-background"
+          className="bg-background w-auto"
           selected={rangeDate}
           captionLayout="dropdown"
           onSelect={(date) => {

@@ -1,3 +1,10 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeClosed, Lock, LogIn, Mail } from "lucide-react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/Button/Button.component";
 import {
   Form,
@@ -13,12 +20,7 @@ import { useAppDispatch } from "@/store";
 import { useLoginMutation } from "@/store/services/auth/auth.service";
 import { AuthActions } from "@/store/slices/auth/auth.slice";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeClosed, Lock, LogIn, Mail } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
+
 import {
   loginFormDefaultValues,
   LoginFormSchema,
@@ -105,7 +107,7 @@ export function LoginForm() {
         <Button
           type="submit"
           variant="outline"
-          className="flex items-center gap-2 w-24"
+          className="flex w-24 items-center gap-2"
           disabled={isLoading}
         >
           {isLoading ? (

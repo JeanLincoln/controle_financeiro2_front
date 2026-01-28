@@ -1,4 +1,5 @@
 import type { Origin } from "@/entities/origin.entity";
+
 import type {
   GetOptionsProps,
   PaginationProps,

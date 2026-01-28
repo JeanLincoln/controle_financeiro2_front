@@ -1,3 +1,5 @@
+import { FileText, Palette, Pencil, Save, Tags, X } from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import {
   Card,
@@ -14,7 +16,7 @@ import { Input } from "@/components/Input/Input.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import { Textarea } from "@/components/Textarea/Textarea.component";
 import type { CategoryFindByIdResponse } from "@/store/services/category/categoryService.types";
-import { FileText, Palette, Pencil, Save, Tags, X } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -54,11 +56,11 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
     !isDeleting && !formState && !category?.subCategories.length;
 
   return (
-    <Card className=" shrink-0 flex-3 border border-gray-200 p-4 rounded-lg">
+    <Card className="flex-3 shrink-0 rounded-lg border border-gray-200 p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 h-full"
+          className="flex h-full flex-col gap-4"
         >
           <CardHeader className="p-0">
             <CardTitle>Sub Categorias</CardTitle>
@@ -74,12 +76,12 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                 >
                   {formState ? (
                     <>
-                      <X className="w-4 h-4" />
+                      <X className="h-4 w-4" />
                       <span>Cancelar</span>
                     </>
                   ) : (
                     <>
-                      <Tags className="w-4 h-4" />
+                      <Tags className="h-4 w-4" />
                       <span>Criar</span>
                     </>
                   )}
@@ -91,40 +93,40 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
           {category && (
             <CardContent className="flex flex-col gap-4 pl-0">
               {isDeleting && (
-                <div className="flex items-center justify-center h-50">
+                <div className="flex h-50 items-center justify-center">
                   <LoadingSpinner variant="orbit" size="lg" />
                 </div>
               )}
               {renderSubCategoriesEmptyState && <SubCategoriesEmptyState />}
               {renderSubCategoriesList && (
-                <div className="flex flex-wrap w-full gap-4 rounded-lg overflow-y-auto max-h-96 ">
+                <div className="flex max-h-96 w-full flex-wrap gap-4 overflow-y-auto rounded-lg">
                   {category?.subCategories.map((subCategory) => {
                     const SelectedIcon = getIconComponent(subCategory.icon);
                     return (
                       <div
-                        className="flex flex-col gap-2 p-2 rounded bg-secondary w-full max-w-59"
+                        className="bg-secondary flex w-full max-w-59 flex-col gap-2 rounded p-2"
                         key={subCategory.id}
                       >
-                        <div className="flex items-center gap-3  justify-between">
-                          <div className="flex gap-2 items-center justify-center">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center justify-center gap-2">
                             {SelectedIcon && (
                               <SelectedIcon
-                                className="w-5 h-5 text-secondary rounded-full flex-shrink-0 p-0.5"
+                                className="text-secondary h-5 w-5 flex-shrink-0 rounded-full p-0.5"
                                 style={{
                                   backgroundColor: subCategory.color
                                 }}
                               />
                             )}
                             <CardTitle
-                              className="text-xs line-clamp-1"
+                              className="line-clamp-1 text-xs"
                               withTooltip
                             >
                               {subCategory.name}
                             </CardTitle>
                           </div>
-                          <div className="flex gap-2 items-center justify-center">
+                          <div className="flex items-center justify-center gap-2">
                             <Pencil
-                              className="w-3 h-3 shrink-0 transition-all cursor-pointer hover:scale-120 hover:text-blue-500"
+                              className="h-3 w-3 shrink-0 cursor-pointer transition-all hover:scale-120 hover:text-blue-500"
                               onClick={() =>
                                 handleAddKey({
                                   key: SUB_CATEGORY_ID_FORM_KEY,
@@ -141,7 +143,7 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                           </div>
                         </div>
                         <CardDescription
-                          className="text-xs text-gray-500 line-clamp-3"
+                          className="line-clamp-3 text-xs text-gray-500"
                           withTooltip
                         >
                           {subCategory.description}
@@ -159,7 +161,7 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                     render={({ field }) => (
                       <FormItem className="w-full">
                         <FormLabel className="flex items-center gap-2">
-                          <FileText className="w-4 h-4" />
+                          <FileText className="h-4 w-4" />
                           Nome
                         </FormLabel>
                         <FormControl>
@@ -179,11 +181,11 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                     render={({ field }) => (
                       <FormItem className="w-full">
                         <FormLabel className="flex items-center gap-2">
-                          <FileText className="w-4 h-4" />
+                          <FileText className="h-4 w-4" />
                           Descrição
                         </FormLabel>
                         <FormControl>
-                          <Textarea {...field} className="resize-none h-30" />
+                          <Textarea {...field} className="h-30 resize-none" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -196,7 +198,7 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                       render={({ field }) => (
                         <FormItem className="w-full">
                           <FormLabel className="flex items-center gap-2">
-                            <Palette className="w-4 h-4" />
+                            <Palette className="h-4 w-4" />
                             Cor
                           </FormLabel>
                           <FormControl>
@@ -215,7 +217,7 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                       render={({ field }) => (
                         <FormItem className="w-full">
                           <FormLabel className="flex items-center gap-2">
-                            <FileText className="w-4 h-4" />
+                            <FileText className="h-4 w-4" />
                             Ícone
                           </FormLabel>
                           <FormControl>
@@ -234,14 +236,14 @@ export function SubCategorySection({ category }: SubCategorySectionProps) {
                   <Button
                     type="submit"
                     variant="outline"
-                    className="flex items-center w-32 gap-2"
+                    className="flex w-32 items-center gap-2"
                     disabled={isLoading}
                   >
                     {isLoading ? (
                       <LoadingSpinner size="sm" variant="orbit" />
                     ) : (
                       <>
-                        <Save className="w-4 h-4" />
+                        <Save className="h-4 w-4" />
                         Salvar
                       </>
                     )}

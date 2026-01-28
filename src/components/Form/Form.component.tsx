@@ -1,6 +1,4 @@
 import * as React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import { Slot } from "@radix-ui/react-slot";
 import {
   Controller,
   FormProvider,
@@ -10,9 +8,11 @@ import {
   type FieldPath,
   type FieldValues
 } from "react-hook-form";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
 
-import { cn } from "@/utils/cn.utils";
 import { Label } from "@/components/Label/Label.component";
+import { cn } from "@/utils/cn.utils";
 
 const Form = FormProvider;
 
@@ -102,7 +102,7 @@ function FormLabel({ className, required = false, ...props }: FormLabelProps) {
         htmlFor={formItemId}
         {...props}
       />
-      {required && <span className="text-red-500 text-xs">*</span>}
+      {required && <span className="text-xs text-red-500">*</span>}
     </div>
   );
 }
@@ -160,12 +160,12 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
 }
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
   FormMessage,
-  FormField
+  useFormField
 };

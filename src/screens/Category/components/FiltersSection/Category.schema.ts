@@ -1,6 +1,7 @@
+import { z } from "zod";
+
 import { CategorySortableFields } from "@/store/services/category/categoryService.types";
 import { SortOrder } from "@/store/services/services.types";
-import { z } from "zod";
 
 export const CategoryFormSchema = z.object({
   name: z.string().optional(),

@@ -1,6 +1,8 @@
+import type { PropsWithChildren } from "react";
+
 import { AlertDialog } from "@/components/AlertDialog/AlertDialog.component";
 import { Drawer } from "@/components/Drawer/Drawer.component";
-import type { PropsWithChildren } from "react";
+
 import { useOriginDialogVisibility } from "../../hooks/useOriginAlertDialogVisibility.hook";
 import { useOriginDrawerVisibility } from "../../hooks/useOriginDrawerVisibility.hook";
 import { OriginAlertDialog } from "./OriginAlertDialog/OriginAlertDialog.component";

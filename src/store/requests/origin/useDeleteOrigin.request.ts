@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useDeleteOriginMutation } from "@/store/services/origin/origin.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useDeleteOrigin() {
   const [deleteOrigin, { isLoading }] = useDeleteOriginMutation();

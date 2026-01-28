@@ -1,4 +1,5 @@
 import { StandardPagination } from "@/components/Pagination/Pagination.component";
+
 import { FiltersSection } from "./components/FiltersSection/FiltersSection.component";
 import { HeaderSection } from "./components/Header/HeaderSection.component";
 import { OriginProviders } from "./components/OriginProviders/OriginProviders.provider";
@@ -12,7 +13,7 @@ export default function OriginScreen() {
 
   return (
     <OriginProviders>
-      <div className="container flex flex-col min-h-screen gap-4 p-6 mx-auto">
+      <div className="container mx-auto flex min-h-screen flex-col gap-4 p-6">
         <HeaderSection />
         <FiltersSection form={form} />
         {dataIsEmpty && (

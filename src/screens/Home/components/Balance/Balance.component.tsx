@@ -1,13 +1,14 @@
 import {
   Card,
-  CardHeader,
-  CardTitle,
+  CardContent,
   CardDescription,
-  CardContent
+  CardHeader,
+  CardTitle
 } from "@/components/Card/Card.component";
 import { useBalanceQuery } from "@/store/services/dashboard/dashboard.service";
-import { BalanceCard } from "./BalanceCard/BalanceCard.component";
+
 import { BalanceSkeleton } from "./Balance.skeleton";
+import { BalanceCard } from "./BalanceCard/BalanceCard.component";
 
 export function Balance() {
   const { data: balance, isLoading } = useBalanceQuery();
@@ -16,16 +17,18 @@ export function Balance() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg font-semibold">
           Balanço deste mês
         </CardTitle>
-        <CardDescription>Entradas, saidas e saldo do mês atual</CardDescription>
+        <CardDescription className="text-xs">
+          Entradas, saídas e saldo do mês atual
+        </CardDescription>
       </CardHeader>
-      <CardContent className="px-4-6">
+      <CardContent className="px-6">
         {isLoading && <BalanceSkeleton />}
         {balanceIsLoaded && (
-          <div className="flex justify-between gap-4">
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
             <BalanceCard
               title="Entradas"
               effect="positive"

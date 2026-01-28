@@ -1,11 +1,19 @@
-import { baseQueryWithAuth } from "@/store/config/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { CACHE_TIME_INTERVALS } from "../services.constants";
+
+import { baseQueryWithAuth } from "@/store/config/base-query";
+
+import {
+  CACHE_TIME_INTERVALS,
+  DEFAULT_INFINITE_QUERY_OPTIONS
+} from "../services.constants";
+import type { OmitPagination, PaginationProps } from "../services.types";
 import type {
   CreateSubCategoryParams,
   DeleteSubCategoryParams,
   FindByIdSubCategoryParams,
   FindByIdSubCategoryResponse,
+  SubCategoryOptionsParams,
+  SubCategoryOptionsResponse,
   UpdateSubCategoryParams
 } from "./subCategoryService.types";
 
@@ -23,6 +31,22 @@ export const SubCategoryService = createApi({
       query: ({ categoryId, subCategoryId }) => ({
         method: "GET",
         url: `/sub-categories/${categoryId}/${subCategoryId}`
+      }),
+      providesTags: ["SubCategory"]
+    }),
+    getSubCategoriesOptions: builder.infiniteQuery<
+      SubCategoryOptionsResponse,
+      OmitPagination<SubCategoryOptionsParams>,
+      PaginationProps
+    >({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
+        method: "GET",
+        url: "/sub-categories/options",
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
       }),
       providesTags: ["SubCategory"]
     }),
@@ -54,6 +78,7 @@ export const SubCategoryService = createApi({
 
 export const {
   useFindByIdSubCategoryQuery,
+  useGetSubCategoriesOptionsInfiniteQuery,
   useCreateSubCategoryMutation,
   useDeleteSubCategoryMutation,
   useUpdateSubCategoryMutation

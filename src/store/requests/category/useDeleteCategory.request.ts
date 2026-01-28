@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useDeleteCategoryMutation } from "@/store/services/category/category.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 export function useDeleteCategory() {
   const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();

@@ -1,3 +1,5 @@
+import { ChevronDown, Search, X } from "lucide-react";
+
 import { Badge } from "@/components/Badge/Badge.component";
 import { Button } from "@/components/Button/Button.component";
 import {
@@ -14,7 +16,7 @@ import {
   PopoverTrigger
 } from "@/components/Popover/Popover.component";
 import { cn } from "@/utils/cn.utils";
-import { ChevronDown, Search, X } from "lucide-react";
+
 import { useIconSelector } from "./hooks/useIconSelector.hook";
 import { getIconComponent } from "./utils/iconSelector.utils";
 
@@ -65,15 +67,15 @@ export function IconSelector({
               <>
                 <div
                   style={{ backgroundColor: color }}
-                  className="p-1 rounded-full"
+                  className="rounded-full p-1"
                 >
-                  <SelectedIcon className="w-4 h-4 text-secondary" />
+                  <SelectedIcon className="text-secondary h-4 w-4" />
                 </div>
                 <span>{value}</span>
               </>
             ) : (
               <>
-                <Search className="w-4 h-4" />
+                <Search className="h-4 w-4" />
                 <span>{placeholder}</span>
               </>
             )}
@@ -81,37 +83,37 @@ export function IconSelector({
           <div className="flex items-center gap-1">
             {value && (
               <span
-                className="flex items-center justify-center w-4 h-4 p-0 hover:bg-destructive hover:text-destructive-foreground rounded"
+                className="hover:bg-destructive hover:text-destructive-foreground flex h-4 w-4 items-center justify-center rounded p-0"
                 onClick={handleClear}
               >
                 <X />
               </span>
             )}
-            <ChevronDown className="w-4 h-4 opacity-50 shrink-0" />
+            <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0 max-w-180" align="start">
+      <PopoverContent className="w-full max-w-180 p-0" align="start">
         <Command>
-          <div className="flex items-center px-3 border-b">
+          <div className="flex items-center border-b px-3">
             <CommandInput
               placeholder="Buscar ícones..."
               value={search}
               onValueChange={setSearch}
-              className="flex w-full h-10 py-3 text-sm bg-transparent rounded-md outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+              className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
           <CommandList className="max-h-[300px] overflow-auto">
             <CommandEmpty>
-              <div className="py-6 text-sm text-center">
-                <Search className="w-4 h-4 mx-auto mb-2 text-muted-foreground" />
+              <div className="py-6 text-center text-sm">
+                <Search className="text-muted-foreground mx-auto mb-2 h-4 w-4" />
                 Nenhum ícone encontrado.
               </div>
             </CommandEmpty>
             <CommandGroup>
               <div className="p-2">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-muted-foreground">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-muted-foreground text-xs font-medium">
                     {filteredIcons.length} ícones encontrados
                   </span>
                   {search && (
@@ -132,21 +134,21 @@ export function IconSelector({
                         value={iconName}
                         onSelect={() => handleSelect(iconName)}
                         className={cn(
-                          " flex-col flex  items-center justify-center p-2 h-22 cursor-pointer rounded-md border-2 border-transparent transition-all hover:border-primary/20 hover:bg-accent",
+                          "hover:border-primary/20 hover:bg-accent flex h-22 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-transparent p-2 transition-all",
                           isSelected && "border-primary bg-primary/10"
                         )}
                         title={iconName}
                       >
                         <div
-                          className="relative flex items-center justify-center p-2 mb-1 rounded-full"
+                          className="relative mb-1 flex items-center justify-center rounded-full p-2"
                           style={{
                             backgroundColor: color,
                             border: isSelected ? `2px solid white` : "none"
                           }}
                         >
-                          <IconComponent className="w-4 h-4 text-black" />
+                          <IconComponent className="h-4 w-4 text-black" />
                         </div>
-                        <span className="w-full mt-1 text-xs leading-tight text-center truncate ">
+                        <span className="mt-1 w-full truncate text-center text-xs leading-tight">
                           {iconName}
                         </span>
                       </CommandItem>

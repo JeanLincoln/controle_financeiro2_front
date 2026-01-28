@@ -6,11 +6,11 @@ export const TRANSACTION_CHART_CONFIG = {
   },
   income: {
     label: "Entradas",
-    color: "var(--chart-1)"
+    color: "var(--chart-2)"
   },
   expense: {
     label: "Despesas",
-    color: "var(--chart-2)"
+    color: "var(--chart-5)"
   },
   balance: {
     label: "Saldo",

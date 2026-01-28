@@ -1,12 +1,14 @@
+import { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import type { Category } from "@/entities/category.entity";
 import { useCategoryCreate } from "@/store/requests/category/useCategoryCreate.request";
 import { useCategoryUpdate } from "@/store/requests/category/useCategoryUpdate.request";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+
 import {
-  CategoryFormSchema,
-  categoryFormDefaultValues
+  categoryFormDefaultValues,
+  CategoryFormSchema
 } from "../CategoryForm.schema";
 import type { CategorySectionProps } from "../CategorySection.component";
 

@@ -1,9 +1,11 @@
 import type { Middleware } from "@reduxjs/toolkit";
+
 import { AuthService } from "../services/auth/auth.service";
 import { CategoryService } from "../services/category/category.service";
 import { DashboardService } from "../services/dashboard/dashboard.service";
 import { OriginService } from "../services/origin/origin.service";
 import { SubCategoryService } from "../services/subCategory/subCategory.service";
+import { TransactionService } from "../services/transaction/transaction.service";
 
 interface MiddlewareOptions {
   serializableCheck?: boolean | object;
@@ -20,7 +22,8 @@ export default (getDefaultMiddleware: GetDefaultMiddlewareType) => {
     DashboardService.middleware,
     OriginService.middleware,
     CategoryService.middleware,
-    SubCategoryService.middleware
+    SubCategoryService.middleware,
+    TransactionService.middleware
   );
 
   return middleware;

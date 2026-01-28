@@ -1,13 +1,14 @@
+import * as React from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon
 } from "lucide-react";
-import * as React from "react";
 
 import { Button, buttonVariants } from "@/components/Button/Button.component";
 import type { PaginationResponse } from "@/store/services/services.types";
 import { cn } from "@/utils/cn.utils";
+
 import { Input } from "../Input/Input.component";
 import { usePagination } from "./hooks/usePagination.hook";
 
@@ -290,7 +291,7 @@ function StandardPagination({
   const renderGoToPageInput = () => (
     <div className="flex items-center justify-center gap-2">
       <Input
-        className=" [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+        className="[-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         type="number"
         min={1}
         max={totalPages}
@@ -301,7 +302,7 @@ function StandardPagination({
   );
 
   return (
-    <Pagination className={cn("h-fit flex gap-2", className)}>
+    <Pagination className={cn("flex h-fit gap-2", className)}>
       <PaginationContent>
         {renderGoToPreviousButton()}
         {renderPageItems()}

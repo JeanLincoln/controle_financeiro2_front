@@ -21,9 +21,9 @@ export function LoadingSpinner({
     return (
       <div className={cn("flex items-center justify-center", className)}>
         <div className={cn("relative", sizeClasses[size])}>
-          <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping"></div>
-          <div className="absolute inset-0 rounded-full bg-primary/40 animate-pulse"></div>
-          <div className="relative rounded-full bg-primary animate-bounce"></div>
+          <div className="bg-primary/20 absolute inset-0 animate-ping rounded-full"></div>
+          <div className="bg-primary/40 absolute inset-0 animate-pulse rounded-full"></div>
+          <div className="bg-primary relative animate-bounce rounded-full"></div>
         </div>
       </div>
     );
@@ -36,22 +36,22 @@ export function LoadingSpinner({
       >
         <div
           className={cn(
-            "rounded-full bg-primary animate-bounce",
-            size === "sm" ? "w-1 h-1" : size === "md" ? "w-2 h-2" : "w-3 h-3"
+            "bg-primary animate-bounce rounded-full",
+            size === "sm" ? "h-1 w-1" : size === "md" ? "h-2 w-2" : "h-3 w-3"
           )}
           style={{ animationDelay: "0ms" }}
         ></div>
         <div
           className={cn(
-            "rounded-full bg-primary animate-bounce",
-            size === "sm" ? "w-1 h-1" : size === "md" ? "w-2 h-2" : "w-3 h-3"
+            "bg-primary animate-bounce rounded-full",
+            size === "sm" ? "h-1 w-1" : size === "md" ? "h-2 w-2" : "h-3 w-3"
           )}
           style={{ animationDelay: "150ms" }}
         ></div>
         <div
           className={cn(
-            "rounded-full bg-primary animate-bounce",
-            size === "sm" ? "w-1 h-1" : size === "md" ? "w-2 h-2" : "w-3 h-3"
+            "bg-primary animate-bounce rounded-full",
+            size === "sm" ? "h-1 w-1" : size === "md" ? "h-2 w-2" : "h-3 w-3"
           )}
           style={{ animationDelay: "300ms" }}
         ></div>
@@ -63,13 +63,13 @@ export function LoadingSpinner({
     return (
       <div className={cn("flex items-center justify-center", className)}>
         <div className={cn("relative", sizeClasses[size])}>
-          <div className="absolute inset-0 rounded-full border-2 border-primary/20"></div>
-          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary animate-spin"></div>
+          <div className="border-primary/20 absolute inset-0 rounded-full border-2"></div>
+          <div className="border-t-primary absolute inset-0 animate-spin rounded-full border-2 border-transparent"></div>
           <div
-            className="absolute inset-1 rounded-full border border-transparent border-r-primary animate-spin"
+            className="border-r-primary absolute inset-1 animate-spin rounded-full border border-transparent"
             style={{ animationDirection: "reverse", animationDuration: "0.8s" }}
           ></div>
-          <div className="absolute inset-2 rounded-full bg-primary/60 animate-pulse"></div>
+          <div className="bg-primary/60 absolute inset-2 animate-pulse rounded-full"></div>
         </div>
       </div>
     );
@@ -78,14 +78,14 @@ export function LoadingSpinner({
   return (
     <div className={cn("flex items-center justify-center", className)}>
       <div className={cn("relative", sizeClasses[size])}>
-        <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping"></div>
-        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary border-r-primary animate-spin"></div>
+        <div className="border-primary/20 absolute inset-0 animate-ping rounded-full border-2"></div>
+        <div className="border-t-primary border-r-primary absolute inset-0 animate-spin rounded-full border-2 border-transparent"></div>
         <div
-          className="absolute inset-1 rounded-full border border-transparent border-b-primary/60 animate-spin"
+          className="border-b-primary/60 absolute inset-1 animate-spin rounded-full border border-transparent"
           style={{ animationDirection: "reverse", animationDuration: "1.5s" }}
         ></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-1 h-1 rounded-full bg-primary animate-pulse"></div>
+          <div className="bg-primary h-1 w-1 animate-pulse rounded-full"></div>
         </div>
       </div>
     </div>

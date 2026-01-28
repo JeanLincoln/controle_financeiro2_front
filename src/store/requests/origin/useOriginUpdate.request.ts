@@ -1,7 +1,8 @@
+import { toast } from "sonner";
+
 import type { CreateOrUpdateOrigin } from "@/components/Form/Origin/hooks/useOriginForm.hook";
 import { useUpdateOriginMutation } from "@/store/services/origin/origin.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 type UseOriginUpdateProps = {
   successCallback: () => void;

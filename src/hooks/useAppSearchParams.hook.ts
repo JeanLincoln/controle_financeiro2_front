@@ -10,20 +10,46 @@ export type HandleKeyProps = {
   value: number | string;
 };
 
+export type HandleAddAndRemoveKeysProps = {
+  add?: HandleKeyProps[];
+  remove?: string[];
+};
+
 export function useAppSearchParams({
   clearOnUnmount
 }: useAppSearchParamsProps = {}) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
 
-  const handleAddKey = async ({ key, value }: HandleKeyProps) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set(key, value.toString());
-    setSearchParams(newSearchParams);
+  const handleAddKey = ({ key, value }: HandleKeyProps) => {
+    setSearchParams((searchParams) => {
+      searchParams.set(key, value.toString());
+      return searchParams;
+    });
   };
 
   const handleRemoveKey = ({ key }: Pick<HandleKeyProps, "key">) => {
-    searchParams.delete(key);
-    setSearchParams(searchParams);
+    setSearchParams((searchParams) => {
+      searchParams.delete(key);
+      return searchParams;
+    });
+  };
+
+  const handleKeys = ({ add, remove }: HandleAddAndRemoveKeysProps) => {
+    setSearchParams((searchParams) => {
+      if (remove && !!remove.length) {
+        remove.forEach((key) => {
+          searchParams.delete(key);
+        });
+      }
+
+      if (add && !!add.length) {
+        add.forEach(({ key, value }) => {
+          searchParams.set(key, value.toString());
+        });
+      }
+
+      return searchParams;
+    });
   };
 
   useEffect(() => {
@@ -38,6 +64,7 @@ export function useAppSearchParams({
 
   return {
     handleAddKey,
-    handleRemoveKey
+    handleRemoveKey,
+    handleKeys
   };
 }

@@ -22,7 +22,7 @@ function Input({ className, type, icon, ...props }: InputProps) {
         {...props}
       />
       {icon && (
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-10 bg-card cursor-pointer rounded-full p-1 w-6 h-6 flex items-center justify-center">
+        <div className="bg-card absolute top-1/2 right-3 z-10 flex h-6 w-6 -translate-y-1/2 transform cursor-pointer items-center justify-center rounded-full p-1">
           {icon}
         </div>
       )}

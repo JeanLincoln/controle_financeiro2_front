@@ -1,5 +1,5 @@
-import { CircleAlert, Trash } from "lucide-react";
 import { useState } from "react";
+import { CircleAlert, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 export function useHandleDeleteSubCategoryTimeout() {
@@ -40,17 +40,16 @@ export function useHandleDeleteSubCategoryTimeout() {
   ) => {
     return !!confirmDelete && confirmDelete === subCategoryId ? (
       <CircleAlert
-        className="w-4 h-4 shrink-0 transition-all cursor-pointer hover:scale-120 hover:text-destructive animate-bounce text-destructive"
+        className="hover:text-destructive text-destructive h-4 w-4 shrink-0 animate-bounce cursor-pointer transition-all hover:scale-120"
         onClick={() => {
           if (!timeoutId) return;
-          console.log({ timeoutId });
           handleClearTimeout(timeoutId);
           deleteCallback();
         }}
       />
     ) : (
       <Trash
-        className="w-3 h-3 shrink-0 transition-all cursor-pointer hover:scale-120 hover:text-destructive"
+        className="hover:text-destructive h-3 w-3 shrink-0 cursor-pointer transition-all hover:scale-120"
         onClick={() => handleConfirmDelete(subCategoryId)}
       />
     );

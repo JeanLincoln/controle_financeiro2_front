@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useFindByIdSubCategoryQuery } from "@/store/services/subCategory/subCategory.service";
 import type { SubCategoryIdParams } from "@/store/services/subCategory/subCategoryService.types";
-import { toast } from "sonner";
 
 type UseFindSubCategoryByIdProps = Partial<SubCategoryIdParams>;
 

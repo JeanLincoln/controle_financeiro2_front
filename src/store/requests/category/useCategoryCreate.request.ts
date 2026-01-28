@@ -1,9 +1,10 @@
+import { toast } from "sonner";
+
 import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
 import type { CreateOrUpdateCategory } from "@/components/Form/Category/CategorySection/hooks/useCategoryForm.hook";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useCreateCategoryMutation } from "@/store/services/category/category.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
-import { toast } from "sonner";
 
 type UseCategoryCreateProps = {
   successCallback?: () => void;

@@ -1,5 +1,6 @@
-import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 import { useSearchParams } from "react-router";
+
+import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
 
 export const CATEGORY_RANKING_FILTERS_KEY = "categoryRankingType";
 export const SUB_CATEGORY_RANKING_FILTERS_KEY = "subCategoryRankingType";

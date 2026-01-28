@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { CreateOrUpdateCategory } from "../hooks/useCategoryForm.hook";
 
 export const CategoryFormSchema = z.object({

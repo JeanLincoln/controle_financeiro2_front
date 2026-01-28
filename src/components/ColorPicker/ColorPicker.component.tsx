@@ -1,3 +1,6 @@
+import React from "react";
+import { Palette } from "lucide-react";
+
 import { Button } from "@/components/Button/Button.component";
 import {
   Popover,
@@ -5,8 +8,7 @@ import {
   PopoverTrigger
 } from "@/components/Popover/Popover.component";
 import { cn } from "@/utils/cn.utils";
-import { Palette } from "lucide-react";
-import React from "react";
+
 import { PRESET_COLORS } from "./constants/colorPicker.constants";
 
 interface AdvancedColorPickerProps {
@@ -40,14 +42,14 @@ export const ColorPicker = React.forwardRef<
           <Button
             variant="outline"
             size="sm"
-            className="w-auto h-10 gap-2 px-3"
+            className="h-10 w-auto gap-2 px-3"
             disabled={disabled}
           >
             <div
-              className="w-4 h-4 border rounded border-border"
+              className="border-border h-4 w-4 rounded border"
               style={{ backgroundColor: value }}
             />
-            <Palette className="w-4 h-4" />
+            <Palette className="h-4 w-4" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-64 p-3">
@@ -59,7 +61,7 @@ export const ColorPicker = React.forwardRef<
                   key={color}
                   type="button"
                   className={cn(
-                    "w-8 h-8 rounded border-2 transition-transform hover:scale-110",
+                    "h-8 w-8 rounded border-2 transition-transform hover:scale-110",
                     value === color ? "border-foreground" : "border-border"
                   )}
                   style={{ backgroundColor: color }}
@@ -69,7 +71,7 @@ export const ColorPicker = React.forwardRef<
               ))}
             </div>
             <div className="space-y-2">
-              <label className="text-sm text-muted-foreground">
+              <label className="text-muted-foreground text-sm">
                 Cor personalizada
               </label>
               <div className="flex items-center gap-2">
@@ -78,11 +80,11 @@ export const ColorPicker = React.forwardRef<
                   type="color"
                   value={value}
                   onChange={handleCustomColorChange}
-                  className="w-12 h-8 border rounded cursor-pointer border-input"
+                  className="border-input h-8 w-12 cursor-pointer rounded border"
                   disabled={disabled}
                   {...props}
                 />
-                <span className="font-mono text-sm text-muted-foreground">
+                <span className="text-muted-foreground font-mono text-sm">
                   {value.toUpperCase()}
                 </span>
               </div>
@@ -92,11 +94,11 @@ export const ColorPicker = React.forwardRef<
       </Popover>
       <div className="flex items-center gap-2">
         <div
-          className="w-6 h-6 border rounded border-input"
+          className="border-input h-6 w-6 rounded border"
           style={{ backgroundColor: value }}
           title={`Cor selecionada: ${value}`}
         />
-        <span className="font-mono text-sm text-muted-foreground">
+        <span className="text-muted-foreground font-mono text-sm">
           {value.toUpperCase()}
         </span>
       </div>

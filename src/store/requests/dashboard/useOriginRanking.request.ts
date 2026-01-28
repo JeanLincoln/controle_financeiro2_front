@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useOriginRankingQuery } from "@/store/services/dashboard/dashboard.service";
 import type { RankingParams } from "@/store/services/dashboard/dashboardService.types";
-import { toast } from "sonner";
 
 export function useOriginRanking({ type }: RankingParams) {
   const {

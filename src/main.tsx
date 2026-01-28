@@ -1,11 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router";
-import { router } from "./routes";
-import "./index.css";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { RouterProvider } from "react-router";
+import { setDefaultOptions } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { Toaster } from "sonner";
+
+import "./index.css";
+
+import { router } from "./routes";
+import { store } from "./store";
+
+setDefaultOptions({ locale: ptBR });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

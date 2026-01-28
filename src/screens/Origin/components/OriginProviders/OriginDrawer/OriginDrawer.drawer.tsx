@@ -1,3 +1,5 @@
+import { useSearchParams } from "react-router";
+
 import {
   DrawerContent,
   DrawerDescription,
@@ -5,14 +7,13 @@ import {
   DrawerTitle
 } from "@/components/Drawer/Drawer.component";
 import { OriginForm } from "@/components/Form/Origin/Origin.form";
-import { useSearchParams } from "react-router";
 
 export const OriginDrawer = () => {
   const [params] = useSearchParams();
   const id = params.get("id");
 
   return (
-    <DrawerContent className="w-full max-w-2xl mx-auto">
+    <DrawerContent className="mx-auto w-full max-w-2xl">
       <DrawerHeader>
         <DrawerTitle>{id ? "Editar Origem" : "Nova Origem"}</DrawerTitle>
         <DrawerDescription>
@@ -21,7 +22,7 @@ export const OriginDrawer = () => {
             : "Preencha os dados para criar uma nova origem"}
         </DrawerDescription>
       </DrawerHeader>
-      <div className="p-4 flex items-center justify-center">
+      <div className="flex items-center justify-center p-4">
         <OriginForm />
       </div>
     </DrawerContent>

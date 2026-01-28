@@ -1,10 +1,12 @@
+import { type UseFormReturn } from "react-hook-form";
+import { ArrowDown, ArrowUp, LetterText, ListOrderedIcon } from "lucide-react";
+
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle
 } from "@/components/Card/Card.component";
-
 import {
   Form,
   FormControl,
@@ -22,12 +24,11 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from "@/components/Select/Select.component";
+} from "@/components/Select/ShadcnSelect/Select.component";
 import { OriginSortableFields } from "@/store/services/origin/originService.types";
 import { SortOrder } from "@/store/services/services.types";
 import { handleSortOrderChange } from "@/utils/handleSortOrderChange.utils";
-import { ArrowDown, ArrowUp, LetterText, ListOrderedIcon } from "lucide-react";
-import { type UseFormReturn } from "react-hook-form";
+
 import { type OriginFormSchemaType } from "./Origin.schema";
 
 type FiltersSectionProps = {
@@ -42,14 +43,14 @@ export function FiltersSection({ form }: FiltersSectionProps) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="flex items-center w-full gap-4 ">
+          <form className="flex w-full items-center gap-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormLabel className="flex items-center gap-2">
-                    <LetterText className="w-4 h-4" />
+                    <LetterText className="h-4 w-4" />
                     nome
                   </FormLabel>
                   <FormControl>
@@ -69,13 +70,13 @@ export function FiltersSection({ form }: FiltersSectionProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <ListOrderedIcon className="w-4 h-4" />
+                    <ListOrderedIcon className="h-4 w-4" />
                     Ordem por
                   </FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a fruit" />
+                        <SelectValue placeholder="Selecione um campo" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -101,13 +102,13 @@ export function FiltersSection({ form }: FiltersSectionProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <ListOrderedIcon className="w-4 h-4" />
+                    <ListOrderedIcon className="h-4 w-4" />
                     Ordem
                   </FormLabel>
                   <FormControl>
                     <button
                       type="button"
-                      className="flex items-center justify-center w-full bg-input/30 border-input h-9 cursor-pointer hover:bg-input/60 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                      className="bg-input/30 border-input hover:bg-input/60 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full cursor-pointer items-center justify-center rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                       onClick={() =>
                         handleSortOrderChange(form.setValue, field.value)
                       }

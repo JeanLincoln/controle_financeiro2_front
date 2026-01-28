@@ -5,6 +5,8 @@ export const SortOrder = {
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 
+export type OmitPagination<T> = Omit<T, "page" | "limit">;
+
 export type PaginationProps = {
   page?: number;
   limit?: number;
@@ -30,7 +32,7 @@ export type SortAndPaginationProps<T> = PaginationProps & {
   sortBy?: T;
 };
 
-type OptionProps = {
+export type OptionProps = {
   id: number;
   name: string;
 };
