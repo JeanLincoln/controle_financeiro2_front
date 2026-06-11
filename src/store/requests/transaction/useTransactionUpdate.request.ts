@@ -1,8 +1,9 @@
 import { toast } from "sonner";
 
 import type { TransactionFormValues } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
+import { useAppDispatch } from "@/store";
+import { DashboardService } from "@/store/services/dashboard/dashboard.service";
 import { useUpdateTransactionMutation } from "@/store/services/transaction/transaction.service";
-import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseTransactionUpdateProps = {
@@ -14,6 +15,7 @@ export function useTransactionUpdate({
   successCallback,
   errorCallback
 }: UseTransactionUpdateProps) {
+  const dispatch = useAppDispatch();
   const [updateTransaction, { isLoading }] = useUpdateTransactionMutation();
 
   async function handleUpdateTransaction(
@@ -24,9 +26,7 @@ export function useTransactionUpdate({
       updateTransaction({
         ...transactionData,
         id: transactionId,
-        transactionDate: formatDateToApi(
-          new Date(transactionData.transactionDate)
-        )
+        transactionDate: new Date(transactionData.transactionDate).toISOString()
       }).unwrap()
     );
 
@@ -37,6 +37,7 @@ export function useTransactionUpdate({
     }
 
     toast.success("Transação atualizada com sucesso");
+    dispatch(DashboardService.util.invalidateTags(["Balance"]));
     successCallback();
   }
 

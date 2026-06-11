@@ -26,7 +26,6 @@ import {
 } from "@/components/Form/Form.component";
 import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useGetTransactionGraphData } from "@/store/requests/dashboard/useGetTransactionGraphData.request";
-import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 
 import { BalanceChartEmptyState } from "./BalanceChart.empty-state";
 import {
@@ -54,8 +53,8 @@ export function BalanceChart() {
   });
 
   const onSubmit = (data: BalanceChartSchema) => {
-    const startDate = formatDateToApi(data.rangeDate.from);
-    const endDate = formatDateToApi(data.rangeDate.to);
+    const startDate = data.rangeDate.from.toISOString();
+    const endDate = data.rangeDate.to.toISOString();
 
     handleAddKey({ key: "graphDate", value: `${startDate}_${endDate}` });
   };

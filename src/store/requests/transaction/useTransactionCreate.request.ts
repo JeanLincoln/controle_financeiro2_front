@@ -1,8 +1,9 @@
 import { toast } from "sonner";
 
 import type { TransactionFormValues } from "@/components/Form/Transaction/hooks/useTransactionForm.hook";
+import { useAppDispatch } from "@/store";
+import { DashboardService } from "@/store/services/dashboard/dashboard.service";
 import { useCreateTransactionMutation } from "@/store/services/transaction/transaction.service";
-import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseTransactionCreateProps = {
@@ -14,6 +15,7 @@ export function useTransactionCreate({
   successCallback,
   errorCallback
 }: UseTransactionCreateProps) {
+  const dispatch = useAppDispatch();
   const [createTransaction, { isLoading }] = useCreateTransactionMutation();
 
   async function handleCreateTransaction(
@@ -22,9 +24,7 @@ export function useTransactionCreate({
     const [error] = await handleRequest(
       createTransaction({
         ...transactionData,
-        transactionDate: formatDateToApi(
-          new Date(transactionData.transactionDate)
-        )
+        transactionDate: transactionData.transactionDate.toISOString()
       }).unwrap()
     );
 
@@ -33,7 +33,7 @@ export function useTransactionCreate({
       errorCallback?.();
       return;
     }
-
+    dispatch(DashboardService.util.invalidateTags(["Balance"]));
     toast.success("Transação criada com sucesso");
     successCallback();
   }

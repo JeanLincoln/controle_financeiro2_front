@@ -23,22 +23,27 @@ export function BalanceCard({
   variationTotal,
   pastValue = 0
 }: BalanceCardProps) {
-  const pastValueIsPositive = pastValue >= 0;
+  const pastValueAndCurrentValueAreEquals = pastValue === total;
+
   const statusIsPositive =
-    variationPercentage !== null && variationPercentage >= 0;
+    (effect === "positive" && (variationTotal || 0) >= 0) ||
+    (effect === "negative" && (variationTotal || 0) < 0);
 
-  const positiveVariationClass =
-    effect === "positive" ? "text-green-500 text-xs" : "text-red-500 text-xs";
-  const negativeVariationClass =
-    effect === "positive" ? "text-red-500 text-xs" : "text-green-500 text-xs";
+  const variationClass = statusIsPositive
+    ? "text-green-500 text-xs"
+    : "text-red-500 text-xs";
 
-  const statusClassName = statusIsPositive
-    ? positiveVariationClass
-    : negativeVariationClass;
+  const neutralVariationClass = "text-muted-foreground text-xs";
 
-  const pastValueClassName = pastValueIsPositive
-    ? positiveVariationClass
-    : negativeVariationClass;
+  const statusClassName = pastValueAndCurrentValueAreEquals
+    ? neutralVariationClass
+    : variationClass;
+
+  const validatedVariation = !pastValue
+    ? null
+    : variationPercentage !== null
+      ? variationPercentage
+      : 0;
 
   return (
     <Card className="gap-2 p-4">
@@ -58,10 +63,14 @@ export function BalanceCard({
               </span>
               <div className="flex items-center gap-0.5">
                 <span className={statusClassName}>
-                  {statusIsPositive ? "+" : ""}
+                  {effect === "positive" &&
+                    statusIsPositive &&
+                    !!validatedVariation &&
+                    "+"}
+                  {effect === "negative" && statusIsPositive && ""}
                 </span>
                 <span className={statusClassName}>
-                  {variationPercentage || 0}%
+                  {validatedVariation ? `${validatedVariation}%` : "-"}
                 </span>
               </div>
             </div>
@@ -70,11 +79,12 @@ export function BalanceCard({
                 Valor mês anterior:
               </span>
               <div className="flex items-center gap-0.5">
-                <span className={pastValueClassName}>
-                  {pastValueIsPositive ? "+" : ""}
+                <span className={statusClassName}>
+                  {effect === "positive" && statusIsPositive && "+"}
+                  {effect === "negative" && statusIsPositive && ""}
                 </span>
-                <span className={pastValueClassName}>
-                  {toBRLCurrency(pastValue)}
+                <span className={statusClassName}>
+                  {pastValue > 0 ? toBRLCurrency(pastValue) : "-"}
                 </span>
               </div>
             </div>
@@ -84,10 +94,13 @@ export function BalanceCard({
               </span>
               <div className="flex items-center gap-0.5">
                 <span className={statusClassName}>
-                  {statusIsPositive ? "+" : ""}
+                  {effect === "positive" && statusIsPositive && "+"}
+                  {effect === "negative" && statusIsPositive && ""}
                 </span>
                 <span className={statusClassName}>
-                  {toBRLCurrency(variationTotal)}
+                  {variationTotal !== null
+                    ? toBRLCurrency(variationTotal)
+                    : "-"}
                 </span>
               </div>
             </div>

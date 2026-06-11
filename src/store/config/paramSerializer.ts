@@ -1,5 +1,3 @@
-import { formatDateToApi } from "@/utils/formatDateToApi.utils";
-
 type ParamsType = Record<string, unknown>;
 
 const validateParams = (params: ParamsType) =>
@@ -24,7 +22,7 @@ export const paramsSerializer = (params: ParamsType) => {
     }
 
     if (value instanceof Date) {
-      searchParams.append(key, formatDateToApi(value));
+      searchParams.append(key, value.toISOString());
       continue;
     }
 
