@@ -1,9 +1,12 @@
 import { toast } from "sonner";
 
+import { useAppDispatch } from "@/store";
+import { DashboardService } from "@/store/services/dashboard/dashboard.service";
 import { useDeleteTransactionMutation } from "@/store/services/transaction/transaction.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 export function useDeleteTransaction() {
+  const dispatch = useAppDispatch();
   const [deleteTransaction, { isLoading }] = useDeleteTransactionMutation();
 
   async function handleDeleteTransaction(transactionId?: number) {
@@ -18,6 +21,7 @@ export function useDeleteTransaction() {
       return;
     }
 
+    dispatch(DashboardService.util.invalidateTags(["Balance"]));
     toast.success("Transação excluída com sucesso");
   }
 

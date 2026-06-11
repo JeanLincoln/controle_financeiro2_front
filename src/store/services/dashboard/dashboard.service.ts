@@ -17,6 +17,7 @@ import type {
 export const DashboardService = createApi({
   reducerPath: "dashboard-service",
   baseQuery: baseQueryWithAuth,
+  tagTypes: ["Balance"],
   refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
@@ -24,7 +25,8 @@ export const DashboardService = createApi({
       query: () => ({
         method: "GET",
         url: "/dashboard/balance"
-      })
+      }),
+      providesTags: ["Balance"]
     }),
     transactionsGraph: builder.query<
       TransactionsGraphResponse,
@@ -37,7 +39,8 @@ export const DashboardService = createApi({
           startDate: startDate,
           endDate: endDate
         }
-      })
+      }),
+      providesTags: ["Balance"]
     }),
     categoryRanking: builder.query<CategoryRankingResponse, RankingParams>({
       query: ({ type }) => ({
@@ -46,7 +49,8 @@ export const DashboardService = createApi({
         params: {
           type
         }
-      })
+      }),
+      providesTags: ["Balance"]
     }),
     subCategoryRanking: builder.query<
       SubCategoryRankingResponse,
@@ -58,7 +62,8 @@ export const DashboardService = createApi({
         params: {
           type
         }
-      })
+      }),
+      providesTags: ["Balance"]
     }),
     transactionRanking: builder.query<
       TransactionRankingResponse,
@@ -70,7 +75,8 @@ export const DashboardService = createApi({
         params: {
           type
         }
-      })
+      }),
+      providesTags: ["Balance"]
     }),
     originRanking: builder.query<OriginRankingResponse, RankingParams>({
       query: ({ type }) => ({
@@ -79,7 +85,8 @@ export const DashboardService = createApi({
         params: {
           type
         }
-      })
+      }),
+      providesTags: ["Balance"]
     })
   })
 });

@@ -3,11 +3,10 @@ import { toast } from "sonner";
 
 import { handleInitialRangeDate } from "@/screens/Home/components/BalanceChart/utils/handleInitialDate.utils";
 import { useTransactionsGraphQuery } from "@/store/services/dashboard/dashboard.service";
-import { formatDateToApi } from "@/utils/formatDateToApi.utils";
 
 const { from, to } = handleInitialRangeDate();
-const defaultFrom = formatDateToApi(from);
-const defaultTo = formatDateToApi(to);
+const defaultFrom = from.toISOString();
+const defaultTo = to.toISOString();
 
 export function useGetTransactionGraphData() {
   const [params] = useSearchParams();
