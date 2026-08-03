@@ -26,7 +26,8 @@ export type CategorySortBy =
 export type CategoryFindAllSortAndPaginationProps =
   SortAndPaginationProps<CategorySortBy>;
 
-export type CategoryFindAllParams = CategoryFindAllSortAndPaginationProps;
+export type CategoryFindAllParams = CategoryFindAllSortAndPaginationProps &
+  CategoryFindAllFilters;
 
 export type CategoryWithSubCategoriesTags = Category & {
   subCategories: Pick<SubCategory, "id" | "name" | "icon" | "color">[];

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePromiseDebounce } from "@/hooks/usePromiseDebounce.hook";
-import { useFindAllCategories } from "@/store/requests/category/useFindAllCategory.request";
+import { useLazyFindAllCategories } from "@/store/requests/category/useLazyFindAllCategory.request";
 
 import {
   categoryFormDefaultValues,
@@ -15,7 +15,7 @@ export function useCategoryScreen() {
     data: response,
     isLoading,
     handleFetchCategories
-  } = useFindAllCategories();
+  } = useLazyFindAllCategories();
 
   const form = useForm({
     resolver: zodResolver(CategoryFormSchema),

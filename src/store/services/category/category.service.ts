@@ -36,6 +36,23 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
+    InfiniteFindAllCategories: builder.infiniteQuery<
+      CategoryFindAllResponse,
+      OmitPagination<CategoryFindAllParams>,
+      PaginationProps
+    >({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
+        method: "GET",
+        url: "/categories",
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
+      }),
+      providesTags: ["Category"]
+    }),
+
     findCategoryById: builder.query<
       CategoryFindByIdResponse,
       CategoryFindByIdParams
@@ -89,6 +106,8 @@ export const CategoryService = createApi({
 });
 
 export const {
+  useFindAllCategoriesQuery,
+  useInfiniteFindAllCategoriesInfiniteQuery,
   useLazyFindAllCategoriesQuery,
   useLazyFindCategoryByIdQuery,
   useGetCategoriesOptionsInfiniteQuery,

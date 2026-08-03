@@ -21,9 +21,12 @@ export function useSubCategoryCreate({
     categoryId: number,
     subCategoryData: CreateOrUpdateSubCategory
   ) {
-    const [error] = await handleRequest(
-      createSubCategory({ categoryId, ...subCategoryData }).unwrap()
-    );
+    const payload = {
+      ...subCategoryData,
+      categoryId
+    };
+
+    const [error] = await handleRequest(createSubCategory(payload).unwrap());
 
     if (error) {
       toast.error("Houve um erro ao criar a categoria");

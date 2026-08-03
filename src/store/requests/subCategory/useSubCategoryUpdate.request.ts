@@ -22,13 +22,13 @@ export function useSubCategoryUpdate({
     subCategoryId: number,
     subCategoryData: CreateOrUpdateSubCategory
   ) {
-    const [error] = await handleRequest(
-      updateSubCategory({
-        categoryId,
-        id: subCategoryId,
-        ...subCategoryData
-      }).unwrap()
-    );
+    const payload = {
+      ...subCategoryData,
+      categoryId,
+      id: subCategoryId
+    };
+
+    const [error] = await handleRequest(updateSubCategory(payload).unwrap());
 
     if (error) {
       toast.error("Houve um erro ao atualizar a categoria");

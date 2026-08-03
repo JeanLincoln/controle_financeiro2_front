@@ -1,23 +1,20 @@
-import { useEffect } from "react";
+import { useRef } from "react";
 import {
   Banknote,
-  Building2,
   Calendar,
   FileText,
   Save,
   Tag,
-  Tags,
   TrendingDown,
   TrendingUp
 } from "lucide-react";
 
+import { Accordion } from "@/components/Accordion/Accordion.component";
 import { Button } from "@/components/Button/Button.component";
 import { DateOfBirthPicker } from "@/components/DatesPicker/DateOfBirthPicker/DateOfBirthPicker.component";
 import { CurrencyInput } from "@/components/Input/CurrencyInput.component";
 import { Input } from "@/components/Input/Input.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
-import { CustomMultiSelectDropdown } from "@/components/Select/CustomMultiSelectDropdown/CustomMultiSelectDropdown.component";
-import { CustomSingleSelect } from "@/components/Select/CustomSingleSelect/CustomSingleSelect.component";
 import {
   Select,
   SelectContent,
@@ -30,9 +27,10 @@ import {
 import { Textarea } from "@/components/Textarea/Textarea.component";
 import type { Transaction } from "@/entities/transaction.entity";
 import { TransactionType } from "@/entities/transaction.entity";
-import { useGetInfiniteCategoryOptions } from "@/store/requests/category/useGetCategoryOptions.request";
-import { useGetInfiniteOriginOptions } from "@/store/requests/origin/useGetOriginsOptions.request";
-import { useGetInfiniteSubCategoryOptions } from "@/store/requests/subCategory/useGetSubCategoriesOptions.request";
+import { useInfiniteQueryObserver } from "@/hooks/useInfiniteQueryObserver.hook";
+import { useInfiniteFindAllCategories } from "@/store/requests/category/useInfiniteFindAllCategory.request";
+import { useInfiniteFindAllOrigins } from "@/store/requests/origin/useInfiniteFindAllOrigin.request";
+import { useInfiniteFindAllSubCategories } from "@/store/requests/subCategory/useInfiniteFindAllSubCategories.request";
 
 import {
   Form,
@@ -42,6 +40,7 @@ import {
   FormLabel,
   FormMessage
 } from "../Form.component";
+import { EntityAccordion } from "./components/EntityAccordion/EntityAccordion.component";
 import { useTransactionForm } from "./hooks/useTransactionForm.hook";
 
 export type TransactionFormProps = {
@@ -51,37 +50,51 @@ export type TransactionFormProps = {
 export function TransactionForm({ transaction }: TransactionFormProps) {
   const { form, isLoading, onSubmit } = useTransactionForm(transaction);
 
-  const {
-    originsOptions,
-    isLoading: originsOptionsLoading,
-    fetchNextPage: fetchNextPageOriginsOptions,
-    hasNextPage: hasNextPageOriginsOptions
-  } = useGetInfiniteOriginOptions({});
+  const categoryIds = form.watch("categoriesIds");
 
   const {
-    categoriesOptions,
-    isLoading: categoriesOptionsLoading,
-    fetchNextPage: fetchNextPageCategoriesOptions,
-    hasNextPage: hasNextPageCategoriesOptions
-  } = useGetInfiniteCategoryOptions({});
-
+    origins,
+    isLoading: isLoadingOriginOptions,
+    hasNextPage: originHasNextPage,
+    fetchNextPage: originFetchNextPage
+  } = useInfiniteFindAllOrigins();
   const {
-    subCategoriesOptions,
-    isLoading: subCategoriesOptionsLoading,
-    fetchNextPage: fetchNextPageSubCategoriesOptions,
-    hasNextPage: hasNextPageSubCategoriesOptions
-  } = useGetInfiniteSubCategoryOptions({
-    categoriesIds: form.watch("categoriesIds")
+    categories,
+    isLoading: isLoadingCategoryOptions,
+    hasNextPage: categoryHasNextPage,
+    fetchNextPage: categoryFetchNextPage
+  } = useInfiniteFindAllCategories();
+  const {
+    subCategories,
+    isLoading: isLoadingSubCategoryOptions,
+    hasNextPage: subCategoryHasNextPage,
+    fetchNextPage: subCategoryFetchNextPage
+  } = useInfiniteFindAllSubCategories({
+    categoriesIds: categoryIds || []
   });
 
-  useEffect(() => {
-    const actualSubCategoriesIds = form.getValues("subCategoriesIds");
-    const filteredSubCategoriesIds = actualSubCategoriesIds.filter((id) =>
-      subCategoriesOptions.some((option) => option.id === id)
-    );
+  const fetchRootElement = useRef<HTMLDivElement>(null);
 
-    form.setValue("subCategoriesIds", filteredSubCategoriesIds);
-  }, [subCategoriesOptions]);
+  const setOriginFetchRef = useInfiniteQueryObserver({
+    fetchNextPage: originFetchNextPage,
+    hasNextPage: originHasNextPage,
+    isLoading: isLoadingOriginOptions,
+    rootElement: fetchRootElement
+  });
+
+  const setCategoryFetchRef = useInfiniteQueryObserver({
+    fetchNextPage: categoryFetchNextPage,
+    hasNextPage: categoryHasNextPage,
+    isLoading: isLoadingCategoryOptions,
+    rootElement: fetchRootElement
+  });
+
+  const setSubCategoryFetchRef = useInfiniteQueryObserver({
+    fetchNextPage: subCategoryFetchNextPage,
+    hasNextPage: subCategoryHasNextPage,
+    isLoading: isLoadingSubCategoryOptions,
+    rootElement: fetchRootElement
+  });
 
   return (
     <Form {...form}>
@@ -214,86 +227,53 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
             />
           </div>
         </div>
-        <div className="flex h-fit w-full flex-wrap gap-4">
-          <FormField
-            control={form.control}
-            name="originId"
-            render={({ field }) => (
-              <FormItem className="max-w-[48%] min-w-[48%] flex-1">
-                <FormLabel className="flex items-center gap-2">
-                  <Building2 className="h-4 w-4" />
-                  Origem
-                </FormLabel>
-                <FormControl>
-                  <CustomSingleSelect
-                    value={field.value}
-                    onChange={field.onChange}
-                    placeholder="Selecione a origem..."
-                    isLoadingOptions={originsOptionsLoading}
-                    options={originsOptions}
-                    required
-                    infiniteScroll={{
-                      fetchNextPage: fetchNextPageOriginsOptions,
-                      hasNextPage: hasNextPageOriginsOptions
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="categoriesIds"
-            render={({ field }) => (
-              <FormItem className="max-w-[48%] min-w-[48%] flex-1">
-                <FormLabel className="flex items-center gap-2">
-                  <Tag className="h-4 w-4" />
-                  Categorias
-                </FormLabel>
-                <FormControl>
-                  <CustomMultiSelectDropdown
-                    value={field.value}
-                    onChange={field.onChange}
-                    placeholder="Selecione categorias..."
-                    isLoadingOptions={categoriesOptionsLoading}
-                    options={categoriesOptions}
-                    infiniteScroll={{
-                      fetchNextPage: fetchNextPageCategoriesOptions,
-                      hasNextPage: hasNextPageCategoriesOptions
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="subCategoriesIds"
-            render={({ field }) => (
-              <FormItem className="max-w-[48%] min-w-[48%] flex-1">
-                <FormLabel className="flex items-center gap-2">
-                  <Tags className="h-4 w-4" />
-                  Subcategorias
-                </FormLabel>
-                <FormControl>
-                  <CustomMultiSelectDropdown
-                    value={field.value}
-                    onChange={field.onChange}
-                    placeholder="Selecione subcategorias..."
-                    isLoadingOptions={subCategoriesOptionsLoading}
-                    options={subCategoriesOptions}
-                    infiniteScroll={{
-                      fetchNextPage: fetchNextPageSubCategoriesOptions,
-                      hasNextPage: hasNextPageSubCategoriesOptions
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div
+          ref={fetchRootElement}
+          className="flex h-full max-h-[42vh] w-full flex-wrap gap-4 overflow-y-auto"
+        >
+          <Accordion type="single" collapsible className="w-full">
+            <FormField
+              control={form.control}
+              name="originId"
+              render={() => (
+                <EntityAccordion
+                  title="Origens"
+                  entityOptions={origins}
+                  formFieldName="originId"
+                  fetchAreaRef={setOriginFetchRef}
+                />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="categoriesIds"
+              render={() => (
+                <EntityAccordion
+                  title="Categorias"
+                  entityOptions={categories}
+                  formFieldName="categoriesIds"
+                  fetchAreaRef={setCategoryFetchRef}
+                />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="subCategoriesIds"
+              disabled={
+                !form.watch("categoriesIds") ||
+                form.watch("categoriesIds").length === 0
+              }
+              render={() => (
+                <EntityAccordion
+                  title="Sub-categorias"
+                  entityOptions={subCategories}
+                  formFieldName="subCategoriesIds"
+                  fetchAreaRef={setSubCategoryFetchRef}
+                  disabled={!categoryIds?.length}
+                />
+              )}
+            />
+          </Accordion>
         </div>
         <Button
           type="submit"

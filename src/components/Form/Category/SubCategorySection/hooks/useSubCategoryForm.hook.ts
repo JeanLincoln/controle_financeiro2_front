@@ -24,7 +24,7 @@ type SubCategorySectionProps = {
 
 export type CreateOrUpdateSubCategory = Omit<
   SubCategory,
-  "id" | "createdAt" | "updatedAt"
+  "id" | "createdAt" | "updatedAt" | "categoryId"
 >;
 
 const onCreateOrUpdateSuccess = ({

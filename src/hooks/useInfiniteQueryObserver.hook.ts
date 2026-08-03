@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 type UseInfiniteQueryObserverProps = {
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isLoading: boolean;
+  rootElement?: RefObject<null | HTMLDivElement>;
 };
 
 export const useInfiniteQueryObserver = (
@@ -14,37 +15,43 @@ export const useInfiniteQueryObserver = (
   const { fetchNextPage, hasNextPage, isLoading } = infiniteProps;
 
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const lastElementRef = useRef<HTMLButtonElement>(null);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
-
+      console.log(target);
       if (target.isIntersecting && hasNextPage && !isLoading) {
         fetchNextPage();
       }
     },
-    [isLoading]
+    [fetchNextPage, hasNextPage, isLoading]
+  );
+
+  const setRef = useCallback(
+    (node: HTMLDivElement | HTMLButtonElement | null) => {
+      if (!node) {
+        observerRef.current?.disconnect();
+        return;
+      }
+
+      observerRef.current?.disconnect();
+
+      const options: IntersectionObserverInit = {
+        root: infiniteProps.rootElement?.current ?? null,
+        rootMargin: `0px 0px 5px 0px`,
+        threshold: 0.1
+      };
+
+      observerRef.current = new IntersectionObserver(handleObserver, options);
+
+      observerRef.current.observe(node);
+    },
+    [handleObserver, infiniteProps.rootElement]
   );
 
   useEffect(() => {
-    if (!lastElementRef.current) return;
+    return () => observerRef.current?.disconnect();
+  }, []);
 
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: `0px 0px 5px 0px`,
-      threshold: 0.1
-    };
-
-    observerRef.current = new IntersectionObserver(handleObserver, options);
-    observerRef.current.observe(lastElementRef.current);
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [handleObserver, lastElementRef.current]);
-
-  return { lastElementRef };
+  return setRef;
 };

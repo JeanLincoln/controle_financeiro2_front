@@ -73,7 +73,7 @@ export const CustomSingleSelect = ({
 
   const validatedLastButtonRef = (index: number) =>
     index === filteredOptions.length - 1 && infiniteScroll?.hasNextPage
-      ? infiniteProps?.lastElementRef
+      ? infiniteProps
       : null;
 
   return (

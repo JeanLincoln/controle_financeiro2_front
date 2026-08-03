@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePromiseDebounce } from "@/hooks/usePromiseDebounce.hook";
-import { useFindAllOrigins } from "@/store/requests/origin/useFindAllOrigins.request";
+import { useLazyFindAllOrigins } from "@/store/requests/origin/useLazyFindAllOrigins.request";
 
 import {
   originFormDefaultValues,
@@ -11,7 +11,11 @@ import {
 } from "../components/FiltersSection/Origin.schema";
 
 export function useOriginScreen() {
-  const { data: response, isLoading, handleFetchOrigins } = useFindAllOrigins();
+  const {
+    data: response,
+    isLoading,
+    handleFetchOrigins
+  } = useLazyFindAllOrigins();
 
   const form = useForm({
     resolver: zodResolver(OriginFormSchema),

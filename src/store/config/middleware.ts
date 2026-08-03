@@ -1,4 +1,5 @@
-import type { Middleware } from "@reduxjs/toolkit";
+import { Tuple, type Middleware } from "@reduxjs/toolkit";
+import type { PersistPartial } from "redux-persist/es/persistReducer";
 
 import { AuthService } from "../services/auth/auth.service";
 import { CategoryService } from "../services/category/category.service";
@@ -6,16 +7,19 @@ import { DashboardService } from "../services/dashboard/dashboard.service";
 import { OriginService } from "../services/origin/origin.service";
 import { SubCategoryService } from "../services/subCategory/subCategory.service";
 import { TransactionService } from "../services/transaction/transaction.service";
+import type { RootState } from "./reducers";
 
-interface MiddlewareOptions {
+type PersistedRootState = RootState & PersistPartial;
+type AppMiddleware = Middleware<unknown, PersistedRootState>;
+type AppMiddlewareTuple = Tuple<AppMiddleware[]>;
+type GetDefaultMiddlewareCallback = (options?: {
   serializableCheck?: boolean | object;
-  [key: string]: unknown;
-}
+}) => AppMiddlewareTuple;
 
-type GetDefaultMiddlewareType = (options?: MiddlewareOptions) => Middleware[];
-
-export default (getDefaultMiddleware: GetDefaultMiddlewareType) => {
-  const middleware = getDefaultMiddleware({
+export default function middleware(
+  getDefaultMiddleware: GetDefaultMiddlewareCallback
+) {
+  return getDefaultMiddleware({
     serializableCheck: false
   }).concat(
     AuthService.middleware,
@@ -25,6 +29,4 @@ export default (getDefaultMiddleware: GetDefaultMiddlewareType) => {
     SubCategoryService.middleware,
     TransactionService.middleware
   );
-
-  return middleware;
-};
+}
