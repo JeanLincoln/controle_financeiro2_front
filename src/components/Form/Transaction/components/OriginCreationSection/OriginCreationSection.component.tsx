@@ -61,7 +61,7 @@ export function OriginCreationSection({
 
       {isFormVisible && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <section className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -141,10 +141,11 @@ export function OriginCreationSection({
               />
             </div>
             <Button
-              type="submit"
+              type="button"
               variant="outline"
               className="flex w-32 items-center gap-2"
               disabled={isLoading}
+              onClick={() => void form.handleSubmit(onSubmit)()}
             >
               {isLoading ? (
                 <LoadingSpinner size="sm" variant="orbit" />
@@ -155,7 +156,7 @@ export function OriginCreationSection({
                 </>
               )}
             </Button>
-          </form>
+          </section>
         </Form>
       )}
     </div>
