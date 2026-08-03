@@ -74,7 +74,7 @@ export const OriginService = createApi({
       }),
       providesTags: ["Origin"]
     }),
-    createOrigin: builder.mutation<void, CreateOriginParams>({
+    createOrigin: builder.mutation<OriginFindByIdResponse, CreateOriginParams>({
       query: (origin) => ({
         method: "POST",
         url: "/origin",
