@@ -41,6 +41,7 @@ import {
   FormMessage
 } from "../Form.component";
 import { EntityAccordion } from "./components/EntityAccordion/EntityAccordion.component";
+import { OriginCreationSection } from "./components/OriginCreationSection/OriginCreationSection.component";
 import { useTransactionForm } from "./hooks/useTransactionForm.hook";
 
 export type TransactionFormProps = {
@@ -95,6 +96,13 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
     isLoading: isLoadingSubCategoryOptions,
     rootElement: fetchRootElement
   });
+
+  const handleOriginCreated = (originId: number) => {
+    form.setValue("originId", originId, {
+      shouldDirty: true,
+      shouldValidate: true
+    });
+  };
 
   return (
     <Form {...form}>
@@ -241,6 +249,9 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
                   entityOptions={origins}
                   formFieldName="originId"
                   fetchAreaRef={setOriginFetchRef}
+                  createSection={
+                    <OriginCreationSection onSuccess={handleOriginCreated} />
+                  }
                 />
               )}
             />

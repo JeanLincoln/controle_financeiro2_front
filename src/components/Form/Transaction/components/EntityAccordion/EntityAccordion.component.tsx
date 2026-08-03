@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { Building2, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
@@ -19,6 +20,7 @@ interface EntityAccordionProps {
   formFieldName: "originId" | "categoriesIds" | "subCategoriesIds";
   fetchAreaRef: ((node: HTMLDivElement | null) => void) | null;
   disabled?: boolean;
+  createSection?: ReactNode;
 }
 
 export const EntityAccordion = ({
@@ -26,7 +28,8 @@ export const EntityAccordion = ({
   entityOptions,
   formFieldName,
   fetchAreaRef,
-  disabled = false
+  disabled = false,
+  createSection
 }: EntityAccordionProps) => {
   const { getValues, setValue } = useFormContext<TransactionFormSchemaType>();
 
@@ -77,8 +80,10 @@ export const EntityAccordion = ({
       </AccordionTrigger>
       <AccordionContent className="h-fit p-4">
         <div className="flex flex-wrap items-start justify-start gap-4">
+          {createSection}
           {entityOptions.map((entity) => (
             <DetailsCard
+              key={entity.id}
               id={entity.id}
               name={entity.name}
               description={entity.description}
