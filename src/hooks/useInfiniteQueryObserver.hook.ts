@@ -19,7 +19,7 @@ export const useInfiniteQueryObserver = (
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
-      console.log(target);
+
       if (target.isIntersecting && hasNextPage && !isLoading) {
         fetchNextPage();
       }
