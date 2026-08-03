@@ -22,3 +22,8 @@
 
 ## Preocupações
 - O build geral do projeto ainda falha por uma inconsistência de maiúsculas/minúsculas em um arquivo fora do escopo desta tarefa.
+
+## Fix de bloqueio no backend
+- O contrato de `POST /origin` no backend foi ajustado para retornar a origem criada no corpo da resposta.
+- O retorno agora é propagado do repositório ao use case e ao controller.
+- Isso remove o bloqueio load-bearing da auto-seleção da nova origem no frontend.
