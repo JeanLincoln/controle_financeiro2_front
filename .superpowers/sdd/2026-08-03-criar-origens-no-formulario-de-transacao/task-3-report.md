@@ -28,3 +28,5 @@
 ## Fix
 - O formulário inline de `OriginCreationSection` deixou de aninhar um `<form>` dentro do formulário da transação.
 - O bloco passou a renderizar os campos dentro de um container neutro e o botão de salvar chama `form.handleSubmit(onSubmit)` diretamente.
+- O fluxo feliz agora mostra `toast.success("Origem criada com sucesso!")` antes de fechar e limpar o formulário.
+- O Enter nos inputs inline é interceptado na própria seção para não submeter o formulário pai da transação.

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -42,6 +42,21 @@ export function useOriginCreationSection({
     setIsFormVisible(true);
   }, [form, isFormVisible]);
 
+  const handleSectionKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLElement>) => {
+      if (event.key !== "Enter") {
+        return;
+      }
+
+      if (!(event.target instanceof HTMLInputElement)) {
+        return;
+      }
+
+      event.preventDefault();
+    },
+    []
+  );
+
   const onSubmit = useCallback(
     async (data: OriginFormSchemaType) => {
       const [error, createdOrigin] = await handleRequest(
@@ -53,6 +68,7 @@ export function useOriginCreationSection({
         return;
       }
 
+      toast.success("Origem criada com sucesso!");
       onSuccess(createdOrigin.id);
       setIsFormVisible(false);
       form.reset(originFormDefaultValues());
@@ -64,6 +80,7 @@ export function useOriginCreationSection({
     colorWatch,
     form,
     handleToggleForm,
+    handleSectionKeyDown,
     isFormVisible,
     isLoading,
     onSubmit

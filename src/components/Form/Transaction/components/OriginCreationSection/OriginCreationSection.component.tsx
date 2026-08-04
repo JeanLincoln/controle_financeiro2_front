@@ -28,6 +28,7 @@ export function OriginCreationSection({
     colorWatch,
     form,
     handleToggleForm,
+    handleSectionKeyDown,
     isFormVisible,
     isLoading,
     onSubmit
@@ -61,7 +62,10 @@ export function OriginCreationSection({
 
       {isFormVisible && (
         <Form {...form}>
-          <section className="space-y-4">
+          <section
+            className="space-y-4"
+            onKeyDownCapture={handleSectionKeyDown}
+          >
             <FormField
               control={form.control}
               name="name"
