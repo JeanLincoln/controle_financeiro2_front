@@ -1,15 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
 import type { Origin } from "@/entities/origin.entity";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
-import { useAppDispatch, useAppSelector } from "@/store";
 import { useFindOriginById } from "@/store/requests/origin/useFindOriginById.request";
 import { useOriginCreate } from "@/store/requests/origin/useOriginCreate.request";
 import { useOriginUpdate } from "@/store/requests/origin/useOriginUpdate.request";
-import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 
 import {
   originFormDefaultValues,
@@ -21,13 +17,15 @@ export type CreateOrUpdateOrigin = Omit<
   "id" | "createdAt" | "updatedAt"
 >;
 
-const onCreateOrUpdateSuccess = (dispatch: Dispatch<UnknownAction>) => {
-  dispatch(ShowAndHideActions.hide());
+type UseOriginFormProps = {
+  successCallback?: () => void;
+  errorCallback?: () => void;
 };
 
-export function useOriginForm() {
-  const { isVisible } = useAppSelector((state) => state.showAndHide);
-  const dispatch = useAppDispatch();
+export function useOriginForm({
+  successCallback,
+  errorCallback
+}: UseOriginFormProps = {}) {
   const {
     idParam,
     getOrigin,
@@ -35,18 +33,18 @@ export function useOriginForm() {
     origin
   } = useFindOriginById();
 
-  const { handleRemoveKey } = useAppSearchParams();
-
   const form = useForm({
     resolver: zodResolver(OriginFormSchema),
     defaultValues: useMemo(() => originFormDefaultValues(origin), [origin])
   });
 
   const { handleCreateOrigin, isLoading: isCreating } = useOriginCreate({
-    successCallback: () => onCreateOrUpdateSuccess(dispatch)
+    successCallback,
+    errorCallback
   });
   const { handleUpdateOrigin, isLoading: isUpdating } = useOriginUpdate({
-    successCallback: () => onCreateOrUpdateSuccess(dispatch)
+    successCallback,
+    errorCallback
   });
 
   const colorWatch = form.watch("color");
@@ -65,11 +63,6 @@ export function useOriginForm() {
   useEffect(() => {
     form.reset(originFormDefaultValues(origin));
   }, [origin, isLoadingOrigin]);
-
-  useEffect(() => {
-    if (isVisible) return;
-    handleRemoveKey({ key: "id" });
-  }, [isVisible]);
 
   useEffect(() => {
     getOrigin();

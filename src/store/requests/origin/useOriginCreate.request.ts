@@ -6,14 +6,14 @@ import type { OriginFindByIdResponse } from "@/store/services/origin/originServi
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseOriginCreateProps = {
-  successCallback: (origin: OriginFindByIdResponse) => void;
+  successCallback?: (origin: OriginFindByIdResponse) => void;
   errorCallback?: () => void;
 };
 
 export function useOriginCreate({
   successCallback,
   errorCallback
-}: UseOriginCreateProps) {
+}: UseOriginCreateProps = {}) {
   const [createOrigin, { isLoading }] = useCreateOriginMutation();
 
   async function handleCreateOrigin(originData: CreateOrUpdateOrigin) {
@@ -27,7 +27,8 @@ export function useOriginCreate({
       return;
     }
 
-    successCallback(createdOrigin);
+    toast.success("Origem criada com sucesso");
+    successCallback?.(createdOrigin);
   }
 
   return { handleCreateOrigin, isLoading };

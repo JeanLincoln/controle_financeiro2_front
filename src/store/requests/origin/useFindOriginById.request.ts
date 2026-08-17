@@ -6,7 +6,7 @@ import { handleRequest } from "@/utils/handleRequest.utils";
 
 export function useFindOriginById() {
   const [params] = useSearchParams();
-  const id = params.get("id");
+  const id = params.get("editOriginId");
 
   const [fetchOrigin, { data: origin, isLoading, isFetching }] =
     useLazyFindOriginByIdQuery();

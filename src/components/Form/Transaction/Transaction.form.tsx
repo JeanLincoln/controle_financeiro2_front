@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Banknote,
   Calendar,
@@ -32,6 +32,7 @@ import { useInfiniteFindAllCategories } from "@/store/requests/category/useInfin
 import { useInfiniteFindAllOrigins } from "@/store/requests/origin/useInfiniteFindAllOrigin.request";
 import { useInfiniteFindAllSubCategories } from "@/store/requests/subCategory/useInfiniteFindAllSubCategories.request";
 
+import { CategoryForm } from "../Category/Category.form";
 import {
   Form,
   FormControl,
@@ -40,15 +41,19 @@ import {
   FormLabel,
   FormMessage
 } from "../Form.component";
+import { OriginForm } from "../Origin/Origin.form";
 import { EntityAccordion } from "./components/EntityAccordion/EntityAccordion.component";
-import { OriginCreationSection } from "./components/OriginCreationSection/OriginCreationSection.component";
 import { useTransactionForm } from "./hooks/useTransactionForm.hook";
 
 export type TransactionFormProps = {
   transaction?: Transaction;
 };
 
+export type EntityFormOpenState = false | "origin" | "category" | "subCategory";
+
 export function TransactionForm({ transaction }: TransactionFormProps) {
+  const [entityFormOpen, setEntityFormOpen] =
+    useState<EntityFormOpenState>(false);
   const { form, isLoading, onSubmit } = useTransactionForm(transaction);
 
   const categoryIds = form.watch("categoriesIds");
@@ -96,13 +101,6 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
     isLoading: isLoadingSubCategoryOptions,
     rootElement: fetchRootElement
   });
-
-  const handleOriginCreated = (originId: number) => {
-    form.setValue("originId", originId, {
-      shouldDirty: true,
-      shouldValidate: true
-    });
-  };
 
   return (
     <Form {...form}>
@@ -249,8 +247,16 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
                   entityOptions={origins}
                   formFieldName="originId"
                   fetchAreaRef={setOriginFetchRef}
-                  createSection={
-                    <OriginCreationSection onSuccess={handleOriginCreated} />
+                  isEntityFormOpen={entityFormOpen === "origin"}
+                  setIsEntityFormOpen={() =>
+                    setEntityFormOpen(!entityFormOpen ? "origin" : false)
+                  }
+                  entityFormSection={
+                    <OriginForm
+                      onSuccess={() => {
+                        setEntityFormOpen(false);
+                      }}
+                    />
                   }
                 />
               )}
@@ -264,6 +270,7 @@ export function TransactionForm({ transaction }: TransactionFormProps) {
                   entityOptions={categories}
                   formFieldName="categoriesIds"
                   fetchAreaRef={setCategoryFetchRef}
+                  createSection={<CategoryForm />}
                 />
               )}
             />

@@ -17,16 +17,18 @@ import {
 } from "../Form.component";
 import { useOriginForm } from "./hooks/useOriginForm.hook";
 
-export function OriginForm() {
+interface OriginFormProps {
+  onSuccess?: () => void;
+  onError?: () => void;
+}
+
+export function OriginForm({ onSuccess, onError }: OriginFormProps) {
   const { colorWatch, form, isLoading, onSubmit, isLoadingOrigin } =
-    useOriginForm();
+    useOriginForm({ successCallback: onSuccess, errorCallback: onError });
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full max-w-120 flex-col items-center justify-center space-y-6 p-6"
-      >
+      <div className="flex w-full flex-col items-center justify-center space-y-6">
         {isLoadingOrigin && (
           <div className="flex h-50 items-center justify-center">
             <LoadingSpinner variant="orbit" size="lg" />
@@ -70,7 +72,7 @@ export function OriginForm() {
                 </FormItem>
               )}
             />
-            <div className="flex w-full gap-4">
+            <div className="flex w-full items-end justify-start gap-4 pb-3">
               <FormField
                 control={form.control}
                 name="color"
@@ -111,25 +113,26 @@ export function OriginForm() {
                   </FormItem>
                 )}
               />
+              <Button
+                type="button"
+                onClick={() => form.handleSubmit(onSubmit)()}
+                variant="outline"
+                className="flex w-32 items-center gap-2 self-end"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <LoadingSpinner size="sm" variant="orbit" />
+                ) : (
+                  <>
+                    <Save className="h-4 w-4" />
+                    Salvar
+                  </>
+                )}
+              </Button>
             </div>
-            <Button
-              type="submit"
-              variant="outline"
-              className="flex w-32 items-center gap-2"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <LoadingSpinner size="sm" variant="orbit" />
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Salvar
-                </>
-              )}
-            </Button>
           </>
         )}
-      </form>
+      </div>
     </Form>
   );
 }

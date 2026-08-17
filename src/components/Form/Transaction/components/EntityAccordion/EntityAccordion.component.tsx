@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { Building2, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from "@/components/Accordion/Accordion.component";
+import { Button } from "@/components/Button/Button.component";
 
 import type { TransactionFormSchemaType } from "../../TransactionForm.schema";
 import {
@@ -20,7 +21,9 @@ interface EntityAccordionProps {
   formFieldName: "originId" | "categoriesIds" | "subCategoriesIds";
   fetchAreaRef: ((node: HTMLDivElement | null) => void) | null;
   disabled?: boolean;
-  createSection?: ReactNode;
+  entityFormSection: ReactNode;
+  isEntityFormOpen: boolean;
+  setIsEntityFormOpen: () => void;
 }
 
 export const EntityAccordion = ({
@@ -29,7 +32,9 @@ export const EntityAccordion = ({
   formFieldName,
   fetchAreaRef,
   disabled = false,
-  createSection
+  entityFormSection,
+  isEntityFormOpen = false,
+  setIsEntityFormOpen
 }: EntityAccordionProps) => {
   const { getValues, setValue } = useFormContext<TransactionFormSchemaType>();
 
@@ -78,22 +83,35 @@ export const EntityAccordion = ({
           />
         </div>
       </AccordionTrigger>
-      <AccordionContent className="h-fit p-4">
-        <div className="flex flex-wrap items-start justify-start gap-4">
-          {createSection}
-          {entityOptions.map((entity) => (
-            <DetailsCard
-              key={entity.id}
-              id={entity.id}
-              name={entity.name}
-              description={entity.description}
-              color={entity.color}
-              icon={entity.icon}
-              isSelected={validateIfItsSelected(entity.id)}
-              onClick={() => handleSelectItem(entity.id)}
-            />
-          ))}
-          <div ref={fetchAreaRef} className="h-4 w-full" />
+      <AccordionContent className="h-fit p-4 py-1">
+        <Button
+          type="button"
+          variant={isEntityFormOpen ? "destructive" : "outline"}
+          className="w-full"
+          onClick={() => setIsEntityFormOpen()}
+        >
+          {isEntityFormOpen ? "Cancelar" : "Criar"}
+        </Button>
+        <div className="mt-4 flex flex-wrap items-start justify-start gap-6">
+          {isEntityFormOpen ? (
+            entityFormSection
+          ) : (
+            <>
+              {entityOptions.map((entity) => (
+                <DetailsCard
+                  key={entity.id}
+                  id={entity.id}
+                  name={entity.name}
+                  description={entity.description}
+                  color={entity.color}
+                  icon={entity.icon}
+                  isSelected={validateIfItsSelected(entity.id)}
+                  onClick={() => handleSelectItem(entity.id)}
+                />
+              ))}
+              <div ref={fetchAreaRef} className="h-4 w-full" />
+            </>
+          )}
         </div>
       </AccordionContent>
     </AccordionItem>
