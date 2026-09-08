@@ -26,10 +26,11 @@ export function useInfiniteFindAllCategories(
   const {
     data: categories,
     isLoading,
-    isFetching,
+    isFetchingNextPage,
     isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   } = useInfiniteFindAllCategoriesInfiniteQuery(filters);
 
   if (isError) {
@@ -45,8 +46,11 @@ export function useInfiniteFindAllCategories(
   return {
     categories: formattedCategories,
     setCategoriesFilters: setFilters,
-    isLoading: isLoading || isFetching,
+    isLoading,
+    isFetchingNextPage,
+    isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   };
 }

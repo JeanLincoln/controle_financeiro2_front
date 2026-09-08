@@ -26,10 +26,11 @@ export function useInfiniteFindAllOrigins(
   const {
     data: origins,
     isLoading,
-    isFetching,
+    isFetchingNextPage,
     isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   } = useInfiniteFindAllOriginsInfiniteQuery(filters);
 
   if (isError) {
@@ -45,8 +46,11 @@ export function useInfiniteFindAllOrigins(
   return {
     origins: formattedOrigins,
     setOriginsFilters: setFilters,
-    isLoading: isLoading || isFetching,
+    isLoading,
+    isFetchingNextPage,
+    isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   };
 }

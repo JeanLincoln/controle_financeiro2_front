@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { categoryFormDefaultValues } from "@/screens/Category/components/FiltersSection/Category.schema";
+import { categoryFormDefaultValues } from "@/components/Form/Category/CategoryForm.schema";
 import { useFindAllCategoriesQuery } from "@/store/services/category/category.service";
 import type { CategoryFindAllParams } from "@/store/services/category/categoryService.types";
 

@@ -1,9 +1,7 @@
-import CategoryScreen from "@/screens/Category/Category.screen";
 import HomeScreen from "@/screens/Home/Home.screen";
-import OriginScreen from "@/screens/Origin/Origin.screen";
 import ProfileScreen from "@/screens/Profile/Profile.screen";
-import SubCategoryScreen from "@/screens/SubCategory/SubCategory.screen";
 import TransactionScreen from "@/screens/Transaction/Transaction.screen";
+import { TransactionFormScreen } from "@/screens/TransactionForm/TransactionForm.screen";
 
 export const APP_ROUTES = [
   {
@@ -15,19 +13,15 @@ export const APP_ROUTES = [
     element: <ProfileScreen />
   },
   {
-    path: "/origin",
-    element: <OriginScreen />
-  },
-  {
-    path: "/category",
-    element: <CategoryScreen />
-  },
-  {
-    path: "/sub-category",
-    element: <SubCategoryScreen />
-  },
-  {
     path: "/transaction",
     element: <TransactionScreen />
+  },
+  {
+    path: "/transaction/new",
+    element: <TransactionFormScreen />
+  },
+  {
+    path: "/transaction/:id/edit",
+    element: <TransactionFormScreen />
   }
 ];

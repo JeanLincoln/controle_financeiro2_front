@@ -1,7 +1,6 @@
 import { toast } from "sonner";
 
 import type { CreateOrUpdateOrigin } from "@/components/Form/Origin/hooks/useOriginForm.hook";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import { useUpdateOriginMutation } from "@/store/services/origin/origin.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
@@ -15,7 +14,6 @@ export function useOriginUpdate({
   errorCallback
 }: UseOriginUpdateProps = {}) {
   const [updateOrigin, { isLoading }] = useUpdateOriginMutation();
-  const { handleRemoveKey } = useAppSearchParams();
 
   async function handleUpdateOrigin(
     originId: number,
@@ -30,9 +28,8 @@ export function useOriginUpdate({
       errorCallback?.();
       return;
     }
-
     toast.success("Origem atualizada com sucesso");
-    handleRemoveKey({ key: "editOriginId" });
+    toast.success("Origem atualizada com sucesso");
     successCallback?.();
   }
 

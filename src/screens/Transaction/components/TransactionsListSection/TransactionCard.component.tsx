@@ -1,4 +1,5 @@
-import { Info, Trash, type LucideIcon } from "lucide-react";
+import { useNavigate } from "react-router";
+import { Pencil, Trash, type LucideIcon } from "lucide-react";
 
 import { AlertDialogTrigger } from "@/components/AlertDialog/AlertDialog.component";
 import {
@@ -8,7 +9,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/Card/Card.component";
-import { DrawerTrigger } from "@/components/Drawer/Drawer.component";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
 import {
   Tooltip,
@@ -16,25 +16,28 @@ import {
   TooltipTrigger
 } from "@/components/Tooltip/Tooltip.component";
 import { TransactionType } from "@/entities/transaction.entity";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
 import type { FindAllTransformedTransaction } from "@/store/services/transaction/transactionService.types";
 import { getContrastTextColor } from "@/utils/getContrastTextColor.utils";
 import { handleUTCTime } from "@/utils/handleUTCTime";
 
-interface TransactionCardProps {
+type TransactionCardProps = {
   transaction: FindAllTransformedTransaction;
-}
+  onDelete: (transactionId: number) => void;
+};
 
-interface TagProps {
+type TagProps = {
   name: string;
   color: string;
   Icon: LucideIcon;
-}
+};
 
-export const TransactionCard = ({ transaction }: TransactionCardProps) => {
+export const TransactionCard = ({
+  transaction,
+  onDelete
+}: TransactionCardProps) => {
   const OriginIcon = getIconComponent(transaction.origin.icon);
   const isIncome = transaction.type === TransactionType.INCOME;
-  const { handleKeys } = useAppSearchParams();
+  const navigate = useNavigate();
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.currentTarget.scrollLeft += e.deltaY;
@@ -68,26 +71,20 @@ export const TransactionCard = ({ transaction }: TransactionCardProps) => {
             </CardDescription>
           </div>
           <div className="flex shrink-0 gap-1.5">
-            <DrawerTrigger asChild>
-              <button
-                className="text-muted-foreground hover:text-primary transition-colors"
-                onClick={() =>
-                  handleKeys({
-                    add: [{ key: "id", value: transaction.id }]
-                  })
-                }
-              >
-                <Info className="h-3.5 w-3.5" />
-              </button>
-            </DrawerTrigger>
+            <button
+              type="button"
+              aria-label={`Editar transação ${transaction.name}`}
+              className="text-muted-foreground hover:text-primary cursor-pointer transition-colors"
+              onClick={() => navigate(`/transaction/${transaction.id}/edit`)}
+            >
+              <Pencil className="h-3.5 w-3.5" />
+            </button>
             <AlertDialogTrigger asChild>
               <button
-                className="text-muted-foreground hover:text-destructive transition-colors"
-                onClick={() =>
-                  handleKeys({
-                    add: [{ key: "id", value: transaction.id }]
-                  })
-                }
+                type="button"
+                aria-label={`Excluir transação ${transaction.name}`}
+                className="text-muted-foreground hover:text-destructive cursor-pointer transition-colors"
+                onClick={() => onDelete(transaction.id)}
               >
                 <Trash className="h-3.5 w-3.5" />
               </button>
@@ -138,6 +135,7 @@ export const TransactionCard = ({ transaction }: TransactionCardProps) => {
               return (
                 CategoryIcon && (
                   <Tag
+                    key={category.id}
                     Icon={CategoryIcon}
                     name={category.name}
                     color={category.color}

@@ -1,12 +1,12 @@
-import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 
 import { useFindTransactionByIdQuery } from "@/store/services/transaction/transaction.service";
 
-export function useFindTransactionById() {
-  const [params] = useSearchParams();
-  const id = params.get("id");
+type UseFindTransactionByIdProps = {
+  id?: string;
+};
 
+export function useFindTransactionById({ id }: UseFindTransactionByIdProps) {
   const {
     data: transaction,
     isLoading,

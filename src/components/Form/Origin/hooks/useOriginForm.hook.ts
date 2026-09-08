@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { Origin } from "@/entities/origin.entity";
-import { useFindOriginById } from "@/store/requests/origin/useFindOriginById.request";
 import { useOriginCreate } from "@/store/requests/origin/useOriginCreate.request";
 import { useOriginUpdate } from "@/store/requests/origin/useOriginUpdate.request";
 
+import type { OriginFormOrigin } from "../Origin.form";
 import {
   originFormDefaultValues,
   OriginFormSchema
@@ -18,21 +18,16 @@ export type CreateOrUpdateOrigin = Omit<
 >;
 
 type UseOriginFormProps = {
-  successCallback?: () => void;
+  origin?: OriginFormOrigin;
+  successCallback?: (origin?: Origin) => void;
   errorCallback?: () => void;
 };
 
 export function useOriginForm({
+  origin,
   successCallback,
   errorCallback
 }: UseOriginFormProps = {}) {
-  const {
-    idParam,
-    getOrigin,
-    isLoading: isLoadingOrigin,
-    origin
-  } = useFindOriginById();
-
   const form = useForm({
     resolver: zodResolver(OriginFormSchema),
     defaultValues: useMemo(() => originFormDefaultValues(origin), [origin])
@@ -62,17 +57,12 @@ export function useOriginForm({
 
   useEffect(() => {
     form.reset(originFormDefaultValues(origin));
-  }, [origin, isLoadingOrigin]);
-
-  useEffect(() => {
-    getOrigin();
-  }, [idParam]);
+  }, [form, origin]);
 
   return {
     form,
     colorWatch,
     onSubmit,
-    isLoading,
-    isLoadingOrigin
+    isLoading
   };
 }

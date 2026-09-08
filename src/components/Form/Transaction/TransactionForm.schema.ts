@@ -17,7 +17,9 @@ export const TransactionFormSchema = z.object({
     .min(1, "A descrição deve ter pelo menos 1 caractere")
     .max(100, "A descrição deve ter no máximo 100 caracteres"),
   type: z.enum(TransactionType, { error: "O tipo de transação é obrigatório" }),
-  amount: z.number().min(0, "O valor deve ser um número positivo"),
+  amount: z
+    .number()
+    .min(1, "O valor deve é um campo obrigatório e deve ser maior que 0"),
   transactionDate: z.date({ error: "A data da transação é obrigatória" }),
   categoriesIds: z.array(z.number()),
   subCategoriesIds: z.array(z.number()),

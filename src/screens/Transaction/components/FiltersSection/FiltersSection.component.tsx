@@ -99,6 +99,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                         type="text"
                         placeholder="Procure suas transações pelo nome"
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormMessage />
@@ -117,6 +118,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                     <FormControl>
                       <Input
                         {...field}
+                        value={field.value ?? ""}
                         type="number"
                         placeholder="0.00"
                         min={1}

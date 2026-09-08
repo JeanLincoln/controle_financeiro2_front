@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { originFormDefaultValues } from "@/screens/Origin/components/FiltersSection/Origin.schema";
+import { originFormDefaultValues } from "@/components/Form/Origin/OriginForm.schema";
 import { useFindAllOriginsQuery } from "@/store/services/origin/origin.service";
 import type { OriginFindAllParams } from "@/store/services/origin/originService.types";
 

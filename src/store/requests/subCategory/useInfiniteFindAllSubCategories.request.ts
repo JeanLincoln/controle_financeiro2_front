@@ -22,10 +22,11 @@ export function useInfiniteFindAllSubCategories({
   const {
     data: subCategories,
     isLoading,
-    isFetching,
+    isFetchingNextPage,
     isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   } = useInfiniteFindAllSubCategoriesInfiniteQuery(
     { name, sortBy, sortOrder, categoriesIds },
     {
@@ -45,8 +46,11 @@ export function useInfiniteFindAllSubCategories({
 
   return {
     subCategories: formattedSubCategories,
-    isLoading: isLoading || isFetching,
+    isLoading,
+    isFetchingNextPage,
+    isError,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    refetch
   };
 }

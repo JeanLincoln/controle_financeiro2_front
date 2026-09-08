@@ -3,9 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePromiseDebounce } from "@/hooks/usePromiseDebounce.hook";
-import { useAppDispatch } from "@/store";
 import { useFindAllTransactions } from "@/store/requests/transaction/useFindAllTransactions.request";
-import { ShowAndHideActions } from "@/store/slices/showAndHide/showAndHide.slice";
 
 import {
   transactionFormDefaultValues,
@@ -14,7 +12,6 @@ import {
 } from "../components/FiltersSection/Transaction.schema";
 
 export function useTransactionScreen() {
-  const dispatch = useAppDispatch();
   const form = useForm({
     resolver: zodResolver(TransactionFormSchema),
     defaultValues: transactionFormDefaultValues
@@ -33,10 +30,6 @@ export function useTransactionScreen() {
   const dataIsLoading = isLoading || debounceLoading;
   const dataIsEmpty =
     !dataIsLoading && (!transactions || transactions.data.length === 0);
-
-  useEffect(() => {
-    dispatch(ShowAndHideActions.hide());
-  }, []);
 
   useEffect(() => {
     form.setValue("page", 1);

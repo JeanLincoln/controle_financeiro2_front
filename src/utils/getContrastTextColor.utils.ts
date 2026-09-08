@@ -1,7 +1,3 @@
-/**
- * Calculates the relative luminance of a color
- * Based on WCAG 2.0 formula
- */
 function getLuminance(r: number, g: number, b: number): number {
   const [rs, gs, bs] = [r, g, b].map((c) => {
     const sRGB = c / 255;
@@ -12,14 +8,8 @@ function getLuminance(r: number, g: number, b: number): number {
   return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
 }
 
-/**
- * Converts hex color to RGB
- */
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  // Remove # if present
   hex = hex.replace(/^#/, "");
-
-  // Handle 3-digit hex
   if (hex.length === 3) {
     hex = hex
       .split("")
@@ -37,25 +27,18 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
     : null;
 }
 
-/**
- * Determines whether to use light or dark text based on background color
- * @param backgroundColor - Hex color string (e.g., "#ffffff" or "ffffff")
- * @param threshold - Luminance threshold (0-1), default 0.5
- * @returns "text-white" for dark backgrounds, "text-gray-900" for light backgrounds
- */
-export function getContrastTextColor(
-  backgroundColor: string,
-  threshold: number = 0.5
-): string {
+export function getContrastTextColor(backgroundColor: string): string {
   const rgb = hexToRgb(backgroundColor);
 
   if (!rgb) {
-    // Fallback to white if color parsing fails
     return "text-white";
   }
 
   const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
+  const whiteContrastRatio = 1.05 / (luminance + 0.05);
+  const darkContrastRatio = (luminance + 0.05) / 0.05;
 
-  // If luminance is greater than threshold, background is light, use dark text
-  return luminance > threshold ? "text-gray-900" : "text-white";
+  return darkContrastRatio > whiteContrastRatio
+    ? "text-gray-900"
+    : "text-white";
 }
