@@ -102,6 +102,7 @@ export function RelationSelection({
           {openRelationGroup === RELATION_GROUPS.CATEGORIES && (
             <CategoryRelationSelection
               categories={categories}
+              subCategories={subCategories}
               isLoading={isLoadingCategories}
               isError={isCategoriesError}
               onRetry={onRetryCategories}

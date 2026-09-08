@@ -11,6 +11,7 @@ import {
 import { CategoryForm } from "@/components/Form/Category/Category.form";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 import type { Category } from "@/entities/category.entity";
+import type { SubCategory } from "@/entities/subCategory.entity";
 
 import { useCategoryRelationSelection } from "../../hooks/useCategoryRelationSelection.hook";
 import { RelationListHeader } from "../RelationListHeader/RelationListHeader.component";
@@ -19,6 +20,7 @@ import { RelationOptionCard } from "../RelationOptionCard/RelationOptionCard.com
 
 type CategoryRelationSelectionProps = {
   categories: Category[];
+  subCategories: SubCategory[];
   isLoading: boolean;
   isError: boolean;
   onRetry: () => void;
@@ -31,6 +33,7 @@ type RelationFetchRef =
 
 export function CategoryRelationSelection({
   categories,
+  subCategories,
   isLoading,
   isError,
   onRetry,
@@ -45,7 +48,7 @@ export function CategoryRelationSelection({
     handleCategorySuccess,
     toggleCategorySelection,
     categoriesIds
-  } = useCategoryRelationSelection();
+  } = useCategoryRelationSelection({ subCategories });
 
   return (
     <div className="space-y-4">
