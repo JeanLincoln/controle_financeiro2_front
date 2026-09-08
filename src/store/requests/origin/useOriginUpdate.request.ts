@@ -29,7 +29,6 @@ export function useOriginUpdate({
       return;
     }
     toast.success("Origem atualizada com sucesso");
-    toast.success("Origem atualizada com sucesso");
     successCallback?.();
   }
 

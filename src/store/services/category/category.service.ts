@@ -14,6 +14,7 @@ import type {
   CategoryOptionsParams,
   CategoryOptionsResponse,
   CreateCategoryParams,
+  CreateCategoryResponse,
   DeleteCategoryParams,
   UpdateCategoryParams
 } from "./categoryService.types";
@@ -79,7 +80,10 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
-    createCategory: builder.mutation<void, CreateCategoryParams>({
+    createCategory: builder.mutation<
+      CreateCategoryResponse,
+      CreateCategoryParams
+    >({
       query: (category) => ({
         method: "POST",
         url: "/categories",

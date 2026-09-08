@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { originFormDefaultValues } from "@/components/Form/Origin/OriginForm.schema";
 import { useFindAllOriginsQuery } from "@/store/services/origin/origin.service";
 import type { OriginFindAllParams } from "@/store/services/origin/originService.types";
 
 export function useFindAllOrigins() {
-  const [filters, setFilters] = useState<OriginFindAllParams>(
-    originFormDefaultValues
-  );
+  const [filters, setFilters] = useState<OriginFindAllParams>({});
   const {
     data: origins,
     isLoading,
