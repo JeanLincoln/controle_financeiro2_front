@@ -29,15 +29,15 @@ export function useSubCategoryCreate({
     const [error] = await handleRequest(createSubCategory(payload).unwrap());
 
     if (error) {
-      toast.error("Houve um erro ao criar a categoria");
+      toast.error("Houve um erro ao criar a sub-categoria");
       errorCallback?.();
       return;
     }
     dispatch({
-      type: "category-service/invalidateTags",
-      payload: ["Category"]
+      type: "sub-category-service/invalidateTags",
+      payload: ["SubCategory"]
     });
-    toast.success("Categoria criada com sucesso");
+    toast.success("Sub-categoria criada com sucesso");
     successCallback();
   }
 

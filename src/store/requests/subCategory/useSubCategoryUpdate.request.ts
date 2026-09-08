@@ -31,16 +31,16 @@ export function useSubCategoryUpdate({
     const [error] = await handleRequest(updateSubCategory(payload).unwrap());
 
     if (error) {
-      toast.error("Houve um erro ao atualizar a categoria");
+      toast.error("Houve um erro ao atualizar a sub-categoria");
       errorCallback?.();
       return;
     }
 
     dispatch({
-      type: "category-service/invalidateTags",
-      payload: ["Category"]
+      type: "sub-category-service/invalidateTags",
+      payload: ["SubCategory"]
     });
-    toast.success("Categoria atualizada com sucesso");
+    toast.success("Sub-categoria atualizada com sucesso");
     successCallback();
   }
 

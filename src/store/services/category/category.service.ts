@@ -37,7 +37,7 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
-    InfiniteFindAllCategories: builder.infiniteQuery<
+    infiniteFindAllCategories: builder.infiniteQuery<
       CategoryFindAllResponse,
       OmitPagination<CategoryFindAllParams>,
       PaginationProps
