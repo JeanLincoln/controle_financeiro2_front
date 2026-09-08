@@ -5,14 +5,14 @@ import { useUpdateOriginMutation } from "@/store/services/origin/origin.service"
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseOriginUpdateProps = {
-  successCallback: () => void;
+  successCallback?: () => void;
   errorCallback?: () => void;
 };
 
 export function useOriginUpdate({
   successCallback,
   errorCallback
-}: UseOriginUpdateProps) {
+}: UseOriginUpdateProps = {}) {
   const [updateOrigin, { isLoading }] = useUpdateOriginMutation();
 
   async function handleUpdateOrigin(
@@ -28,8 +28,8 @@ export function useOriginUpdate({
       errorCallback?.();
       return;
     }
-
-    successCallback();
+    toast.success("Origem atualizada com sucesso");
+    successCallback?.();
   }
 
   return { handleUpdateOrigin, isLoading };

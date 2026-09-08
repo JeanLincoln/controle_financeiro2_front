@@ -25,7 +25,8 @@ export type OriginSortBy =
 export type OriginFindAllSortAndPaginationProps =
   SortAndPaginationProps<OriginSortBy>;
 
-export type OriginFindAllParams = OriginFindAllSortAndPaginationProps;
+export type OriginFindAllParams = OriginFindAllSortAndPaginationProps &
+  OriginFindAllFilters;
 export type OriginFindAllResponse = PaginationResponse & {
   data: Origin[];
 };

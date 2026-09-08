@@ -14,6 +14,7 @@ import type {
   CategoryOptionsParams,
   CategoryOptionsResponse,
   CreateCategoryParams,
+  CreateCategoryResponse,
   DeleteCategoryParams,
   UpdateCategoryParams
 } from "./categoryService.types";
@@ -36,6 +37,23 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
+    infiniteFindAllCategories: builder.infiniteQuery<
+      CategoryFindAllResponse,
+      OmitPagination<CategoryFindAllParams>,
+      PaginationProps
+    >({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
+        method: "GET",
+        url: "/categories",
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
+      }),
+      providesTags: ["Category"]
+    }),
+
     findCategoryById: builder.query<
       CategoryFindByIdResponse,
       CategoryFindByIdParams
@@ -62,7 +80,10 @@ export const CategoryService = createApi({
       }),
       providesTags: ["Category"]
     }),
-    createCategory: builder.mutation<void, CreateCategoryParams>({
+    createCategory: builder.mutation<
+      CreateCategoryResponse,
+      CreateCategoryParams
+    >({
       query: (category) => ({
         method: "POST",
         url: "/categories",
@@ -89,6 +110,8 @@ export const CategoryService = createApi({
 });
 
 export const {
+  useFindAllCategoriesQuery,
+  useInfiniteFindAllCategoriesInfiniteQuery,
   useLazyFindAllCategoriesQuery,
   useLazyFindCategoryByIdQuery,
   useGetCategoriesOptionsInfiniteQuery,

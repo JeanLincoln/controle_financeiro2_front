@@ -1,31 +1,33 @@
+import { useState } from "react";
 import { toast } from "sonner";
 
-import { useLazyFindAllCategoriesQuery } from "@/store/services/category/category.service";
+import { useFindAllCategoriesQuery } from "@/store/services/category/category.service";
 import type { CategoryFindAllParams } from "@/store/services/category/categoryService.types";
-import { handleRequest } from "@/utils/handleRequest.utils";
+import { SortOrder } from "@/store/services/services.types";
 
 export function useFindAllCategories() {
-  const [fetchCategoriesTrigger, { data, isLoading }] =
-    useLazyFindAllCategoriesQuery();
+  const [filters, setFilters] = useState<CategoryFindAllParams>({
+    limit: 10,
+    page: 1,
+    sortBy: "createdAt",
+    sortOrder: SortOrder.DESC
+  });
+  const {
+    data: categories,
+    isLoading,
+    isFetching,
+    isError
+  } = useFindAllCategoriesQuery(filters);
 
-  async function handleFetchCategories(params: CategoryFindAllParams) {
-    const preferCacheValue = true;
-
-    const [error] = await handleRequest(
-      fetchCategoriesTrigger(params, preferCacheValue).unwrap()
+  if (isError) {
+    toast.error(
+      "Houve um erro ao buscar as categorias, tente novamente mais tarde!"
     );
-
-    if (error) {
-      toast.error(
-        "Houve um erro ao buscar as categorias, tente novamente mais tarde!."
-      );
-      return;
-    }
   }
 
   return {
-    handleFetchCategories,
-    data,
-    isLoading
+    categories,
+    setCategoriesFilters: setFilters,
+    isLoading: isLoading || isFetching
   };
 }

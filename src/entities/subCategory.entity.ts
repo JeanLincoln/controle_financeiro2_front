@@ -8,6 +8,7 @@ export interface SubCategory {
   updatedAt: Date;
   color: string;
   icon: string;
+  categoryId: number;
 }
 
 export type SubCategoryRanking = {

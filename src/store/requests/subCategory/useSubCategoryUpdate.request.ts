@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-import type { CreateOrUpdateSubCategory } from "@/components/Form/Category/SubCategorySection/hooks/useSubCategoryForm.hook";
+import type { CreateOrUpdateSubCategory } from "@/components/Form/SubCategory/hooks/useSubCategoryForm.hook";
 import { useAppDispatch } from "@/store";
 import { useUpdateSubCategoryMutation } from "@/store/services/subCategory/subCategory.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
@@ -22,25 +22,25 @@ export function useSubCategoryUpdate({
     subCategoryId: number,
     subCategoryData: CreateOrUpdateSubCategory
   ) {
-    const [error] = await handleRequest(
-      updateSubCategory({
-        categoryId,
-        id: subCategoryId,
-        ...subCategoryData
-      }).unwrap()
-    );
+    const payload = {
+      ...subCategoryData,
+      categoryId,
+      id: subCategoryId
+    };
+
+    const [error] = await handleRequest(updateSubCategory(payload).unwrap());
 
     if (error) {
-      toast.error("Houve um erro ao atualizar a categoria");
+      toast.error("Houve um erro ao atualizar a sub-categoria");
       errorCallback?.();
       return;
     }
 
     dispatch({
-      type: "category-service/invalidateTags",
-      payload: ["Category"]
+      type: "sub-category-service/invalidateTags",
+      payload: ["SubCategory"]
     });
-    toast.success("Categoria atualizada com sucesso");
+    toast.success("Sub-categoria atualizada com sucesso");
     successCallback();
   }
 

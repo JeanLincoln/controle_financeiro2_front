@@ -3,8 +3,34 @@ import type { SubCategory } from "@/entities/subCategory.entity";
 import type {
   GetOptionsProps,
   PaginationProps,
+  PaginationResponse,
+  SortAndPaginationProps,
   SortOrder
 } from "../services.types";
+
+export type SubCategoryFindAllFilters = {
+  categoriesIds: number[];
+  name?: string;
+};
+
+export const SubCategorySortableFields = {
+  Nome: "name",
+  Descrição: "description",
+  "Criado em": "createdAt",
+  "Atualizado em": "updatedAt"
+} as const;
+
+export type SubCategorySortBy =
+  (typeof SubCategorySortableFields)[keyof typeof SubCategorySortableFields];
+
+export type SubCategoryFindAllSortAndPaginationProps =
+  SortAndPaginationProps<SubCategorySortBy>;
+
+export type SubCategoryFindAllParams =
+  SubCategoryFindAllSortAndPaginationProps & SubCategoryFindAllFilters;
+export type SubCategoryFindAllResponse = PaginationResponse & {
+  data: SubCategory[];
+};
 
 export type SubCategoryIdParams = {
   categoryId: number;

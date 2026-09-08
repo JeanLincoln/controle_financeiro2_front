@@ -1,13 +1,10 @@
 import { toast } from "sonner";
 
-import { CATEGORY_ID_FORM_KEY } from "@/components/Form/Category/Category.form";
-import type { CreateOrUpdateCategory } from "@/components/Form/Category/CategorySection/hooks/useCategoryForm.hook";
-import { useAppSearchParams } from "@/hooks/useAppSearchParams.hook";
+import type { CreateOrUpdateCategory } from "@/components/Form/Category/hooks/useCategoryForm.hook";
 import { useCreateCategoryMutation } from "@/store/services/category/category.service";
-import { handleRequest } from "@/utils/handleRequest.utils";
 
 type UseCategoryCreateProps = {
-  successCallback?: () => void;
+  successCallback?: (categoryId: number) => void;
   errorCallback?: () => void;
 };
 
@@ -15,22 +12,16 @@ export function useCategoryCreate({
   successCallback,
   errorCallback
 }: UseCategoryCreateProps = {}) {
-  const { handleAddKey } = useAppSearchParams();
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
 
   async function handleCreateCategory(categoryData: CreateOrUpdateCategory) {
-    const [error, result] = await handleRequest(
-      createCategory(categoryData).unwrap()
-    );
-
-    if (error) {
+    try {
+      const result = await createCategory(categoryData).unwrap();
+      successCallback?.(result.id);
+    } catch (err) {
       toast.error("Houve um erro ao criar a categoria");
       errorCallback?.();
-      return;
     }
-
-    handleAddKey({ key: CATEGORY_ID_FORM_KEY, value: result.id });
-    successCallback?.();
   }
 
   return { handleCreateCategory, isLoading };

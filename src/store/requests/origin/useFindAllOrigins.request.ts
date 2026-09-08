@@ -1,31 +1,27 @@
+import { useState } from "react";
 import { toast } from "sonner";
 
-import { useLazyFindAllOriginsQuery } from "@/store/services/origin/origin.service";
+import { useFindAllOriginsQuery } from "@/store/services/origin/origin.service";
 import type { OriginFindAllParams } from "@/store/services/origin/originService.types";
-import { handleRequest } from "@/utils/handleRequest.utils";
 
 export function useFindAllOrigins() {
-  const [fetchOriginsTrigger, { data, isLoading }] =
-    useLazyFindAllOriginsQuery();
+  const [filters, setFilters] = useState<OriginFindAllParams>({});
+  const {
+    data: origins,
+    isLoading,
+    isFetching,
+    isError
+  } = useFindAllOriginsQuery(filters);
 
-  async function handleFetchOrigins(params: OriginFindAllParams) {
-    const preferCacheValue = true;
-
-    const [error] = await handleRequest(
-      fetchOriginsTrigger(params, preferCacheValue).unwrap()
+  if (isError) {
+    toast.error(
+      "Houve um erro ao buscar as origens, tente novamente mais tarde!"
     );
-
-    if (error) {
-      toast.error(
-        "Houve um erro ao buscar as origens, tente novamente mais tarde!."
-      );
-      return;
-    }
   }
 
   return {
-    handleFetchOrigins,
-    data,
-    isLoading
+    origins,
+    setOriginsFilters: setFilters,
+    isLoading: isLoading || isFetching
   };
 }

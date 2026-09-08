@@ -1,50 +1,126 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router";
+import { FileText, Palette, Save } from "lucide-react";
 
+import { Button } from "@/components/Button/Button.component";
+import { ColorPicker } from "@/components/ColorPicker/ColorPicker.component";
+import { IconSelector } from "@/components/IconSelector/IconSelector.component";
+import { Input } from "@/components/Input/Input.component";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
-import { useShowAndHideSearchParamsClear } from "@/hooks/useShowAndHideSearchParamsClear.hook";
-import { useFindCategoryById } from "@/store/requests/category/useFindCategoryById.request";
+import { Textarea } from "@/components/Textarea/Textarea.component";
 
-import { CategorySection } from "./CategorySection/CategorySection.component";
-import { SubCategorySection } from "./SubCategorySection/SubCategorySection.component";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "../Form.component";
+import {
+  useCategoryForm,
+  type CategoryFormParams
+} from "./hooks/useCategoryForm.hook";
 
-export const CATEGORY_ID_FORM_KEY = "category_id";
-export const SUB_CATEGORY_ID_FORM_KEY = "sub_category_id";
+export type CategoryFormProps = {
+  category?: CategoryFormParams;
+  onSuccess: (categoryId?: number) => void;
+};
 
-export function CategoryForm() {
-  const [params] = useSearchParams();
-  const id = params.get(CATEGORY_ID_FORM_KEY);
-
-  const {
-    idParam,
-    getCategory,
-    isLoading: isLoadingCategory,
-    category
-  } = useFindCategoryById({ id });
-
-  useEffect(() => {
-    getCategory();
-  }, [idParam]);
-
-  useShowAndHideSearchParamsClear({
-    clearOnUnmount: [CATEGORY_ID_FORM_KEY, SUB_CATEGORY_ID_FORM_KEY]
+export function CategoryForm({ category, onSuccess }: CategoryFormProps) {
+  const { form, color, isLoading, handleSubmit } = useCategoryForm({
+    category,
+    onSuccess
   });
 
   return (
-    <div className="flex w-full flex-col items-center justify-center space-y-6 p-6">
-      {isLoadingCategory && (
-        <div className="flex h-50 items-center justify-center">
-          <LoadingSpinner variant="orbit" size="lg" />
+    <Form {...form}>
+      <div className="flex w-full flex-col gap-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Nome
+              </FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Nome da categoria" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Descrição
+              </FormLabel>
+              <FormControl>
+                <Textarea className="h-30 resize-none" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex w-full gap-4">
+          <FormField
+            control={form.control}
+            name="color"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="flex items-center gap-2">
+                  <Palette className="h-4 w-4" />
+                  Cor
+                </FormLabel>
+                <FormControl>
+                  <ColorPicker value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="icon"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Ícone
+                </FormLabel>
+                <FormControl>
+                  <IconSelector
+                    color={color}
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Selecione um ícone..."
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-      )}
-      {!isLoadingCategory && (
-        <>
-          <div className="flex w-full gap-6">
-            <CategorySection category={category} />
-            <SubCategorySection category={category} />
-          </div>
-        </>
-      )}
-    </div>
+        <Button
+          type="button"
+          disabled={isLoading}
+          className="self-end"
+          onClick={() => form.handleSubmit(handleSubmit)()}
+        >
+          {isLoading ? (
+            <LoadingSpinner size="sm" variant="orbit" />
+          ) : (
+            <>
+              <Save className="h-4 w-4" />
+              Salvar
+            </>
+          )}
+        </Button>
+      </div>
+    </Form>
   );
 }

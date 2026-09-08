@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-import type { CreateOrUpdateSubCategory } from "@/components/Form/Category/SubCategorySection/hooks/useSubCategoryForm.hook";
+import type { CreateOrUpdateSubCategory } from "@/components/Form/SubCategory/hooks/useSubCategoryForm.hook";
 import { useAppDispatch } from "@/store";
 import { useCreateSubCategoryMutation } from "@/store/services/subCategory/subCategory.service";
 import { handleRequest } from "@/utils/handleRequest.utils";
@@ -21,20 +21,23 @@ export function useSubCategoryCreate({
     categoryId: number,
     subCategoryData: CreateOrUpdateSubCategory
   ) {
-    const [error] = await handleRequest(
-      createSubCategory({ categoryId, ...subCategoryData }).unwrap()
-    );
+    const payload = {
+      ...subCategoryData,
+      categoryId
+    };
+
+    const [error] = await handleRequest(createSubCategory(payload).unwrap());
 
     if (error) {
-      toast.error("Houve um erro ao criar a categoria");
+      toast.error("Houve um erro ao criar a sub-categoria");
       errorCallback?.();
       return;
     }
     dispatch({
-      type: "category-service/invalidateTags",
-      payload: ["Category"]
+      type: "sub-category-service/invalidateTags",
+      payload: ["SubCategory"]
     });
-    toast.success("Categoria criada com sucesso");
+    toast.success("Sub-categoria criada com sucesso");
     successCallback();
   }
 

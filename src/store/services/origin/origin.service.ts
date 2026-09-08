@@ -33,6 +33,22 @@ export const OriginService = createApi({
       }),
       providesTags: ["Origin"]
     }),
+    infiniteFindAllOrigins: builder.infiniteQuery<
+      OriginFindAllResponse,
+      OmitPagination<OriginFindAllParams>,
+      PaginationProps
+    >({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
+        method: "GET",
+        url: "/origin",
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
+      }),
+      providesTags: ["Origin"]
+    }),
     findOriginById: builder.query<OriginFindByIdResponse, OriginFindByIdParams>(
       {
         query: ({ id }) => ({
@@ -58,7 +74,7 @@ export const OriginService = createApi({
       }),
       providesTags: ["Origin"]
     }),
-    createOrigin: builder.mutation<void, CreateOriginParams>({
+    createOrigin: builder.mutation<OriginFindByIdResponse, CreateOriginParams>({
       query: (origin) => ({
         method: "POST",
         url: "/origin",
@@ -85,6 +101,8 @@ export const OriginService = createApi({
 });
 
 export const {
+  useFindAllOriginsQuery,
+  useInfiniteFindAllOriginsInfiniteQuery,
   useLazyFindAllOriginsQuery,
   useLazyFindOriginByIdQuery,
   useCreateOriginMutation,

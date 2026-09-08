@@ -6,11 +6,13 @@ import { TransactionsListSectionSkeleton } from "./TransactionsListSectionSkelet
 type TransactionsListSectionProps = {
   transactions?: TransactionFindAllResponse["data"];
   loading: boolean;
+  onDelete: (transactionId: number) => void;
 };
 
 export function TransactionsListSection({
   transactions,
-  loading
+  loading,
+  onDelete
 }: TransactionsListSectionProps) {
   const dataIsLoaded = !loading && transactions && transactions.length > 0;
   return (
@@ -19,7 +21,11 @@ export function TransactionsListSection({
         {loading && <TransactionsListSectionSkeleton />}
         {dataIsLoaded &&
           transactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
+            <TransactionCard
+              key={transaction.id}
+              transaction={transaction}
+              onDelete={onDelete}
+            />
           ))}
       </div>
     </div>

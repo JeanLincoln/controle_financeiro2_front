@@ -12,6 +12,8 @@ import type {
   DeleteSubCategoryParams,
   FindByIdSubCategoryParams,
   FindByIdSubCategoryResponse,
+  SubCategoryFindAllParams,
+  SubCategoryFindAllResponse,
   SubCategoryOptionsParams,
   SubCategoryOptionsResponse,
   UpdateSubCategoryParams
@@ -24,6 +26,33 @@ export const SubCategoryService = createApi({
   refetchOnMountOrArgChange: CACHE_TIME_INTERVALS.TWO_MINUTES,
   keepUnusedDataFor: CACHE_TIME_INTERVALS.THIRTY_SECONDS,
   endpoints: (builder) => ({
+    findAllSubCategories: builder.query<
+      SubCategoryFindAllResponse,
+      SubCategoryFindAllParams
+    >({
+      query: (params) => ({
+        method: "GET",
+        url: `/sub-categories`,
+        params
+      }),
+      providesTags: ["SubCategory"]
+    }),
+    infiniteFindAllSubCategories: builder.infiniteQuery<
+      SubCategoryFindAllResponse,
+      OmitPagination<SubCategoryFindAllParams>,
+      PaginationProps
+    >({
+      infiniteQueryOptions: DEFAULT_INFINITE_QUERY_OPTIONS,
+      query: ({ pageParam, queryArg }) => ({
+        method: "GET",
+        url: "/sub-categories",
+        params: {
+          ...pageParam,
+          ...queryArg
+        }
+      }),
+      providesTags: ["SubCategory"]
+    }),
     findByIdSubCategory: builder.query<
       FindByIdSubCategoryResponse,
       FindByIdSubCategoryParams
@@ -77,6 +106,8 @@ export const SubCategoryService = createApi({
 });
 
 export const {
+  useFindAllSubCategoriesQuery,
+  useInfiniteFindAllSubCategoriesInfiniteQuery,
   useFindByIdSubCategoryQuery,
   useGetSubCategoriesOptionsInfiniteQuery,
   useCreateSubCategoryMutation,

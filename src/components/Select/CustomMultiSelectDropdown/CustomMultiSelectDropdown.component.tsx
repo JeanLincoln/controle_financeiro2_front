@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDownIcon, ChevronUpIcon, X } from "lucide-react";
 
@@ -50,7 +50,7 @@ export const CustomMultiSelectDropdown = ({
   onChange,
   infiniteScroll
 }: MultiSelectDropdownProps) => {
-  const infiniteProps = useInfiniteQueryObserver(
+  const setLastButtonRef = useInfiniteQueryObserver(
     infiniteScroll
       ? {
           fetchNextPage: infiniteScroll.fetchNextPage,
@@ -77,7 +77,7 @@ export const CustomMultiSelectDropdown = ({
 
   const validatedLastButtonRef = (index: number) =>
     index === (filteredOptions?.length || 0) - 1 && infiniteScroll?.hasNextPage
-      ? infiniteProps?.lastElementRef
+      ? setLastButtonRef
       : null;
 
   const selectedOptions = handleFindSelectedOptions(value || []);
