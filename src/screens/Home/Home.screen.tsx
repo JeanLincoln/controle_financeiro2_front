@@ -24,11 +24,11 @@ export default function HomeScreen() {
           </div>
         </div>
 
-        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <section>
           <Balance />
         </section>
 
-        <section className="animate-in fade-in slide-in-from-bottom-4 mb-0 space-y-4 duration-700">
+        <section className="mb-0 space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <h2 className="text-foreground text-xl font-semibold tracking-tight">
@@ -42,7 +42,7 @@ export default function HomeScreen() {
           <RankingCardsSwiper />
         </section>
 
-        <section className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <section>
           <BalanceChart />
         </section>
       </div>
