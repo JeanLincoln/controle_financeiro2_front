@@ -45,7 +45,7 @@ export function OriginForm({ origin, onSuccess, onError }: OriginFormProps) {
             name="name"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className="flex items-center gap-2">
+                <FormLabel className="flex items-center gap-2" required>
                   <FileText className="h-4 w-4" />
                   Nome
                 </FormLabel>
@@ -78,7 +78,7 @@ export function OriginForm({ origin, onSuccess, onError }: OriginFormProps) {
               name="color"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className="flex items-center gap-2">
+                  <FormLabel className="flex items-center gap-2" required>
                     <Palette className="h-4 w-4" />
                     Cor
                   </FormLabel>
@@ -97,7 +97,7 @@ export function OriginForm({ origin, onSuccess, onError }: OriginFormProps) {
               name="icon"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className="flex items-center gap-2">
+                  <FormLabel className="flex items-center gap-2" required>
                     <FileText className="h-4 w-4" />
                     Ícone
                   </FormLabel>

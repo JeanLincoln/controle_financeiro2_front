@@ -7,6 +7,7 @@ type RelationButtonProps = {
   title: string;
   isOpen: boolean;
   isDisabled?: boolean;
+  required?: boolean;
   onClick: () => void;
 };
 
@@ -15,6 +16,7 @@ export function RelationButton({
   title,
   isOpen,
   isDisabled = false,
+  required = false,
   onClick
 }: RelationButtonProps) {
   return (
@@ -29,7 +31,7 @@ export function RelationButton({
       )}
     >
       {icon}
-      {title}
+      {title} {required && <span className="text-destructive text-xs">*</span>}
     </button>
   );
 }
