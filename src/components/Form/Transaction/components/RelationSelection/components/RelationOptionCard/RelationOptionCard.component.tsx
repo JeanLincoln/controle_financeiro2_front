@@ -1,6 +1,13 @@
-import { Check, Pencil } from "lucide-react";
+import { useState } from "react";
+import { Check, EllipsisVertical, Pencil, Trash } from "lucide-react";
 
 import { Button } from "@/components/Button/Button.component";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/DropdownMenu/DropdownMenu.component";
 import { getIconComponent } from "@/components/IconSelector/utils/iconSelector.utils";
 import { cn } from "@/utils/cn.utils";
 import { getContrastTextColor } from "@/utils/getContrastTextColor.utils";
@@ -17,16 +24,33 @@ type RelationOptionCardProps = {
   option: RelationOption;
   isSelected: boolean;
   onSelect: () => void;
-  onEdit?: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+};
+
+type HandleMenuItemsSelectParams = {
+  event: Event;
+  action: () => void;
 };
 
 export function RelationOptionCard({
   option,
   isSelected,
   onSelect,
-  onEdit
+  onEdit,
+  onDelete
 }: RelationOptionCardProps) {
   const Icon = getIconComponent(option.icon);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuItemSelect = ({
+    event,
+    action
+  }: HandleMenuItemsSelectParams) => {
+    event.preventDefault();
+    setIsMenuOpen(false);
+    action();
+  };
 
   return (
     <div
@@ -69,18 +93,40 @@ export function RelationOptionCard({
       >
         {isSelected && <Check className="h-3.5 w-3.5" />}
       </span>
-      {onEdit && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          aria-label={`Editar origem ${option.name}`}
-          className="relative z-10 shrink-0"
-          onClick={onEdit}
-        >
-          <Pencil className="h-4 w-4" />
-        </Button>
-      )}
+
+      <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={`Mais ações para ${option.name}`}
+            className="relative z-10 shrink-0"
+          >
+            <EllipsisVertical className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="relative z-20">
+          <DropdownMenuItem
+            onSelect={(event) => {
+              handleMenuItemSelect({ event, action: onEdit });
+            }}
+          >
+            <Pencil className="h-4 w-4" />
+            Editar
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            variant="destructive"
+            onSelect={(event) => {
+              handleMenuItemSelect({ event, action: onDelete });
+            }}
+          >
+            <Trash className="h-4 w-4" />
+            Excluir
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

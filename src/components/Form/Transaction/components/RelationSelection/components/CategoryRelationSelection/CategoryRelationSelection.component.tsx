@@ -14,6 +14,7 @@ import type { Category } from "@/entities/category.entity";
 import type { SubCategory } from "@/entities/subCategory.entity";
 
 import { useCategoryRelationSelection } from "../../hooks/useCategoryRelationSelection.hook";
+import { RelationDeleteDialog } from "../RelationDeleteDialog/RelationDeleteDialog.component";
 import { RelationListHeader } from "../RelationListHeader/RelationListHeader.component";
 import { RelationListState } from "../RelationListState/RelationListState.component";
 import { RelationOptionCard } from "../RelationOptionCard/RelationOptionCard.component";
@@ -47,7 +48,12 @@ export function CategoryRelationSelection({
     handleCategoryDialogOpenChange,
     handleCategorySuccess,
     toggleCategorySelection,
-    categoriesIds
+    categoriesIds,
+    categoryPendingDeletion,
+    isDeletingCategory,
+    openCategoryDeletionDialog,
+    handleCategoryDeletionDialogOpenChange,
+    confirmCategoryDeletion
   } = useCategoryRelationSelection({ subCategories });
 
   return (
@@ -93,6 +99,7 @@ export function CategoryRelationSelection({
               isSelected={categoriesIds.includes(category.id)}
               onSelect={() => toggleCategorySelection(category.id)}
               onEdit={() => openCategoryEditionDialog(category)}
+              onDelete={() => openCategoryDeletionDialog(category)}
             />
           ))}
           <div ref={setFetchRef} className="h-px w-full" />
@@ -119,6 +126,13 @@ export function CategoryRelationSelection({
           />
         </DialogContent>
       </Dialog>
+      <RelationDeleteDialog
+        open={categoryPendingDeletion !== null}
+        onOpenChange={handleCategoryDeletionDialogOpenChange}
+        relationName={categoryPendingDeletion?.name}
+        isLoading={isDeletingCategory}
+        onConfirm={confirmCategoryDeletion}
+      />
     </div>
   );
 }
