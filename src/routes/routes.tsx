@@ -1,5 +1,5 @@
 import HomeScreen from "@/screens/Home/Home.screen";
-import ProfileScreen from "@/screens/Profile/Profile.screen";
+import { ProfileScreen } from "@/screens/Profile/Profile.screen";
 import TransactionScreen from "@/screens/Transaction/Transaction.screen";
 import { TransactionFormScreen } from "@/screens/TransactionForm/TransactionForm.screen";
 
