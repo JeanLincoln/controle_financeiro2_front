@@ -92,7 +92,7 @@ export function FiltersSection({ form }: FiltersSectionProps) {
                   <FormItem className="min-w-106 flex-1">
                     <FormLabel className="flex items-center gap-2">
                       <LetterText className="h-4 w-4" />
-                      nome
+                      Nome
                     </FormLabel>
                     <FormControl>
                       <Input

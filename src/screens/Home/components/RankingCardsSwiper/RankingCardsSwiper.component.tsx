@@ -16,11 +16,11 @@ import { RankingCard } from "../RankingCard/RankingCard.component";
 
 import "./RankingCardsSwiper.css";
 
-const FIVE_SECONDS_IN_MS = 5000;
+const EIGHT_SECONDS_IN_MS = 8000;
 const SPACE_BETWEEN_SLIDES = 16;
 const DEFAULT_SLIDES_PER_VIEW = 2.15;
 const AUTO_PLAY_CONFIG = {
-  delay: FIVE_SECONDS_IN_MS,
+  delay: EIGHT_SECONDS_IN_MS,
   disableOnInteraction: false,
   pauseOnMouseEnter: true
 };
@@ -57,7 +57,7 @@ export function RankingCardsSwiper() {
   });
 
   return (
-    <div className="ranking-swiper">
+    <div className="ranking-swiper mb-4">
       <Swiper
         modules={[Pagination, Mousewheel, Keyboard, Autoplay]}
         spaceBetween={SPACE_BETWEEN_SLIDES}

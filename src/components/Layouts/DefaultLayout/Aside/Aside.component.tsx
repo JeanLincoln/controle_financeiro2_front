@@ -3,11 +3,13 @@ import { LogOut, User } from "lucide-react";
 
 import { Button } from "@/components/Button/Button.component";
 import { useLogout } from "@/hooks/useLogout.hook";
+import { useAppSelector } from "@/store";
 import { cn } from "@/utils/cn.utils";
 
 import { asideNavigationItems } from "./constants/asideNavigationItems.constant";
 
 export function Aside() {
+  const user = useAppSelector((state) => state.auth.user);
   const logout = useLogout();
 
   return (
@@ -20,9 +22,11 @@ export function Aside() {
           <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
             <User className="text-primary h-5 w-5" />
           </div>
-          <span className="text-foreground hidden font-medium whitespace-nowrap transition-opacity duration-300 group-hover:block">
-            User Profile
-          </span>
+          {user && (
+            <span className="text-foreground hidden font-medium whitespace-nowrap transition-opacity duration-300 group-hover:block">
+              {user.firstName}
+            </span>
+          )}
         </Link>
       </div>
 

@@ -112,11 +112,17 @@ export const RankingCard = <T extends BaseRowProps>({
           {dataLoaded && (
             <CardContent className="flex-1 pt-0">
               <Table>
-                <TableHeader>
+                <TableHeader className="bg-muted/50">
                   <TableRow>
-                    <TableHead className="text-xs">Nome</TableHead>
-                    <TableHead className="text-xs">Tipo</TableHead>
-                    <TableHead className="text-right text-xs">Valor</TableHead>
+                    <TableHead className="text-xs font-semibold">
+                      Nome
+                    </TableHead>
+                    <TableHead className="text-xs font-semibold">
+                      Tipo
+                    </TableHead>
+                    <TableHead className="text-right text-xs font-semibold">
+                      Valor
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
