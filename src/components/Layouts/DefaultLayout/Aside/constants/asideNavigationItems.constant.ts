@@ -7,7 +7,7 @@ export const asideNavigationItems = [
     icon: ChartNoAxesCombined
   },
   {
-    name: "Transaction",
+    name: "Transações",
     href: "/transaction",
     icon: CreditCard
   }
