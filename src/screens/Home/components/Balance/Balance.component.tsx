@@ -11,9 +11,9 @@ import { BalanceSkeleton } from "./Balance.skeleton";
 import { BalanceCard } from "./BalanceCard/BalanceCard.component";
 
 export function Balance() {
-  const { data: balance, isLoading } = useBalanceQuery();
+  const { data: balance, isLoading, isError } = useBalanceQuery();
 
-  const balanceIsLoaded = !isLoading && balance;
+  const balanceIsLoaded = !isLoading && !!balance;
 
   return (
     <Card>
@@ -27,6 +27,11 @@ export function Balance() {
       </CardHeader>
       <CardContent className="px-6">
         {isLoading && <BalanceSkeleton />}
+        {isError && (
+          <div className="text-muted-foreground flex min-h-[180px] items-center justify-center text-sm">
+            Não foi possível carregar o balanço deste mês.
+          </div>
+        )}
         {balanceIsLoaded && (
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
             <BalanceCard

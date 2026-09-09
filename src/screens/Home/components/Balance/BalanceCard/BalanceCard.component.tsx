@@ -26,8 +26,8 @@ export function BalanceCard({
   const pastValueAndCurrentValueAreEquals = pastValue === total;
 
   const statusIsPositive =
-    (effect === "positive" && (variationTotal || 0) >= 0) ||
-    (effect === "negative" && (variationTotal || 0) < 0);
+    (effect === "positive" && variationTotal >= 0) ||
+    (effect === "negative" && variationTotal < 0);
 
   const variationClass = statusIsPositive
     ? "text-green-500 text-xs"
@@ -39,11 +39,24 @@ export function BalanceCard({
     ? neutralVariationClass
     : variationClass;
 
-  const validatedVariation = !pastValue
-    ? null
-    : variationPercentage !== null
-      ? variationPercentage
-      : 0;
+  const validatedVariation =
+    pastValue === 0
+      ? null
+      : variationPercentage !== null
+        ? variationPercentage
+        : 0;
+
+  const shouldShowPositivePrefix =
+    statusIsPositive && validatedVariation !== null && validatedVariation > 0;
+
+  const shouldShowNegativePrefix =
+    !statusIsPositive && validatedVariation !== null && validatedVariation < 0;
+
+  const formatSignedCurrency = (value: number) => {
+    const prefix = value > 0 ? "+" : value < 0 ? "-" : "";
+
+    return `${prefix}${toBRLCurrency(Math.abs(value))}`;
+  };
 
   return (
     <Card className="gap-2 p-4">
@@ -63,14 +76,11 @@ export function BalanceCard({
               </span>
               <div className="flex items-center gap-0.5">
                 <span className={statusClassName}>
-                  {effect === "positive" &&
-                    statusIsPositive &&
-                    !!validatedVariation &&
-                    "+"}
-                  {effect === "negative" && statusIsPositive && ""}
+                  {effect === "positive" && shouldShowPositivePrefix && "+"}
+                  {effect === "negative" && shouldShowNegativePrefix && "-"}
                 </span>
                 <span className={statusClassName}>
-                  {validatedVariation ? `${validatedVariation}%` : "-"}
+                  {validatedVariation !== null ? `${validatedVariation}%` : "-"}
                 </span>
               </div>
             </div>
@@ -80,11 +90,7 @@ export function BalanceCard({
               </span>
               <div className="flex items-center gap-0.5">
                 <span className={statusClassName}>
-                  {effect === "positive" && statusIsPositive && "+"}
-                  {effect === "negative" && statusIsPositive && ""}
-                </span>
-                <span className={statusClassName}>
-                  {pastValue > 0 ? toBRLCurrency(pastValue) : "-"}
+                  {pastValue !== 0 ? toBRLCurrency(pastValue) : "-"}
                 </span>
               </div>
             </div>
@@ -94,13 +100,7 @@ export function BalanceCard({
               </span>
               <div className="flex items-center gap-0.5">
                 <span className={statusClassName}>
-                  {effect === "positive" && statusIsPositive && "+"}
-                  {effect === "negative" && statusIsPositive && ""}
-                </span>
-                <span className={statusClassName}>
-                  {variationTotal !== null
-                    ? toBRLCurrency(variationTotal)
-                    : "-"}
+                  {formatSignedCurrency(variationTotal)}
                 </span>
               </div>
             </div>
