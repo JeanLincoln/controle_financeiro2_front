@@ -5,7 +5,7 @@ import type { UpdateUserParams } from "@/store/services/user/userService.types";
 import { handleRequest } from "@/utils/handleRequest.utils";
 
 interface UseUserUpdateProps {
-  successCallback?: (userData: UpdateUserParams) => void;
+  successCallback?: (userData: Omit<UpdateUserParams, "password">) => void;
 }
 
 export function useUserUpdate({ successCallback }: UseUserUpdateProps = {}) {
@@ -20,7 +20,8 @@ export function useUserUpdate({ successCallback }: UseUserUpdateProps = {}) {
     }
 
     toast.success("Perfil atualizado com sucesso!");
-    successCallback?.(userData);
+    const { password: _password, ...safeUserData } = userData;
+    successCallback?.(safeUserData);
   }
 
   return { handleUpdateUser, isLoading };
