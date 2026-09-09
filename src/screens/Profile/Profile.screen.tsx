@@ -24,7 +24,7 @@ export function ProfileScreen() {
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <div className="flex h-50 items-center justify-center">
+            <div className="flex items-center justify-center py-12">
               <LoadingSpinner variant="orbit" size="lg" />
             </div>
           ) : user ? (
