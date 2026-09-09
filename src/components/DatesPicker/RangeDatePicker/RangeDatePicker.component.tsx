@@ -44,6 +44,7 @@ export function RangeDatePicker({
           mode="range"
           className="bg-background w-auto"
           selected={rangeDate}
+          defaultMonth={rangeDate?.from}
           captionLayout="dropdown"
           onSelect={(date) => {
             onSelectDate(date);

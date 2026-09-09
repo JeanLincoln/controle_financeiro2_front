@@ -7,6 +7,7 @@ import { DashboardService } from "../services/dashboard/dashboard.service";
 import { OriginService } from "../services/origin/origin.service";
 import { SubCategoryService } from "../services/subCategory/subCategory.service";
 import { TransactionService } from "../services/transaction/transaction.service";
+import { UserService } from "../services/user/user.service";
 import type { RootState } from "./reducers";
 
 type PersistedRootState = RootState & PersistPartial;
@@ -27,6 +28,7 @@ export default function middleware(
     OriginService.middleware,
     CategoryService.middleware,
     SubCategoryService.middleware,
-    TransactionService.middleware
+    TransactionService.middleware,
+    UserService.middleware
   );
 }

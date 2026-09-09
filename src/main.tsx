@@ -4,19 +4,31 @@ import { Provider } from "react-redux";
 import { RouterProvider } from "react-router";
 import { setDefaultOptions } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "sonner";
+
+import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner.component";
 
 import "./index.css";
 
 import { router } from "./routes";
-import { store } from "./store";
+import { persistor, store } from "./store";
 
 setDefaultOptions({ locale: ptBR });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate
+        loading={
+          <div className="flex min-h-screen items-center justify-center">
+            <LoadingSpinner variant="orbit" size="lg" />
+          </div>
+        }
+        persistor={persistor}
+      >
+        <RouterProvider router={router} />
+      </PersistGate>
       <Toaster position="top-right" />
     </Provider>
   </StrictMode>

@@ -40,6 +40,7 @@ export function DateOfBirthPicker({
           mode="single"
           className="bg-background w-auto"
           selected={date}
+          defaultMonth={date}
           captionLayout="dropdown"
           onSelect={(date) => {
             onSelectDate(date);
