@@ -14,7 +14,6 @@ export const TransactionFormSchema = z.object({
     .max(50, "O nome deve ter no máximo 50 caracteres"),
   description: z
     .string()
-    .min(1, "A descrição deve ter pelo menos 1 caractere")
     .max(100, "A descrição deve ter no máximo 100 caracteres"),
   type: z.enum(TransactionType, { error: "O tipo de transação é obrigatório" }),
   amount: z.number().min(1, "O valor é obrigatório e deve ser maior que 0"),

@@ -67,6 +67,7 @@ export function RelationSelection({
         <RelationButton
           icon={<Building2 className="h-5 w-5" />}
           title="Origem"
+          required
           isOpen={openRelationGroup === RELATION_GROUPS.ORIGIN}
           onClick={() => toggleRelationGroup(RELATION_GROUPS.ORIGIN)}
         />
