@@ -15,6 +15,7 @@ import {
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner.component";
 
 import { useOriginRelationSelection } from "../../hooks/useOriginRelationSelection.hook";
+import { RelationDeleteDialog } from "../RelationDeleteDialog/RelationDeleteDialog.component";
 import { RelationListHeader } from "../RelationListHeader/RelationListHeader.component";
 import { RelationListState } from "../RelationListState/RelationListState.component";
 import { RelationOptionCard } from "../RelationOptionCard/RelationOptionCard.component";
@@ -46,7 +47,12 @@ export function OriginRelationSelection({
     openOriginEditionDialog,
     handleOriginDialogOpenChange,
     handleOriginSuccess,
-    handleOriginSelect
+    handleOriginSelect,
+    originPendingDeletion,
+    isDeletingOrigin,
+    openOriginDeletionDialog,
+    handleOriginDeletionDialogOpenChange,
+    confirmOriginDeletion
   } = useOriginRelationSelection();
 
   return (
@@ -92,6 +98,7 @@ export function OriginRelationSelection({
               isSelected={originId === origin.id}
               onSelect={() => handleOriginSelect(origin)}
               onEdit={() => openOriginEditionDialog(origin)}
+              onDelete={() => openOriginDeletionDialog(origin)}
             />
           ))}
           <div ref={setFetchRef} className="h-px w-full" />
@@ -118,6 +125,13 @@ export function OriginRelationSelection({
           />
         </DialogContent>
       </Dialog>
+      <RelationDeleteDialog
+        open={originPendingDeletion !== null}
+        onOpenChange={handleOriginDeletionDialogOpenChange}
+        relationName={originPendingDeletion?.name}
+        isLoading={isDeletingOrigin}
+        onConfirm={confirmOriginDeletion}
+      />
     </div>
   );
 }

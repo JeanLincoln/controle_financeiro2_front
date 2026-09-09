@@ -3,6 +3,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import type { CategoryFormParams } from "@/components/Form/Category/hooks/useCategoryForm.hook";
 import type { SubCategory } from "@/entities/subCategory.entity";
+import { useDeleteCategory } from "@/store/requests/category/useDeleteCategory.request";
 
 import type { TransactionFormSchemaType } from "../../../TransactionForm.schema";
 import { RELATION_GROUPS } from "../RelationSelection.component";
@@ -15,10 +16,14 @@ export const useCategoryRelationSelection = ({
   subCategories
 }: UseCategoryRelationSelectionProps) => {
   const { control, setValue } = useFormContext<TransactionFormSchemaType>();
+  const { handleDeleteCategory, isLoading: isDeletingCategory } =
+    useDeleteCategory();
 
   const [categoryDialogCategory, setCategoryDialogCategory] =
     useState<CategoryFormParams | null>(null);
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [categoryPendingDeletion, setCategoryPendingDeletion] =
+    useState<CategoryFormParams | null>(null);
 
   const categoriesIds = useWatch({
     control,
@@ -88,6 +93,35 @@ export const useCategoryRelationSelection = ({
     handleCategoryDialogOpenChange(false);
   };
 
+  const openCategoryDeletionDialog = (category: CategoryFormParams) => {
+    setCategoryPendingDeletion(category);
+  };
+
+  const handleCategoryDeletionDialogOpenChange = (isOpen: boolean) => {
+    if (!isOpen) {
+      setCategoryPendingDeletion(null);
+    }
+  };
+
+  const confirmCategoryDeletion = async () => {
+    if (!categoryPendingDeletion) return;
+
+    const isDeleted = await handleDeleteCategory(categoryPendingDeletion.id);
+
+    if (isDeleted && categoriesIds.includes(categoryPendingDeletion.id)) {
+      const updatedValues = categoriesIds.filter(
+        (selectedValue) => selectedValue !== categoryPendingDeletion.id
+      );
+
+      setValue(RELATION_GROUPS.CATEGORIES, updatedValues, {
+        shouldDirty: true
+      });
+      removeOrphanSubCategories(categoryPendingDeletion.id);
+    }
+
+    setCategoryPendingDeletion(null);
+  };
+
   return {
     categoryDialogCategory,
     isCategoryDialogOpen,
@@ -96,6 +130,11 @@ export const useCategoryRelationSelection = ({
     handleCategoryDialogOpenChange,
     handleCategorySuccess,
     categoriesIds,
-    toggleCategorySelection
+    toggleCategorySelection,
+    categoryPendingDeletion,
+    isDeletingCategory,
+    openCategoryDeletionDialog,
+    handleCategoryDeletionDialogOpenChange,
+    confirmCategoryDeletion
   };
 };

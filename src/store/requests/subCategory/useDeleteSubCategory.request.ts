@@ -2,7 +2,6 @@ import { toast } from "sonner";
 
 import { useAppDispatch } from "@/store";
 import { useDeleteSubCategoryMutation } from "@/store/services/subCategory/subCategory.service";
-import { handleRequest } from "@/utils/handleRequest.utils";
 
 export function useDeleteSubCategory() {
   const dispatch = useAppDispatch();
@@ -14,18 +13,18 @@ export function useDeleteSubCategory() {
   ) {
     if (!subCategoryId) return;
 
-    const [error] = await handleRequest(
-      deleteSubCategory({ categoryId, subCategoryId }).unwrap()
-    );
-
-    dispatch({
-      type: "category-service/invalidateTags",
-      payload: ["Category"]
-    });
-
-    if (error) {
+    try {
+      await deleteSubCategory({ categoryId, subCategoryId }).unwrap();
+      dispatch({
+        type: "category-service/invalidateTags",
+        payload: ["Category"]
+      });
+      toast.success("Sub-categoria excluída com sucesso");
+      return true;
+    } catch (err) {
+      console.error("Error deleting sub-category:", err);
       toast.error("Houve um erro ao excluir a sub-categoria");
-      return;
+      return false;
     }
   }
 
