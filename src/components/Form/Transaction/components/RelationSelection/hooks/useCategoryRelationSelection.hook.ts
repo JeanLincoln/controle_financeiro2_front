@@ -106,9 +106,9 @@ export const useCategoryRelationSelection = ({
   const confirmCategoryDeletion = async () => {
     if (!categoryPendingDeletion) return;
 
-    await handleDeleteCategory(categoryPendingDeletion.id);
+    const isDeleted = await handleDeleteCategory(categoryPendingDeletion.id);
 
-    if (categoriesIds.includes(categoryPendingDeletion.id)) {
+    if (isDeleted && categoriesIds.includes(categoryPendingDeletion.id)) {
       const updatedValues = categoriesIds.filter(
         (selectedValue) => selectedValue !== categoryPendingDeletion.id
       );

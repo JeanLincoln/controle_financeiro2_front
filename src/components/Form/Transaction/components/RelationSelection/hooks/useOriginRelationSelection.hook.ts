@@ -63,9 +63,9 @@ export const useOriginRelationSelection = () => {
   const confirmOriginDeletion = async () => {
     if (!originPendingDeletion) return;
 
-    await handleDeleteOrigin(originPendingDeletion.id);
+    const isDeleted = await handleDeleteOrigin(originPendingDeletion.id);
 
-    if (originId === originPendingDeletion.id) {
+    if (isDeleted && originId === originPendingDeletion.id) {
       setValue(RELATION_GROUPS.ORIGIN, 0, { shouldDirty: true });
     }
 

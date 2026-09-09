@@ -87,12 +87,12 @@ export const useSubCategoryRelationSelection = () => {
   const confirmSubCategoryDeletion = async () => {
     if (!subCategoryPendingDeletion) return;
 
-    await handleDeleteSubCategory(
+    const isDeleted = await handleDeleteSubCategory(
       subCategoryPendingDeletion.categoryId,
       subCategoryPendingDeletion.id
     );
 
-    if (subCategoriesIds.includes(subCategoryPendingDeletion.id)) {
+    if (isDeleted && subCategoriesIds.includes(subCategoryPendingDeletion.id)) {
       const updatedValues = subCategoriesIds.filter(
         (selectedValue) => selectedValue !== subCategoryPendingDeletion.id
       );
