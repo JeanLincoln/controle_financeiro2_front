@@ -26,3 +26,6 @@ dist-ssr
 
 # Envioroment
 .env
+.env.production
+.env.staging
+.env.deploy
