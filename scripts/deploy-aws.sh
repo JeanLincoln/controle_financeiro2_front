@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-if [ ! -f ".env.deploy" ]; then
-  echo "Erro: arquivo .env.deploy não encontrado."
-  exit 1
+if [ -f ".env.deploy" ]; then
+  set -a
+  source .env.deploy
+  set +a
 fi
 
-set -a
-source .env.deploy
-set +a
+: "${AWS_FRONTEND_BUCKET:?AWS_FRONTEND_BUCKET não definida}"
+: "${AWS_CLOUDFRONT_DISTRIBUTION_ID:?AWS_CLOUDFRONT_DISTRIBUTION_ID não definida}"
 
 echo "1/4 - Executando lint..."
 pnpm lint
